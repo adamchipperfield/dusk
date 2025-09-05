@@ -13,7 +13,7 @@
     {{ content_for_header }}
   </head>
 
-  <body class="template-{{ request.page_type | handle }}">
+  <body class="template-{{ request.page_type | handle }} color-scheme-1">
     <a class="visually-hidden" href="#MainContent">{{ 'accessibility.skip_to_text' | t }}</a>
 
     {% sections 'header-group' %}

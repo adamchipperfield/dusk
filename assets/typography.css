@@ -229,10 +229,6 @@ p.margin {
   text-decoration: underline;
 }
 
-.text-inverse {
-  color: var(--color-text-inverse);
-}
-
 .text-error {
   color: var(--color-error);
 }

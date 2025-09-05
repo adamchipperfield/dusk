@@ -16,11 +16,11 @@
    */
   align-items: center;
   background: none;
-  background-color: var(--color-button-background);
-  border: 0;
+  background-color: var(--color-primary-button-background);
+  border: 1px solid var(--color-primary-button-border);
   border-radius: var(--button-border-radius);
   color: inherit;
-  color: var(--color-button-label);
+  color: var(--color-primary-button-label);
   cursor: pointer;
   display: inline-flex;
   font-weight: var(--font-weight-medium);
@@ -39,12 +39,16 @@
 
 .button:not([disabled]):hover,
 .shopify-payment-button .shopify-payment-button__button--unbranded:not([disabled]):hover {
-  background-color: var(--color-button-hover-background);
+  background-color: var(--color-primary-button-background-hover);
+  border-color: var(--color-primary-button-border-hover);
+  color: var(--color-primary-button-label-hover);
 }
 
 .button[disabled],
 .shopify-payment-button .shopify-payment-button__button--unbranded[disabled] {
-  background-color: var(--color-button-background);
+  background-color: var(--color-primary-button-background);
+  border-color: var(--color-primary-button-border);
+  color: var(--color-primary-button-label);
   cursor: not-allowed;
   opacity: 0.5;
 }
@@ -62,14 +66,16 @@
 
 .button--secondary,
 .shopify-payment-button .shopify-payment-button__button--unbranded {
-  background-color: transparent;
-  border: 1px solid var(--color-button-background);
-  color: var(--color-button-background);
+  background-color: var(--color-secondary-button-background);
+  border-color: var(--color-secondary-button-border);
+  color: var(--color-secondary-button-label);
 }
 
 .button--secondary:hover,
 .shopify-payment-button .shopify-payment-button__button--unbranded:hover {
-  color: var(--color-button-label);
+  background-color: var(--color-secondary-button-background-hover);
+  border-color: var(--color-secondary-button-border-hover);
+  color: var(--color-secondary-button-label-hover);
 }
 
 .button-group {
@@ -169,8 +175,8 @@
 }
 
 .bubble--button {
-  background-color: var(--color-button-background);
-  color: var(--color-button-label);
+  background-color: var(--color-primary-button-background);
+  color: var(--color-primary-button-label);
 }
 
 /**

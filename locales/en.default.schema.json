@@ -3,36 +3,51 @@
     "colors": {
       "name": "Colors",
       "settings": {
-        "color_background": {
+        "background": {
           "label": "Background"
         },
-        "color_backdrop": {
-          "label": "Backdrop color"
-        },
-        "color_text": {
+        "text": {
           "label": "Text"
         },
-        "color_text_light": {
+        "text_light": {
           "label": "Text light"
         },
-        "color_text_inverse": {
-          "label": "Text inverse"
+        "backdrop": {
+          "label": "Backdrop"
         },
-        "color_border": {
+        "borders": {
           "label": "Borders"
         },
-        "color_button_background": {
-          "label": "Button background"
-        },
-        "color_button_label": {
-          "label": "Button label"
-        },
-        "color_success": {
+        "success": {
           "label": "Success"
         },
-        "color_error": {
+        "error": {
           "label": "Error"
-        }
+        },
+        "primary_button_header": {
+          "content": "Primary button"
+        },
+        "secondary_button_header": {
+          "content": "Secondary button"
+        },
+        "button_background": {
+          "label": "Background"
+        },
+        "button_label": {
+          "label": "Label"
+        },
+        "button_border": {
+          "label": "Border"
+        },
+        "button_background_hover": {
+          "label": "Background hover"
+        },
+        "button_label_hover": {
+          "label": "Label hover"
+        },
+        "button_border_hover": {
+          "label": "Border hover"
+        },
       }
     },
     "typography": {

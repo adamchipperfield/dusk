@@ -11,64 +11,144 @@
     "name": "t:settings_schema.colors.name",
     "settings": [
       {
-        "type": "color",
-        "id": "color_background",
-        "label": "t:settings_schema.colors.settings.color_background.label",
-        "default": "#FFFFFF"
-      },
-      {
-        "type": "color_background",
-        "id": "color_backdrop",
-        "label": "t:settings_schema.colors.settings.color_backdrop.label",
-        "default": "rgba(0, 0, 0, 0.2)"
-      },
-      {
-        "type": "color",
-        "id": "color_text",
-        "label": "t:settings_schema.colors.settings.color_text.label",
-        "default": "#000000"
-      },
-      {
-        "type": "color",
-        "id": "color_text_light",
-        "label": "t:settings_schema.colors.settings.color_text_light.label",
-        "default": "#3D3A3B"
-      },
-      {
-        "type": "color",
-        "id": "color_text_inverse",
-        "label": "t:settings_schema.colors.settings.color_text_inverse.label",
-        "default": "#FFFFFF"
-      },
-      {
-        "type": "color",
-        "id": "color_border",
-        "label": "t:settings_schema.colors.settings.color_border.label",
-        "default": "#E5DFE1"
-      },
-      {
-        "type": "color",
-        "id": "color_button_background",
-        "label": "t:settings_schema.colors.settings.color_button_background.label",
-        "default": "#376FDA"
-      },
-      {
-        "type": "color",
-        "id": "color_button_label",
-        "label": "t:settings_schema.colors.settings.color_button_label.label",
-        "default": "#FFFFFF"
-      },
-      {
-        "type": "color",
-        "id": "color_success",
-        "label": "t:settings_schema.colors.settings.color_success.label",
-        "default": "#108043"
-      },
-      {
-        "type": "color",
-        "id": "color_error",
-        "label": "t:settings_schema.colors.settings.color_error.label",
-        "default": "#EB001B"
+        "type": "color_scheme_group",
+        "id": "color_schemes",
+        "definition": [
+          {
+            "type": "color",
+            "id": "background",
+            "label": "t:settings_schema.colors.settings.background.label",
+            "default": "#FFFFFF"
+          },
+          {
+            "type": "color",
+            "id": "text",
+            "label": "t:settings_schema.colors.settings.text.label",
+            "default": "#000000"
+          },
+          {
+            "type": "color",
+            "id": "text_light",
+            "label": "t:settings_schema.colors.settings.text_light.label",
+            "default": "#3D3A3B"
+          },
+          {
+            "type": "color_background",
+            "id": "backdrop",
+            "label": "t:settings_schema.colors.settings.backdrop.label",
+            "default": "rgba(0, 0, 0, 0.2)"
+          },
+          {
+            "type": "color",
+            "id": "borders",
+            "label": "t:settings_schema.colors.settings.borders.label",
+            "default": "#E5DFE1"
+          },
+          {
+            "type": "color",
+            "id": "success",
+            "label": "t:settings_schema.colors.settings.success.label",
+            "default": "#108043"
+          },
+          {
+            "type": "color",
+            "id": "error",
+            "label": "t:settings_schema.colors.settings.error.label",
+            "default": "#EB001B"
+          },
+          {
+            "type": "header",
+            "content": "t:settings_schema.colors.settings.primary_button_header.content"
+          },
+          {
+            "type": "color",
+            "id": "primary_button_background",
+            "label": "t:settings_schema.colors.settings.button_background.label",
+            "default": "#376FDA"
+          },
+          {
+            "type": "color",
+            "id": "primary_button_label",
+            "label": "t:settings_schema.colors.settings.button_label.label",
+            "default": "#FFFFFF"
+          },
+          {
+            "type": "color",
+            "id": "primary_button_border",
+            "label": "t:settings_schema.colors.settings.button_border.label",
+            "default": "#376FDA"
+          },
+          {
+            "type": "color",
+            "id": "primary_button_background_hover",
+            "label": "t:settings_schema.colors.settings.button_background_hover.label",
+            "default": "#376FDA"
+          },
+          {
+            "type": "color",
+            "id": "primary_button_label_hover",
+            "label": "t:settings_schema.colors.settings.button_label_hover.label",
+            "default": "#FFFFFF"
+          },
+          {
+            "type": "color",
+            "id": "primary_button_border_hover",
+            "label": "t:settings_schema.colors.settings.button_border_hover.label",
+            "default": "#376FDA"
+          },
+          {
+            "type": "header",
+            "content": "t:settings_schema.colors.settings.secondary_button_header.content"
+          },
+          {
+            "type": "color",
+            "id": "secondary_button_background",
+            "label": "t:settings_schema.colors.settings.button_background.label",
+            "default": "#376FDA"
+          },
+          {
+            "type": "color",
+            "id": "secondary_button_label",
+            "label": "t:settings_schema.colors.settings.button_label.label",
+            "default": "#FFFFFF"
+          },
+          {
+            "type": "color",
+            "id": "secondary_button_border",
+            "label": "t:settings_schema.colors.settings.button_border.label",
+            "default": "#376FDA"
+          },
+          {
+            "type": "color",
+            "id": "secondary_button_background_hover",
+            "label": "t:settings_schema.colors.settings.button_background_hover.label",
+            "default": "#376FDA"
+          },
+          {
+            "type": "color",
+            "id": "secondary_button_label_hover",
+            "label": "t:settings_schema.colors.settings.button_label_hover.label",
+            "default": "#FFFFFF"
+          },
+          {
+            "type": "color",
+            "id": "secondary_button_border_hover",
+            "label": "t:settings_schema.colors.settings.button_border_hover.label",
+            "default": "#376FDA"
+          },
+        ],
+        "role": {
+          "background": "background",
+          "text": "text",
+          "links": "text",
+          "icons": "text",
+          "primary_button": "primary_button_background",
+          "on_primary_button": "primary_button_label",
+          "primary_button_border": "primary_button_border",
+          "secondary_button": "secondary_button_background",
+          "on_secondary_button": "secondary_button_label",
+          "secondary_button_border": "secondary_button_border"
+        }
       }
     ]
   },

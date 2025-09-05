@@ -57,22 +57,6 @@
     --font-weight-bold: 700;
 
     /**
-     * Color.
-     */
-    --color-background: {{ settings.color_background | color_to_rgb }};
-    --color-text: {{ settings.color_text | color_to_rgb }};
-    --color-text-light: {{ settings.color_text_light | color_to_rgb }};
-    --color-text-inverse: {{ settings.color_text_inverse | color_to_rgb }};
-    --color-button-background: {{ settings.color_button_background | color_to_rgb }};
-    --color-button-hover-background: {{ settings.color_button_background | color_darken: 5 }};
-    --color-button-label: {{ settings.color_button_label | color_to_rgb }};
-    --color-border: {{ settings.color_border | color_to_rgb }};
-    --color-border-lighter: {{ settings.color_border | color_lighten: 8 | color_to_rgb }};
-    --color-success: {{ settings.color_success | color_to_rgb }};
-    --color-error: {{ settings.color_error | color_to_rgb }};
-    --color-backdrop: {{ settings.color_backdrop | color_to_rgb }};
-
-    /**
      * Layout.
      */
     --container-gutter: var(--spacing-16);
@@ -97,4 +81,29 @@
       --container-gutter: var(--spacing-24);
     }
   }
+
+  {% for color_scheme in settings.color_schemes %}
+    .color-{{ color_scheme.id }} {
+      --color-background: {{ color_scheme.settings.background }};
+      --color-text: {{ color_scheme.settings.text }};
+      --color-text-light: {{ color_scheme.settings.text_light }};
+      --color-backdrop: {{ color_scheme.settings.backdrop }};
+      --color-border: {{ color_scheme.settings.borders }};
+      --color-border-lighter: {{ color_scheme.settings.borders | color_lighten: 8 | color_to_rgb }};
+      --color-success: {{ color_scheme.settings.success }};
+      --color-error: {{ color_scheme.settings.error }};
+      --color-primary-button-background: {{ color_scheme.settings.primary_button_background }};
+      --color-primary-button-label: {{ color_scheme.settings.primary_button_label }};
+      --color-primary-button-border: {{ color_scheme.settings.primary_button_border }};
+      --color-primary-button-background-hover: {{ color_scheme.settings.primary_button_background_hover }};
+      --color-primary-button-label-hover: {{ color_scheme.settings.primary_button_label_hover }};
+      --color-primary-button-border-hover: {{ color_scheme.settings.primary_button_border_hover }};
+      --color-secondary-button-background: {{ color_scheme.settings.secondary_button_background }};
+      --color-secondary-button-label: {{ color_scheme.settings.secondary_button_label }};
+      --color-secondary-button-border: {{ color_scheme.settings.secondary_button_border }};
+      --color-secondary-button-background-hover: {{ color_scheme.settings.secondary_button_background_hover }};
+      --color-secondary-button-label-hover: {{ color_scheme.settings.secondary_button_label_hover }};
+      --color-secondary-button-border-hover: {{ color_scheme.settings.secondary_button_border_hover }};
+    }
+  {% endfor %}
 </style>

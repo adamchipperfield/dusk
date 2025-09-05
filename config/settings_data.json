@@ -9,6 +9,27 @@
  */
 {
   "current": {
-    "content_for_index": []
+    "content_for_index": [],
+    "color_schemes": {
+      "scheme-1": {
+        "settings": {
+          "background": "#FFFFFF",
+          "text": "#000000",
+          "text_light": "#3D3A3B",
+          "links": "#376FDA",
+          "icons": "#000000",
+          "backdrop": "rgba(0, 0, 0, 0.2)",
+          "borders": "#E5DFE1",
+          "success": "#108043",
+          "error": "#EB001B",
+          "primary_button_background": "#376FDA",
+          "primary_button_label": "#FFFFFF",
+          "primary_button_border": "#376FDA",
+          "secondary_button_background": "#FFFFFF",
+          "secondary_button_label": "#376FDA",
+          "secondary_button_border": "#FFFFFF"
+        }
+      }
+    }
   }
 }
