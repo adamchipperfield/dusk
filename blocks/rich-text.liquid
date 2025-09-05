@@ -1,27 +1,67 @@
-{% doc %}
-  @param {string} [container_class]
-{% enddoc %}
-
 {%- liquid
   if block.settings.body == empty
     continue
   endif
 -%}
 
-<div id="{{ block.id }}" class="rte {{ container_class }}" {{ block.shopify_attributes }}>
-  {{ block.settings.body }}
-</div>
+{% capture content %}
+  <div class="rich-text__content rte">{{ block.settings.body }}</div>
+{% endcapture %}
+
+{% if block.settings.truncate %}
+  <toggle-element id="{{ block.id }}-truncate" class="rich-text__toggle">
+    {{ content }}
+
+    <toggle-element-button toggle-id="{{ block.id }}-truncate">
+      <button class="rich-text__button rich-text__button--open button-reset text-link" type="button">
+        {{ 'accessibility.read_more' | t }}
+      </button>
+    </toggle-element-button>
+
+    <toggle-element-button toggle-id="{{ block.id }}-truncate" action="close">
+      <button class="rich-text__button rich-text__button--close button-reset text-link" type="button">
+        {{ 'accessibility.read_less' | t }}
+      </button>
+    </toggle-element-button>
+  </toggle-element>
+{% else %}
+  {{ content }}
+{% endif %}
+
+{% stylesheet %}
+  .rich-text__toggle:not(.is-open) .rich-text__content {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
+  }
+
+  .rich-text__toggle.is-open .rich-text__button--open,
+  .rich-text__toggle:not(.is-open) .rich-text__button--close {
+    display: none;
+  }
+
+  .rich-text__button {
+    margin-block-start: var(--spacing-4);
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
   "name": "t:blocks.rich-text.name",
-  "tag": null,
+  "class": "rich-text",
   "settings": [
     {
       "type": "richtext",
       "id": "body",
       "label": "t:presets.settings.body.label",
       "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum porta, mi commodo varius sodales, lectus purus tempus urna, et fermentum ipsum tellus non felis. Nullam aliquet egestas lacinia. In auctor quis mauris non sollicitudin. Curabitur a quam ut massa auctor bibendum.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "truncate",
+      "label": "t:blocks.rich-text.settings.truncate.label"
     }
   ],
   "presets": [

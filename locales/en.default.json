@@ -13,7 +13,9 @@
     "carousel_previous": "Go to previous slide",
     "carousel_next": "Go to next slide",
     "carousel_go_to": "Go to slide {{ position }}",
-    "close_drawer": "Close drawer"
+    "close_drawer": "Close drawer",
+    "read_more": "Read more",
+    "read_less": "Read less"
   },
   "form": {
     "first_name": "First name",

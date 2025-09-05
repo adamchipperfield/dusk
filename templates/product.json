@@ -28,7 +28,8 @@
           "type": "rich-text",
           "name": "Description",
           "settings": {
-            "body": "{{ closest.product.description }}"
+            "body": "{{ closest.product.description }}",
+            "truncate": true
           }
         },
         "options": {

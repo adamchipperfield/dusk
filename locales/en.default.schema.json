@@ -267,7 +267,12 @@
       "name": "Heading"
     },
     "rich-text": {
-      "name": "Rich text"
+      "name": "Rich text",
+      "settings": {
+        "truncate": {
+          "label": "Truncate"
+        }
+      }
     },
     "button": {
       "name": "Button"
