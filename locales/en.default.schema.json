@@ -384,6 +384,9 @@
     },
     "_product-benefits": {
       "name": "Product benefits"
+    },
+    "_announcement-bar": {
+      "name": "Announcement bar"
     }
   },
   "presets": {

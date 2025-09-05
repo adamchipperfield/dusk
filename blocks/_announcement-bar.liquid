@@ -1,0 +1,41 @@
+{{ block.settings.text }}
+
+{% stylesheet %}
+  .announcement-bar {
+    padding-block: var(--spacing-8);
+  }
+{% endstylesheet %}
+
+{% style %}
+  #shopify-block-{{ block.id }} {
+    background-color: {{ block.settings.background_color }};
+    color: {{ block.settings.color }};
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "t:blocks._announcement-bar.name",
+  "class": "announcement-bar text-center rte",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "text",
+      "label": "t:presets.settings.text.label",
+      "default": "Announce discounts, sales or <a href=\"/collections/all\">new releases</a>"
+    },
+    {
+      "type": "color",
+      "id": "color",
+      "label": "t:presets.settings.text_color.label",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:presets.settings.background_color.label",
+      "default": "#000000"
+    }
+  ]
+}
+{% endschema %}

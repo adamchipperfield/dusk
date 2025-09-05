@@ -17,6 +17,8 @@
 ></script>
 
 <site-header>
+  {% content_for 'block', type: '_announcement-bar', id: 'announcement' %}
+
   <div class="site-header__container container">
     <div class="site-header__left">
       {% render 'header-menu', menu: section.settings.menu %}
