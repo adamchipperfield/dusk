@@ -1,0 +1,22 @@
+{% content_for 'blocks' %}
+
+{% stylesheet %}
+  .product-benefits {
+    background-color: var(--color-border-lighter);
+    border-radius: 8px;
+    padding-block: var(--spacing-16);
+    padding-inline: var(--spacing-16);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:blocks._product-benefits.name",
+  "class": "product-benefits flex flex-col flex-gap-small",
+  "blocks": [
+    {
+      "type": "_product-benefit"
+    }
+  ]
+}
+{% endschema %}

@@ -360,6 +360,17 @@
     },
     "_newsletter-form": {
       "name": "Newsletter form"
+    },
+    "_product-benefit": {
+      "name": "Product benefit",
+      "settings": {
+        "icon": {
+          "label": "Icon"
+        }
+      }
+    },
+    "_product-benefits": {
+      "name": "Product benefits"
     }
   },
   "presets": {
@@ -469,6 +480,26 @@
       },
       "page": {
         "label": "Page"
+      },
+      "icon": {
+        "label": "Icon",
+        "options": {
+          "none": {
+            "label": "None"
+          },
+          "discount": {
+            "label": "Discount"
+          },
+          "check": {
+            "label": "Check"
+          },
+          "bag": {
+            "label": "Bag"
+          },
+          "profile": {
+            "label": "Profile"
+          }
+        }
       }
     }
   }

@@ -40,6 +40,33 @@
           "name": "Add to cart",
           "settings": {}
         },
+        "benefits": {
+          "type": "_product-benefits",
+          "blocks": {
+            "block_1": {
+              "type": "_product-benefit",
+              "settings": {
+                "icon": "bag",
+                "text": "Standard delivery dispatched within <strong>24 hours</strong>"
+              }
+            },
+            "block_2": {
+              "type": "_product-benefit",
+              "settings": {
+                "icon": "check",
+                "text": "Free returns within 30 days, <a href=\"#\">learn more</a>"
+              }
+            },
+            "block_3": {
+              "type": "_product-benefit",
+              "settings": {
+                "icon": "profile",
+                "text": "<a href=\"#\">Buyers Club</a> members get 10% off every order"
+              }
+            }
+          },
+          "block_order": ["block_1", "block_2", "block_3"]
+        },
         "pick_up": {
           "type": "_product-pick-up",
           "settings": {}
@@ -51,6 +78,7 @@
         "options",
         "description",
         "buttons",
+        "benefits",
         "pick_up"
       ],
       "settings": {}
