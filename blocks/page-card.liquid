@@ -1,0 +1,46 @@
+{% doc %}
+  @description
+  Renders a page summary.
+
+  @param {string} [badges] - Comma separated list of badges.
+
+  @example
+  {% content_for 'block', type: 'article-card', id: 'article', closest.article: article %}
+{% enddoc %}
+
+{% liquid
+  assign page = block.settings.page
+  assign badge_list = badges | split: ', '
+%}
+
+<a class="flex flex-col flex-gap-medium" href="{{ page.url }}">
+  {% unless badge_list.size == 0 %}
+    <ul class="badges list-reset">
+      {% for badge in badge_list %}
+        <li class="badge">{{ badge }}</li>
+      {% endfor %}
+    </ul>
+  {% endunless %}
+
+  <p>{{ page.title }}</p>
+
+  <p class="text-small">{{ page.content | strip_html | truncatewords: 15 }}</p>
+</a>
+
+{% schema %}
+{
+  "name": "t:blocks.page-card.name",
+  "settings": [
+    {
+      "type": "page",
+      "id": "page",
+      "label": "t:presets.settings.page.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks.page-card.name"
+    }
+  ]
+}
+{% endschema %}

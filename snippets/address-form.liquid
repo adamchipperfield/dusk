@@ -1,0 +1,83 @@
+{% doc %}
+  @description
+  Renders an address form
+
+  @param {object} address - The address object being updated.
+
+  @example
+  {% render 'address-form' %}
+{% enddoc %}
+
+{% liquid
+  assign address_fields = 'first_name, last_name, company, address1, address2, city, country, zip, phone, default' | split: ', '
+  assign submit_string = 'customer.address.save_address' | t
+
+  unless address.id
+    assign submit_string = 'customer.address.add_address' | t
+  endunless
+%}
+
+{% form 'customer_address', address %}
+  {{ form.errors | default_errors }}
+
+  <div class="form-group">
+    {% for field in address_fields %}
+      {% liquid
+        assign handle = field | handleize
+        # theme-check-disable UndefinedObject
+        assign id = section.id | append: '-new-' | append: handle
+        # theme-check-enable UndefinedObject
+      %}
+
+      <div class="form-field">
+        {% capture label %}
+          <label for="{{ id }}">
+            {% if field == 'default' %}
+              {{ 'customer.address.set_default_address' | t }}
+            {% else %}
+              {% # theme-check-disable TranslationKeyExists %}
+              {{ 'form.' | append: field | t }}
+              {% # theme-check-enable TranslationKeyExists %}
+            {% endif %}
+          </label>
+        {% endcapture %}
+
+        {% if field == 'country' %}
+          {{ label }}
+
+          <select-provider default-value="{{ form.country }}">
+            <select id="{{ id }}" name="address[{{ field }}]">
+              {{ all_country_option_tags }}
+            </select>
+          </select-provider>
+
+        {% elsif field == 'default' %}
+          <input
+            id="{{ id }}"
+            type="checkbox"
+            name="address[{{ field }}]"
+            {% if address == customer.default_address %}
+              checked
+            {% endif %}
+          >
+
+          {{ label }}
+
+        {% else %}
+          {{ label }}
+
+          <input
+            id="{{ id }}"
+            name="address[{{ field }}]"
+            type="text"
+            {% unless form[field] == blank %}
+              value="{{ form[field] }}"
+            {% endunless %}
+          >
+        {% endif %}
+      </div>
+    {% endfor %}
+
+    <button class="button button--block">{{ submit_string }}</button>
+  </div>
+{% endform %}

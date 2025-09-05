@@ -1,0 +1,206 @@
+{% liquid
+  assign order_date = order.created_at | time_tag: format: 'date_at_time'
+  assign cancelled_at = order.cancelled_at | time_tag: format: 'date_at_time'
+%}
+
+<div class="main-account__header">
+  {{ 'customer.account.return' | t | link_to: routes.account_url, class: 'text-link main-account__return' }}
+
+  <h1 class="text-h4">{{ 'customer.order.title' | t: name: order.name }}</h1>
+  <p class="text-meta">{{ 'customer.order.date_inline_html' | t: date: order_date }}</p>
+
+  {% if order.cancelled %}
+    <div>
+      <p>{{ 'customer.order.cancelled_inline_html' | t: date: cancelled_at }}</p>
+      <small>{{ 'customer.order.cancelled_reason_inline' | t: reason: order.cancel_reason_label }}</small>
+    </div>
+  {% endif %}
+</div>
+
+<div class="main-account__body grid">
+  <div class="col xs12 l8">
+    <table>
+      <thead>
+        <tr>
+          <th>{{ 'customer.order.item_product' | t }}</th>
+          <th>{{ 'customer.order.item_sku' | t }}</th>
+          <th>{{ 'customer.order.item_price' | t }}</th>
+          <th>{{ 'customer.order.item_quantity' | t }}</th>
+          <th>{{ 'customer.order.item_total' | t }}</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for line_item in order.line_items %}
+          <tr>
+            <td>
+              <span class="text-th" data-label="{{ 'customer.order.item_product' | t }}"></span>
+              <span class="value text-link">{{ line_item.title | link_to: line_item.url }}</span>
+            </td>
+
+            <td>
+              {% unless line_item.sku == blank %}
+                <span class="text-th" data-label="{{ 'customer.order.item_sku' | t }}"></span>
+                <span class="value">{{ line_item.sku }}</span>
+              {% endunless %}
+            </td>
+
+            <td>
+              {% liquid
+                assign compare_at = false
+
+                if line_item.original_price != line_item.final_price
+                  assign compare_at = line_item.original_price
+                endif
+              %}
+
+              <span class="text-th" data-label="{{ 'customer.order.item_price' | t }}"></span>
+
+              <span class="value">
+                {% render 'product-price',
+                  variant: line_item.variant,
+                  price: line_item.final_price,
+                  compare_at: compare_at
+                %}
+
+                {% if line_item.selling_plan_allocation %}
+                  <p>{{ line_item.selling_plan_allocation.selling_plan.name }}</p>
+                {% endif %}
+              </span>
+            </td>
+
+            <td>
+              <span class="text-th" data-label="{{ 'customer.order.item_quantity' | t }}"></span>
+              <span class="value">{{ line_item.quantity }}</span>
+            </td>
+
+            <td>
+              <span class="text-th" data-label="{{ 'customer.order.item_total' | t }}"></span>
+
+              <span class="value">
+                {% if line_item.original_line_price != line_item.final_line_price %}
+                  <s>{{ line_item.original_line_price | money }}</s>
+                  {{ line_item.final_line_price | money }}
+
+                {% else %}
+                  {{ line_item.original_line_price | money }}
+                {% endif %}
+              </span>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+
+      <tfoot>
+        <tr>
+          <td colspan="4" class="text-th">{{ 'customer.order.subtotal' | t }}</td>
+
+          <td>
+            <span class="text-th" data-label="{{ 'customer.order.subtotal' | t }}"></span>
+            <span class="value">{{ order.line_items_subtotal_price | money }}</span>
+          </td>
+        </tr>
+
+        {% if order.cart_level_discount_applications != blank %}
+          <tr>
+            {% for discount_application in order.cart_level_discount_applications %}
+              <td colspan="4" class="text-th">{{ discount_application.title }}</td>
+
+              <td>
+                <span class="text-th" data-label="{{ discount_application.title }}"></span>
+                <span class="value">-{{ discount_application.total_allocated_amount | money }}</span>
+              </td>
+            {% endfor %}
+          </tr>
+        {% endif %}
+
+        {% for shipping_method in order.shipping_methods %}
+          {% capture title %}
+              {{ 'customer.order.shipping' | t }} ({{ shipping_method.title }})
+            {% endcapture %}
+
+          <tr>
+            <td colspan="4" class="text-th">{{ title | strip }}</td>
+
+            <td>
+              <span class="text-th" data-label="{{ title | strip }}"></span>
+              <span class="value">{{ shipping_method.price | money }}</span>
+            </td>
+          </tr>
+        {% endfor %}
+
+        {% for tax_line in order.tax_lines %}
+          {% capture title %}
+              {{ 'customer.order.tax' | t }}
+                ({{ tax_line.title }} {{ tax_line.rate | times: 100 }}%)
+            {% endcapture %}
+
+          <tr>
+            <td colspan="4" class="text-th">{{ title | strip }}</td>
+
+            <td>
+              <span class="text-th" data-label="{{ title | strip }}"></span>
+              <span class="value">{{ tax_line.price | money }}</span>
+            </td>
+          </tr>
+        {% endfor %}
+
+        {% if order.total_duties %}
+          <tr>
+            <td colspan="4" class="text-th">{{ 'customer.order.duties' | t }}</td>
+
+            <td>
+              <span class="text-th" data-label="{{ 'customer.order.duties' | t }}"></span>
+              <span class="value">{{ order.total_duties | money }}</span>
+            </td>
+          </tr>
+        {% endif %}
+
+        <tr>
+          <td colspan="4" class="text-th">{{ 'customer.order.total' | t }}</td>
+
+          <td>
+            <span class="text-th" data-label="{{ 'customer.order.total' | t }}"></span>
+            <span class="value">{{ order.total_price | money }}</span>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="col xs12 l4">
+    <div class="grid">
+      <div class="col xs12">
+        <div class="main-account__subheading">
+          <h2 class="text-h5">{{ 'customer.order.billing_address' | t }}</h2>
+
+          <p class="text-meta">
+            {{ 'customer.order.payment_status' | t }}:
+            {{ order.financial_status_label }}
+          </p>
+        </div>
+
+        {{ order.billing_address | format_address }}
+      </div>
+
+      <div class="col xs12">
+        <div class="main-account__subheading">
+          <h2 class="text-h5">{{ 'customer.order.shipping_address' | t }}</h2>
+
+          <p class="text-meta">
+            {{ 'customer.order.fulfillment_status' | t }}:
+            {{ order.fulfillment_status_label }}
+          </p>
+        </div>
+
+        {{ order.shipping_address | format_address }}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "class": "main-account container"
+}
+{% endschema %}

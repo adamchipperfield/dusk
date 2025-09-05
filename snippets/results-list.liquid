@@ -1,0 +1,112 @@
+{% doc %}
+  @description
+  Displays query results with filters, and section rendering.
+
+  @param {sort_option[]} [sort_options] - The sort options to display.
+  @param {string} [sort_by] - The selected sort option.
+  @param {string} [default_sort_by] - The default sort option.
+  @param {filter[]} [filters] - The filters to display.
+  @param {string} [results] - The query results to display.
+
+  @example
+  {% render 'results-list' %}
+{% enddoc %}
+
+{% liquid
+  unless results
+    continue
+  endunless
+%}
+
+<script
+  src="{{ 'results-list.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+
+<results-list
+  {% # theme-check-disable UndefinedObject %}
+  {% if section %}
+    section-id="{{ section.id }}"
+  {% endif %}
+  {% # theme-check-enable UndefinedObject %}
+  {% if default_sort_by %}
+    default-sort-by="{{ default_sort_by }}"
+  {% endif %}
+>
+  <div class="grid">
+    <div class="col xs12 m3">
+      <div class="results-list__aside flex flex-col flex-gap-medium">
+        {% unless sort_options == null or sort_options.size == 0 %}
+          <form data-ref="results-list.sort">
+            <label for="sort-by">{{ 'filter_sort.sort_by' | t }}</label>
+
+            <select id="sort-by" name="sort_by">
+              {% for option in sort_options %}
+                {% liquid
+                  assign selected = false
+
+                  if sort_by == '' or sort_by == null
+                    if option.value == default_sort_by
+                      assign selected = true
+                    endif
+
+                  else
+                    if option.value == sort_by
+                      assign selected = true
+                    endif
+                  endif
+                %}
+
+                <option
+                  value="{{ option.value }}"
+                  {% if selected %}
+                    selected
+                  {% endif %}
+                >
+                  {{ option.name }}
+                </option>
+              {% endfor %}
+            </select>
+          </form>
+        {% endunless %}
+
+        <toggle-element-button action="toggle" toggle-id="filter-form">
+          <button
+            class="button button--block button--small until-medium"
+            type="button"
+          >
+            {{ 'filter_sort.filter' | t }}
+          </button>
+        </toggle-element-button>
+
+        <toggle-element id="filter-form" class="results-list__filters">
+          {% render 'filter-form',
+            filters: filters,
+            ref: 'results-list.filters',
+            terms: search.terms,
+            sort_by: sort_by,
+            default_sort_by: default_sort_by
+          %}
+        </toggle-element>
+      </div>
+    </div>
+
+    <div class="col xs12 m9">{{ results }}</div>
+  </div>
+</results-list>
+
+{% stylesheet %}
+  @media (max-width: 767px) {
+    .results-list__filters:not(.is-open) {
+      display: none;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .results-list__aside {
+      position: sticky;
+      top: calc(var(--spacing-24) + var(--header-height));
+    }
+  }
+{% endstylesheet %}

@@ -1,0 +1,60 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "header",
+  "name": "t:section_groups.header.name",
+  "sections": {
+    "header": {
+      "type": "header",
+      "settings": {}
+    },
+    "cart-drawer": {
+      "type": "cart-drawer",
+      "blocks": {
+        "title": {
+          "type": "_cart-title",
+          "static": true,
+          "settings": {},
+          "blocks": {
+            "title": {
+              "type": "heading",
+              "static": true,
+              "settings": {
+                "text": "Cart",
+                "heading_style": "h4"
+              }
+            }
+          }
+        }
+      },
+      "settings": {}
+    },
+    "localization-drawer": {
+      "type": "localization-drawer",
+      "blocks": {
+        "title": {
+          "type": "heading",
+          "static": true,
+          "settings": {
+            "text": "Select your location",
+            "heading_tag": "p",
+            "heading_style": "h5"
+          }
+        }
+      },
+      "settings": {}
+    }
+  },
+  "order": [
+    "header",
+    "cart-drawer",
+    "localization-drawer"
+  ]
+}

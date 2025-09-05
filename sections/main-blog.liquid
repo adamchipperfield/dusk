@@ -1,0 +1,45 @@
+{% content_for 'block', type: 'heading', id: 'title', margin: true %}
+
+{% paginate blog.articles by section.settings.articles_per_page %}
+  {% if blog.articles.size == 0 %}
+    <p>{{ 'blog.no_articles' | t }}</p>
+  {% else %}
+    <ul class="grid list-reset width-full">
+      {% for article in blog.articles %}
+        <li class="col xs12 s6 m3">
+          {% content_for 'block',
+            type: 'article-card',
+            id: 'article',
+            closest.article: article,
+            preload: forloop.first,
+            image_width: 1086,
+            default_size: '90vw',
+            small_size: '46vw',
+            medium_size: '22vw',
+            xlarge_size: '296px',
+            widths: '180, 331, 482, 633, 784, 935, 1086'
+          %}
+        </li>
+      {% endfor %}
+    </ul>
+
+    <div class="pagination">{{ paginate | default_pagination }}</div>
+  {% endif %}
+{% endpaginate %}
+
+{% schema %}
+{
+  "name": "t:sections.main-blog.name",
+  "class": "container section-margin",
+  "settings": [
+    {
+      "type": "range",
+      "id": "articles_per_page",
+      "label": "t:sections.main-blog.settings.articles_per_page.label",
+      "min": 1,
+      "max": 48,
+      "default": 12
+    }
+  ]
+}
+{% endschema %}

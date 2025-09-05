@@ -1,0 +1,49 @@
+{% doc %}
+  @description
+  Renders a list of social links configured in theme settings.
+
+  @param {string} [class]
+
+  @example
+  {% render 'social-links' %}
+{% enddoc %}
+
+{% liquid
+  assign has_social_links = false
+  assign social_platforms = 'facebook, instagram, pinterest, x, youtube' | split: ', '
+
+  for platform in social_platforms
+    assign setting = 'social_#_link' | replace: '#', platform
+
+    if settings[setting] != blank
+      assign has_social_links = true
+    endif
+  endfor
+%}
+
+{% if has_social_links %}
+  <ul class="social-links flex flex-gap-small flex-wrap justify-center list-reset {{ class }}">
+    {% for platform in social_platforms %}
+      {% liquid
+        assign setting = 'social_#_link' | replace: '#', platform
+        # theme-check-disable TranslationKeyExists
+        assign title = 'social_media.' | append: platform | t
+        # theme-check-enable TranslationKeyExists
+      %}
+
+      {% unless settings[setting] == blank %}
+        <li>
+          <a href="{{ settings[setting] }}" title="{{ title }}" target="_blank">
+            {%- render 'icon-social', icon: platform -%}
+          </a>
+        </li>
+      {% endunless %}
+    {% endfor %}
+  </ul>
+{% endif %}
+
+{% stylesheet %}
+  .social-links .icon {
+    --size: 28px;
+  }
+{% endstylesheet %}

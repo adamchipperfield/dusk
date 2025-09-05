@@ -1,0 +1,40 @@
+{
+  "Setting": {
+    "scope": "liquid,json,jsonc",
+    "prefix": ["setting"],
+    "body": ["{", "\t\"type\": \"${1:type}\",", "\t\"id\": \"${2:id}\",", "\t\"label\": \"${3:label}\"${4}", "}"],
+  },
+
+  "Sidebar setting": {
+    "scope": "liquid,json,jsonc",
+    "prefix": ["sidebar-setting"],
+    "body": ["{", "\t\"type\": \"${1}\",", "\t\"content\": \"${2}\"", "}"],
+  },
+
+  "Basic block schema": {
+    "scope": "liquid,json,jsonc",
+    "prefix": ["block"],
+    "body": ["{", "\t\"type\": \"${1}\",", "\t\"name\": \"${2}\",", "\t\"settings\": [${3}]", "}"],
+  },
+
+  "Heading tag setting": {
+    "scope": "liquid,json,jsonc",
+    "prefix": ["heading-tag-setting", "hts"],
+    "body": [
+      "{",
+      "\t\"type\": \"select\",",
+      "\t\"id\": \"heading_tag\",",
+      "\t\"label\": \"t:presets.settings.heading_tag.label\",",
+      "\t\"options\": [",
+      "\t\t{ \"value\": \"h1\", \"label\": \"t:presets.settings.heading_tag.options.h1.label\" },",
+      "\t\t{ \"value\": \"h2\", \"label\": \"t:presets.settings.heading_tag.options.h2.label\" },",
+      "\t\t{ \"value\": \"h3\", \"label\": \"t:presets.settings.heading_tag.options.h3.label\" },",
+      "\t\t{ \"value\": \"h4\", \"label\": \"t:presets.settings.heading_tag.options.h4.label\" },",
+      "\t\t{ \"value\": \"h5\", \"label\": \"t:presets.settings.heading_tag.options.h5.label\" },",
+      "\t\t{ \"value\": \"h6\", \"label\": \"t:presets.settings.heading_tag.options.h6.label\" }",
+      "\t],",
+      "\t\"default\": \"h2\"",
+      "}",
+    ],
+  },
+}

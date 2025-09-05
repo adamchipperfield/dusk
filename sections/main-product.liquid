@@ -1,0 +1,80 @@
+<script
+  src="{{ 'main-product.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+
+<script
+  src="{{ 'product-form.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+
+<main-product
+  class="main-product"
+  section-id="{{ section.id }}"
+  selected-variant="{{ product.selected_or_first_available_variant.id }}"
+>
+  <div class="container">
+    <div class="main-product__grid grid">
+      <div class="col xs12 m6 l7">
+        {% render 'product-gallery' %}
+      </div>
+
+      <div class="col xs12 m6 l5">
+        <product-form
+          class="main-product__form flex flex-col flex-gap-medium dialog-window-container"
+          section-id="{{ section.id }}"
+          data-ref="main-product.form"
+        >
+          {% content_for 'blocks' %}
+        </product-form>
+      </div>
+    </div>
+  </div>
+</main-product>
+
+{% stylesheet %}
+  @media (min-width: 768px) {
+    .main-product__grid {
+      gap: var(--spacing-64);
+    }
+
+    .main-product__form {
+      position: sticky;
+      top: var(--header-height);
+      padding-block-start: var(--spacing-24);
+    }
+  }
+{% endstylesheet %}
+
+<script type="application/ld+json">
+  {{ product | structured_data }}
+</script>
+
+{% schema %}
+{
+  "name": "t:sections.main-product.name",
+  "class": "section-margin",
+  "blocks": [
+    {
+      "type": "@theme"
+    },
+    {
+      "type": "@app"
+    },
+    {
+      "type": "_product-price"
+    },
+    {
+      "type": "_product-options"
+    },
+    {
+      "type": "_product-buttons"
+    },
+    {
+      "type": "_product-pick-up"
+    }
+  ]
+}
+{% endschema %}

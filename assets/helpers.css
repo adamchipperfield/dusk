@@ -1,0 +1,230 @@
+/**
+ * Utility classes to style elements based on conditions.
+ */
+
+/**
+ * Hide element but make it accessible to screen readers.
+ */
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(100%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+/**
+ * Removes from the accessibility tree.
+ */
+.display-contents {
+  display: contents;
+}
+
+/**
+ * Hide or show the element.
+ */
+.display-none {
+  display: none;
+}
+
+.display-block {
+  display: block;
+}
+
+.hide-empty:empty {
+  display: none;
+}
+
+/**
+ * Hide scroll bars.
+ */
+:is(.hide-scrollbar, .drawer__body)::-webkit-scrollbar {
+  display: none;
+}
+
+:is(.hide-scrollbar, .drawer__body) {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/**
+ * Resets form buttons to appear as a standard text link.
+ */
+.button-reset {
+  background: none;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  padding: 0;
+  text-align: inherit;
+}
+
+/**
+ * Resets list elements to appear as a stacked text links.
+ */
+.list-reset {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+/**
+ * Resets disclosure elements.
+ */
+.disclosure-reset summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+.disclosure-reset summary::-webkit-details-marker {
+  display: none;
+}
+
+/**
+ * Hides the element's overflow.
+ */
+.overflow-hidden {
+  overflow: hidden;
+}
+
+/**
+ * Positioning.
+ */
+.relative {
+  position: relative;
+}
+
+/**
+ * Paddings and margins.
+ */
+.no-margin {
+  margin: 0;
+}
+
+.no-padding {
+  padding: 0;
+}
+
+/**
+ * Icons.
+ */
+.icon {
+  --size: 24px;
+  display: inline-block;
+  fill: currentColor;
+  height: var(--size);
+  vertical-align: middle;
+  width: var(--size);
+}
+
+/**
+ * Media.
+ */
+.image {
+  background-color: var(--color-border-lighter);
+  color: transparent;
+}
+
+.image-wide {
+  height: auto;
+  width: 100%;
+}
+
+.image-tall {
+  height: 100%;
+  width: auto;
+}
+
+.image-cover {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.image-square {
+  aspect-ratio: 1;
+}
+
+.image-container {
+  background-color: var(--color-border-lighter);
+  overflow: hidden;
+  position: relative;
+  z-index: 0;
+}
+
+.image-container__hover {
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.image-container .badges {
+  left: var(--spacing-12);
+  position: absolute;
+  top: var(--spacing-12);
+  z-index: 2;
+}
+
+@media (hover: hover) {
+  .image-container:hover .image-container__hover {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/**
+ * States and messaging.
+ */
+.errors {
+  color: var(--color-error);
+}
+
+.errors ul {
+  display: flex;
+  flex-direction: column;
+  font-size: var(--font-size-12);
+  gap: var(--spacing-8);
+  list-style: none;
+  margin-block-end: var(--spacing-16);
+  padding: 0;
+}
+
+.success {
+  color: var(--color-success);
+  font-size: var(--font-size-12);
+  margin-block-end: var(--spacing-16);
+}
+
+/**
+ * Breakpoint-specific display.
+ */
+@media (min-width: 768px) {
+  .until-medium {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .from-medium {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .until-large {
+    display: none;
+  }
+}
+
+@media (max-width: 1023px) {
+  .from-large {
+    display: none;
+  }
+}

@@ -1,0 +1,12 @@
+<div class="grid no-gutter">
+  <div class="col xs12 l8 offset-l2">
+    {% content_for 'block', type: 'heading', id: 'title', margin: true %}
+    {% content_for 'block', type: 'rich-text', id: 'content' %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "class": "container section-margin"
+}
+{% endschema %}

@@ -1,0 +1,110 @@
+<div class="grid no-gutter">
+  <div class="col xs12 m4 offset-m4">
+    <div id="recover" class="grid no-gutter">
+      <div class="col xs12">
+        {% form 'recover_customer_password' %}
+          <h2 class="text-h4 margin">{{ 'customer.login.recover_password_title' | t }}</h2>
+
+          {% unless form.errors %}
+            <p class="text-meta margin {% if form.posted_successfully? %}success{% endif %}">
+              {% if form.posted_successfully? %}
+                {{ 'customer.login.recover_password_success' | t }}
+
+              {% else %}
+                {{ 'customer.login.recover_password_subtitle' | t }}
+              {% endif %}
+            </p>
+          {% endunless %}
+
+          {{ form.errors | default_errors }}
+
+          <div class="form-group">
+            <div class="form-field">
+              <label for="{{ section.id | append: '-recover-email' }}">
+                {{ 'form.email' | t }}
+              </label>
+
+              <input
+                id="{{ section.id | append: '-recover-email' }}"
+                name="email"
+                type="email"
+              >
+            </div>
+
+            <button class="button">{{ 'form.submit' | t }}</button>
+
+            {{ 'customer.login.recover_password_cancel' | t | link_to: '#customer_login', class: 'text-meta' }}
+          </div>
+        {% endform %}
+      </div>
+    </div>
+
+    <div id="customer_login" class="grid no-gutter">
+      <div class="col xs12">
+        {% form 'customer_login', id: null %}
+          <h1 class="text-h4 margin">{{ 'customer.login.title' | t }}</h1>
+
+          {{ form.errors | default_errors }}
+
+          <div class="form-group">
+            <div class="form-field">
+              <label for="{{ section.id | append: '-email' }}">
+                {{ 'form.email' | t }}
+              </label>
+
+              <input
+                id="{{ section.id | append: '-email' }}"
+                name="customer[email]"
+                type="email"
+              >
+            </div>
+
+            {% if form.password_needed %}
+              <div class="form-field">
+                <label for="{{ section.id | append: '-password' }}">
+                  {{ 'form.password' | t }}
+                </label>
+
+                <input
+                  id="{{ section.id | append: '-password' }}"
+                  name="customer[password]"
+                  type="password"
+                >
+
+                {{ 'customer.login.forgotten_password' | t | link_to: '#recover', class: 'text-meta' }}
+              </div>
+            {% endif %}
+
+            <button class="button">{{ 'customer.login.title' | t }}</button>
+
+            {{ 'customer.register.title' | t | link_to: routes.account_register_url, class: 'text-link' }}
+          </div>
+        {% endform %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  #recover:not(:target) {
+    display: none;
+  }
+
+  #recover:target ~ #customer_login {
+    display: none;
+  }
+
+  #recover,
+  #customer_login {
+    /**
+     * Accounts for the header height plus the margin.
+     */
+    scroll-margin-top: calc(73px + var(--spacing-40));
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "class": "container section-margin"
+}
+{% endschema %}

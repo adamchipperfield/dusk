@@ -1,0 +1,82 @@
+{% doc %}
+  @description
+  Renders an article summary.
+
+  @param {string} [badges] - Comma separated list of badges.
+  @param {boolean} [preload] - Pre-loads the thumbnail image.
+  @param {number} [image_width] - The source image width.
+  @param {string} [default_size] - The default breakpoint size.
+  @param {string} [small_size] - The small breakpoint size.
+  @param {string} [medium_size] - The medium breakpoint size.
+  @param {string} [large_size] - The large breakpoint size.
+  @param {string} [xlarge_size] - The extrra-large breakpoint size.
+  @param {string} [widths] - Custom image widths.
+
+  @example
+  {% content_for 'block', type: 'article-card', id: 'article', closest.article: article %}
+{% enddoc %}
+
+{% liquid
+  assign article = block.settings.article
+  assign badge_list = badges | split: ', '
+  assign image_width = image_width | default: 588
+  assign default_size = default_size | default: '43vw'
+  assign small_size = small_size | default: null
+  assign medium_size = medium_size | default: '30vw'
+  assign large_size = large_size | default: '21vw'
+  assign xlarge_size = xlarge_size | default: '294px'
+  assign widths = widths | default: '180, 316, 452, 588'
+%}
+
+<a class="flex flex-col flex-gap-medium" href="{{ article.url }}">
+  <div class="image-container" style="aspect-ratio: {{ article.image.aspect_ratio | default: 1 }};">
+    {% unless badge_list.size == 0 %}
+      <ul class="badges list-reset">
+        {% for badge in badge_list %}
+          <li class="badge">{{ badge }}</li>
+        {% endfor %}
+      </ul>
+    {% endunless %}
+
+    {% if article.image %}
+      {% render 'image',
+        image: article.image,
+        width: image_width,
+        class: 'image image-wide',
+        preload: preload,
+        widths: widths,
+        size: default_size,
+        small_size: small_size,
+        medium_size: medium_size,
+        large_size: large_size,
+        xlarge_size: xlarge_size
+      %}
+    {% endif %}
+  </div>
+
+  <div class="flex flex-col flex-gap-small">
+    <p>{{ article.title }}</p>
+
+    {% if article.excerpt_or_content %}
+      <p class="text-small">{{ article.excerpt_or_content | strip_html | truncatewords: 15 }}</p>
+    {% endif %}
+  </div>
+</a>
+
+{% schema %}
+{
+  "name": "t:blocks.article-card.name",
+  "settings": [
+    {
+      "type": "article",
+      "id": "article",
+      "label": "t:presets.settings.article.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks.article-card.name"
+    }
+  ]
+}
+{% endschema %}

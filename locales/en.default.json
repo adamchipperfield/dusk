@@ -1,0 +1,198 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "accessibility": {
+    "skip_to_text": "Skip to content",
+    "carousel_previous": "Go to previous slide",
+    "carousel_next": "Go to next slide",
+    "carousel_go_to": "Go to slide {{ position }}",
+    "close_drawer": "Close drawer"
+  },
+  "form": {
+    "first_name": "First name",
+    "last_name": "Last name",
+    "company": "Company",
+    "address1": "Address 1",
+    "address2": "Address 2",
+    "city": "City",
+    "country": "Country",
+    "language": "Language",
+    "zip": "Postal/ZIP code",
+    "phone": "Phone number",
+    "email": "Email",
+    "password": "Password",
+    "confirm_password": "Confirm password",
+    "message": "Message",
+    "submit": "Submit"
+  },
+  "price": {
+    "taxes_included": "Taxes included",
+    "from_html": "From {{ price }}"
+  },
+  "quantity": {
+    "title": "Quantity"
+  },
+  "navigation": {
+    "title": "Menu",
+    "open": "Show navigation",
+    "view_all": "View all {{ title }}"
+  },
+  "cart": {
+    "title": "Cart",
+    "line_item_remove": "Remove",
+    "cart_button": "Go to cart",
+    "checkout_button": "Go to checkout",
+    "subtotal": "Subtotal",
+    "note": "Note",
+    "empty": "Your cart is empty",
+    "empty_button": "Shop all"
+  },
+  "search": {
+    "title": "Search",
+    "query": "Search query",
+    "no_results": "No results found for \"{{ terms }}\"",
+    "article": "Article",
+    "page": "Page"
+  },
+  "collection": {
+    "no_products": "No products found"
+  },
+  "product": {
+    "add_to_cart": "Add to cart",
+    "adding_to_cart": "Adding to cart",
+    "out_of_stock": "Out of stock",
+    "gift_card_recipient_form_send_to_recipient": "I want to send this as a gift",
+    "gift_card_recipient_form_email": "Recipient email",
+    "gift_card_recipient_form_name": "Recipient name",
+    "gift_card_recipient_form_message": "Message",
+    "gift_card_recipient_form_send_on": "Send on",
+    "pick_up_title": "Pick up availability",
+    "pick_up_available_at": "Pick up available at {{ location }}",
+    "pick_up_unavailable_at": "Pick up unavailable at {{ location }}",
+    "pick_up_show_other_locations": "Check availabilities at other locations",
+    "pick_up_available": "Pick up available",
+    "pick_up_unavailable": "Pick up unavailable",
+    "sale": "Sale"
+  },
+  "list_collections": {
+    "no_collections": "No collections found"
+  },
+  "blog": {
+    "no_articles": "No articles found",
+    "comments_title": "{{ count }} comments",
+    "comments_form_title": "Write a comment",
+    "comments_form_success": "Your comment was posted successfully",
+    "comments_form_success_moderated": "Your comment was submitted successfully",
+    "comments_form_author": "Name",
+    "comments_form_email": "Email",
+    "comments_form_body": "Comment",
+    "comments_form_submit": "Post comment"
+  },
+  "contact": {
+    "success": "Your message was submitted successfully"
+  },
+  "gift_card": {
+    "title": "Here's your {{ value }} gift card for {{ shop }}!",
+    "subtitle": "Your gift card",
+    "gift_card_code": "Gift card code",
+    "shop_link": "Continue shopping",
+    "remaining_html": "Remaining {{ balance }}",
+    "add_to_apple_wallet": "Add to Apple Wallet",
+    "image_alt_fallback": "Gift card image",
+    "expired": "Expired",
+    "print_gift_card": "Print"
+  },
+  "filter_sort": {
+    "filter": "Filter",
+    "values_selected": "{{ count }} selected",
+    "clear_filter": "Reset",
+    "clear_all": "Clear all",
+    "price_range_from": "From",
+    "price_range_to": "To",
+    "sort_by": "Sort by"
+  },
+  "localization": {
+    "no_options": "There are no country options configured",
+    "open_drawer": "Open localization drawer"
+  },
+  "newsletter": {
+    "success": "Thanks for subscribing"
+  },
+  "social_media": {
+    "facebook": "Facebook",
+    "instagram": "Instagram",
+    "pinterest": "Pinterest",
+    "x": "X",
+    "youtube": "YouTube"
+  },
+  "customer": {
+    "title": "Account",
+    "login": {
+      "title": "Log in",
+      "forgotten_password": "Forgotten your password?",
+      "recover_password_title": "Reset your password",
+      "recover_password_subtitle": "We will send you an email to reset your password",
+      "recover_password_success": "We've sent you an email with a link to update your password.",
+      "recover_password_cancel": "Cancel"
+    },
+    "register": {
+      "title": "Create an account",
+      "login": "Got an account?"
+    },
+    "reset_password": {
+      "title": "Reset account password"
+    },
+    "activate": {
+      "title": "Activate account",
+      "subtitle": "Create your password to activate your account",
+      "decline": "Decline invitation"
+    },
+    "account": {
+      "title": "Account",
+      "logout": "Log out",
+      "orders": "Orders",
+      "no_orders": "You haven't made any orders",
+      "addresses": "Addresses",
+      "default_address": "Default address",
+      "all_addresses": "View all addresses",
+      "return": "Return to account details"
+    },
+    "order": {
+      "title": "Order {{ name }}",
+      "number": "Order number",
+      "date": "Date",
+      "date_inline_html": "Placed on {{ date }}",
+      "cancelled_inline_html": "Order cancelled on {{ date }}",
+      "cancelled_reason_inline": "Reason: {{ reason }}",
+      "payment_status": "Payment status",
+      "fulfillment_status": "Fulfillment status",
+      "shipping": "Shipping",
+      "tax": "Tax",
+      "duties": "Duties",
+      "billing_address": "Billing address",
+      "shipping_address": "Shipping address",
+      "item_product": "Product",
+      "item_sku": "SKU",
+      "item_price": "Price",
+      "item_quantity": "Quantity",
+      "item_total": "Total",
+      "subtotal": "Subtotal",
+      "total": "Total"
+    },
+    "address": {
+      "set_default_address": "Set as default address",
+      "add_address": "Add address",
+      "save_address": "Save address",
+      "delete_address": "Delete",
+      "new_address": "New address",
+      "edit_address": "Edit address"
+    }
+  }
+}

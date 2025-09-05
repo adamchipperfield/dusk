@@ -1,0 +1,35 @@
+{% content_for 'block', type: 'heading', id: 'title', margin: true %}
+
+{% paginate collections by section.settings.collections_per_page %}
+  {% if collections.size == 0 %}
+    <h2>{{ 'list_collections.no_collections' | t }}</h2>
+
+  {% else %}
+    <ul class="grid list-reset">
+      {% for collection in collections %}
+        <li class="col xs12 s6 m3">
+          {% content_for 'block', type: 'collection-card', id: 'collection', closest.collection: collection %}
+        </li>
+      {% endfor %}
+    </ul>
+
+    <div class="pagination">{{ paginate | default_pagination }}</div>
+  {% endif %}
+{% endpaginate %}
+
+{% schema %}
+{
+  "name": "t:sections.main-list-collections.name",
+  "class": "container section-margin",
+  "settings": [
+    {
+      "type": "range",
+      "id": "collections_per_page",
+      "label": "t:sections.main-list-collections.settings.collections_per_page.label",
+      "min": 1,
+      "max": 48,
+      "default": 12
+    }
+  ]
+}
+{% endschema %}

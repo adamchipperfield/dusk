@@ -1,0 +1,66 @@
+<script
+  src="{{ 'line-item.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+
+<toggle-element
+  id="cart-drawer"
+  class="cart-drawer dialog-window"
+  open-event="cartAdded"
+  preset="dialog"
+  open-on-section-select
+>
+  <div
+    class="drawer"
+    data-ref="toggle-element.dialog"
+    data-section="{{ section.id }}"
+    data-section-element="cart-drawer"
+  >
+    <div class="drawer__header">
+      {% unless cart.empty? %}
+        {% content_for 'block', type: '_cart-title', id: 'title' %}
+      {% endunless %}
+
+      <button
+        class="drawer__close button-reset"
+        data-ref="toggle-element.close"
+        title="{{ 'accessibility.close_drawer' | t }}"
+      >
+        {% render 'icon-misc', icon: 'cancel' %}
+      </button>
+    </div>
+
+    <div class="drawer__body">
+      {% if cart.empty? %}
+        <div class="section-margin flex flex-col flex-gap-medium items-center text-center">
+          <p class="text-h5">{{ 'cart.empty' | t }}</p>
+
+          <a class="button" href="{{ routes.all_products_collection_url }}">
+            {{- 'cart.empty_button' | t -}}
+          </a>
+        </div>
+
+      {% else %}
+        {% form 'cart', cart, id: 'cart_drawer_cart_form', class: 'flex flex-col flex-gap-large' %}
+          {% for item in cart.items %}
+            {% render 'line-item', item: item %}
+          {% endfor %}
+        {% endform %}
+      {% endif %}
+    </div>
+
+    {% unless cart.empty? %}
+      <div class="drawer__footer flex flex-col flex-gap-medium">
+        {% content_for 'block', type: '_cart-summary', id: 'summary', show_cart_button: true %}
+      </div>
+    {% endunless %}
+  </div>
+</toggle-element>
+
+{% schema %}
+{
+  "name": "t:sections.cart-drawer.name",
+  "class": "shopify-section-cart-drawer"
+}
+{% endschema %}

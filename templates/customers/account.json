@@ -1,0 +1,39 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-account",
+      "settings": {
+        "orders_per_page": 12
+      }
+    },
+    "1752147684a14e8fec": {
+      "type": "apps",
+      "blocks": {
+        "recharge_subscriptions_account_login_link_Dzcg4R": {
+          "type": "shopify://apps/recharge-subscriptions/blocks/account-login-link/371eed76-0b44-4869-9813-730372ea378e",
+          "settings": {
+            "description": "to manage your subscriptions.",
+            "link": "Click here",
+            "alignment": "left",
+            "font_size": 16,
+            "font_color": "#000000",
+            "mt": 20,
+            "mb": 20
+          }
+        }
+      },
+      "block_order": ["recharge_subscriptions_account_login_link_Dzcg4R"],
+      "settings": {}
+    }
+  },
+  "order": ["main", "1752147684a14e8fec"]
+}

@@ -1,0 +1,34 @@
+{% doc %}
+  @description
+  Renders a swatch label.
+
+  @param {object} [image] - An image object.
+  @param {object} [color] - A color object.
+  @param {string} input_name - The for attribute of the label.
+  @param {string} label - The descriptive label.
+  @param {boolean} [small] - Reduces the size.
+
+  @example
+  {% render 'swatch' %}
+{% enddoc %}
+
+{% capture styles %}
+  {% if image %}
+    background-image: url({{ image | image_url: width: 60 }});
+    background-position: {{ image.presentation.focal_point }};
+  {% endif %}
+
+  {% if color %}
+    background-color: rgb({{ color.rgb }});
+  {% endif %}
+{% endcapture %}
+
+<label
+  for="{{ input_name }}"
+  class="swatch {% if small %}swatch--small{% endif %}"
+  {% if styles %}
+    style="{{ styles }}"
+  {% endif %}
+>
+  {{- label -}}
+</label>

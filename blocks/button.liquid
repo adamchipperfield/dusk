@@ -1,0 +1,35 @@
+{% liquid
+  if block.settings.text == empty or block.settings.url == null
+    continue
+  endif
+%}
+
+<a id="shopify-block-{{ block.id }}" class="button" href="{{ block.settings.url }}" {{ block.shopify_attributes }}>
+  {{- block.settings.text -}}
+</a>
+
+{% schema %}
+{
+  "name": "t:blocks.button.name",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "t:presets.settings.label.label",
+      "default": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "url",
+      "label": "t:presets.settings.url.label",
+      "default": "/collections/all"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks.button.name"
+    }
+  ]
+}
+{% endschema %}

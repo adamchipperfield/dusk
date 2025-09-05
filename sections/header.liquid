@@ -1,0 +1,180 @@
+{% liquid
+  assign logo_tag = 'p'
+
+  assign logo_alt = section.settings.logo.alt | default: shop.name
+  assign logo_width = section.settings.logo_width
+  assign logo_width_2x = logo_width | times: 2
+
+  if request.page_type == 'index'
+    assign logo_tag = 'h1'
+  endif
+%}
+
+<script
+  src="{{ 'site-header.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+
+<site-header>
+  <div class="site-header__container container">
+    <div class="site-header__left">
+      {% render 'header-menu', menu: section.settings.menu %}
+    </div>
+
+    <{{ logo_tag }} class="site-header__logo margin-left-auto margin-right-auto text-center text-h6">
+      <a href="{{ routes.root_url }}">
+        {% if section.settings.logo %}
+          {{
+            section.settings.logo
+            | image_url: width: logo_width_2x
+            | image_tag: alt: logo_alt, width: logo_width, srcset: null
+          }}
+
+        {% else %}
+          {{ shop.name }}
+        {% endif %}
+      </a>
+    </{{ logo_tag }}>
+
+    <ul class="site-header__misc flex justify-end margin-left-auto text-right list-reset">
+      <li>
+        <a href="{{ routes.search_url }}" title="{{ 'search.title' | t }}">
+          {%- render 'icon-misc', icon: 'search' -%}
+        </a>
+      </li>
+
+      {% if shop.customer_accounts_enabled %}
+        {% liquid
+          assign customer_url = routes.account_login_url
+          assign customer_label = 'customer.login.title' | t
+
+          if customer
+            assign customer_url = routes.account_url
+            assign customer_label = 'customer.title' | t
+          endif
+        %}
+
+        <li>
+          <a href="{{ customer_url }}" title="{{ customer_label }}">
+            {% render 'icon-misc', icon: 'profile' %}
+          </a>
+        </li>
+      {% endif %}
+
+      <li>
+        <toggle-element-button
+          toggle-id="cart-drawer"
+          {% if request.page_type == 'cart' %}
+            disabled
+          {% endif %}
+        >
+          <a class="header-cart-badge" href="{{ routes.cart_url }}" title="{{ 'cart.title' | t }}">
+            {% render 'icon-misc', icon: 'bag' %}
+
+            <span
+              class="header-cart-badge__count bubble bubble--small bubble--button"
+              data-section="{{ section.id }}"
+              data-section-element="cart-count"
+            >
+              {{ cart.item_count }}
+            </span>
+          </a>
+        </toggle-element-button>
+      </li>
+    </ul>
+  </div>
+</site-header>
+
+{% stylesheet %}
+  .site-header {
+    --padding-block: var(--spacing-16);
+    background-color: var(--color-background);
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+  }
+
+  .site-header site-header {
+    display: block;
+  }
+
+  .site-header__container {
+    align-items: center;
+    display: grid;
+    grid-template-columns: var(--outside-column-size, 0.5fr) var(--middle-column-size, 1fr) var(
+        --outside-column-size,
+        0.5fr
+      );
+  }
+
+  .site-header__logo {
+    padding-block: var(--padding-block);
+  }
+
+  .site-header__misc {
+    gap: var(--spacing-8);
+  }
+
+  .header-cart-badge {
+    position: relative;
+  }
+
+  .header-cart-badge__count {
+    position: absolute;
+    right: calc(var(--spacing-4) * -1);
+    top: calc(var(--spacing-2) * -1);
+    z-index: 1;
+  }
+
+  @media (min-width: 768px) {
+    .site-header {
+      --padding-block: var(--spacing-24);
+    }
+
+    .site-header__container {
+      --outside-column-size: 2.5fr;
+    }
+
+    .site-header__left {
+      align-content: center;
+      height: 100%;
+    }
+
+    .site-header__misc {
+      gap: var(--spacing-16);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.header.name",
+  "tag": "header",
+  "class": "site-header shopify-section-header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "t:sections.header.settings.logo.label"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 50,
+      "max": 250,
+      "step": 10,
+      "default": 100,
+      "unit": "t:sections.header.settings.logo_width.unit",
+      "label": "t:sections.header.settings.logo_width.label"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "t:presets.settings.menu.label",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}

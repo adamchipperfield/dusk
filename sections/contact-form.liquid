@@ -1,0 +1,60 @@
+<div class="container">
+  <div class="grid no-gutter">
+    <div class="col xs12 m8 l6 offset-l2">
+      {% form 'contact' %}
+        {% liquid
+          assign default_email_value = false
+
+          if form.email
+            assign default_email_value = form.email
+
+          elsif customer
+            assign default_email_value = customer.email
+          endif
+        %}
+
+        {{ form.errors | default_errors }}
+
+        {% if form.posted_successfully? %}
+          <p class="text-meta success">{{ 'contact.success' | t }}</p>
+        {% endif %}
+
+        <div class="form-group">
+          <div class="form-field">
+            <label for="{{ section.id | append: '-email' }}">{{ 'form.email' | t }}</label>
+
+            <input
+              id="{{ section.id | append: '-email' }}"
+              name="contact[email]"
+              type="email"
+              required
+              {% if default_email_value %}
+                value="{{ default_email_value }}"
+              {% endif %}
+            >
+          </div>
+
+          <div class="form-field">
+            <label for="{{ section.id | append: '-message' }}">{{ 'form.message' | t }}</label>
+
+            <textarea
+              id="{{ section.id | append: '-message' }}"
+              name="contact[{{ 'form.message' | t }}]"
+              required
+            >
+              {{- form.body -}}
+            </textarea>
+          </div>
+
+          <button class="button">{{ 'form.submit' | t }}</button>
+        </div>
+      {% endform %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "class": "section-margin"
+}
+{% endschema %}

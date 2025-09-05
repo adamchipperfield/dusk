@@ -1,0 +1,47 @@
+<script
+  src="{{ 'product-recommendations.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+
+<product-recommendations url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit=4&intent={{ section.settings.intent }}">
+  {% if recommendations.performed? and recommendations.products_count >= 1 %}
+    <div class="container flex flex-col flex-gap-medium items-start">
+      {% content_for 'block', type: 'heading', id: 'heading' %}
+
+      <ul class="grid list-reset">
+        {% for product in recommendations.products %}
+          <li class="col xs6 m4 l3">
+            {% content_for 'block', type: 'product-card', id: 'product', closest.product: product %}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+</product-recommendations>
+
+{% schema %}
+{
+  "name": "t:sections.product-recommendations.name",
+  "class": "section-margin",
+  "settings": [
+    {
+      "type": "select",
+      "id": "intent",
+      "label": "t:sections.product-recommendations.settings.intent.label",
+      "info": "t:sections.product-recommendations.settings.intent.info",
+      "options": [
+        {
+          "label": "t:sections.product-recommendations.settings.intent.options.related.label",
+          "value": "related"
+        },
+        {
+          "label": "t:sections.product-recommendations.settings.intent.options.complementary.label",
+          "value": "complementary"
+        }
+      ],
+      "default": "related"
+    }
+  ]
+}
+{% endschema %}

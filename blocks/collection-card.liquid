@@ -1,0 +1,30 @@
+<a class="flex flex-col flex-gap-medium" href="{{ block.settings.collection.url }}">
+  <div class="image-container image-square">
+    {% if block.settings.collection.featured_image %}
+      {% render 'image', image: block.settings.collection.featured_image, width: 592, class: 'image image-cover' %}
+    {% endif %}
+  </div>
+
+  <p>{{ block.settings.collection.title }}</p>
+</a>
+
+{% schema %}
+{
+  "name": "t:blocks.collection-card.name",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "t:presets.settings.collection.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks.collection-card.name",
+      "settings": {
+        "collection": "{{ closest.collection }}"
+      }
+    }
+  ]
+}
+{% endschema %}

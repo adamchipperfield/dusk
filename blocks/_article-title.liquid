@@ -1,0 +1,29 @@
+{% content_for 'block', type: 'heading', id: 'title', margin: true %}
+
+{% if block.settings.show_author or block.settings.show_published_at %}
+  <p class="text-meta">
+    {% if block.settings.show_author %}{{ closest.article.author }}{% endif -%}
+    {%- if block.settings.show_author and block.settings.show_published_at %} &ndash; {% endif -%}
+    {%- if block.settings.show_published_at %}{{ closest.article.published_at | time_tag: format: 'date' }}{% endif %}
+  </p>
+{% endif %}
+
+{% schema %}
+{
+  "name": "t:blocks._article-title.name",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "t:blocks._article-title.settings.show_author.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_published_at",
+      "label": "t:blocks._article-title.settings.show_published_at.label",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

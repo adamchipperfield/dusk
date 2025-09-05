@@ -1,0 +1,36 @@
+<div class="container flex flex-col flex-gap-large">
+  {% if article.image and section.settings.show_image %}
+    {% render 'image', image: article.image, width: 2560, class: 'image image-wide' %}
+  {% endif %}
+
+  <div class="grid no-gutter">
+    <div class="col xs12 l8 offset-l2 flex flex-col flex-gap-xlarge">
+      <div class="flex flex-col flex-gap-large">
+        {% content_for 'block', type: '_article-title', id: 'title', closest.article: article %}
+        {% content_for 'block', type: 'rich-text', id: 'content' %}
+      </div>
+
+      {% content_for 'block', type: '_article-comments', id: 'comments' %}
+    </div>
+  </div>
+</div>
+
+<script type="application/ld+json">
+  {{ article | structured_data }}
+</script>
+
+{% schema %}
+{
+  "name": "t:sections.main-article.name",
+  "class": "main-article section-margin",
+  "tag": "article",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "t:sections.main-article.settings.show_image.label",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

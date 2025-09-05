@@ -1,0 +1,460 @@
+{
+  "settings_schema": {
+    "colors": {
+      "name": "Colors",
+      "settings": {
+        "color_background": {
+          "label": "Background"
+        },
+        "color_backdrop": {
+          "label": "Backdrop color"
+        },
+        "color_text": {
+          "label": "Text"
+        },
+        "color_text_light": {
+          "label": "Text light"
+        },
+        "color_text_inverse": {
+          "label": "Text inverse"
+        },
+        "color_border": {
+          "label": "Borders"
+        },
+        "color_button_background": {
+          "label": "Button background"
+        },
+        "color_button_label": {
+          "label": "Button label"
+        },
+        "color_success": {
+          "label": "Success"
+        },
+        "color_error": {
+          "label": "Error"
+        }
+      }
+    },
+    "typography": {
+      "name": "Typography",
+      "settings": {
+        "font_body": {
+          "label": "Body font"
+        },
+        "font_heading": {
+          "label": "Heading font"
+        }
+      }
+    },
+    "favicon": {
+      "name": "Favicon",
+      "settings": {
+        "favicon": {
+          "label": "Image",
+          "info": "Will be scaled down to 32 x 32px"
+        }
+      }
+    },
+    "social-media": {
+      "name": "Social media",
+      "settings": {
+        "social_facebook_link": {
+          "label": "Facebook",
+          "info": "https://facebook.com/shopify"
+        },
+        "social_instagram_link": {
+          "label": "Instagram",
+          "info": "https://instagram.com/shopify"
+        },
+        "social_pinterest_link": {
+          "label": "Pinterest",
+          "info": "https://pinterest.com/shopify"
+        },
+        "social_x_link": {
+          "label": "X",
+          "info": "https://x.com/shopify"
+        },
+        "social_youtube_link": {
+          "label": "YouTube",
+          "info": "https://www.youtube.com/shopify"
+        }
+      }
+    },
+    "product-card": {
+      "name": "Product card",
+      "settings": {
+        "show_hover_image": {
+          "label": "Show hover image"
+        }
+      }
+    }
+  },
+  "sections": {
+    "cart-drawer": {
+      "name": "Cart drawer"
+    },
+    "localization-drawer": {
+      "name": "Localization drawer"
+    },
+    "footer": {
+      "name": "Footer",
+      "settings": {
+        "show_follow_on_shop": {
+          "label": "Show Follow on Shop button"
+        },
+        "show_localization": {
+          "label": "Show localization drawer button"
+        },
+        "show_social_links": {
+          "label": "Show social links"
+        }
+      }
+    },
+    "header": {
+      "name": "Header",
+      "settings": {
+        "logo": {
+          "label": "Logo image"
+        },
+        "logo_width": {
+          "unit": "px",
+          "label": "Custom logo width"
+        }
+      }
+    },
+    "main-collection": {
+      "settings": {
+        "products_per_page": {
+          "label": "Products per page"
+        }
+      }
+    },
+    "main-search": {
+      "settings": {
+        "results_per_page": {
+          "label": "Results per page"
+        }
+      }
+    },
+    "main-product": {
+      "name": "Product page",
+      "blocks": {
+        "title": {
+          "name": "Title"
+        },
+        "price": {
+          "name": "Price",
+          "settings": {
+            "show_taxes_included": {
+              "label": "Show taxes included"
+            }
+          }
+        },
+        "options": {
+          "name": "Options"
+        },
+        "buttons": {
+          "name": "Add to cart",
+          "settings": {
+            "show_accelerated_checkout_button": {
+              "label": "Show accelerated checkout button"
+            },
+            "show_gift_card_recipient_option": {
+              "label": "Show gift card recipient option"
+            }
+          }
+        },
+        "description": {
+          "name": "Description"
+        },
+        "liquid": {
+          "name": "Custom Liquid"
+        }
+      }
+    },
+    "main-account": {
+      "name": "Account",
+      "settings": {
+        "orders_per_page": {
+          "label": "Orders per page"
+        }
+      }
+    },
+    "main-addresses": {
+      "name": "Addresses",
+      "settings": {
+        "addresses_per_page": {
+          "label": "Addresses per page"
+        }
+      }
+    },
+    "main-article": {
+      "name": "Article",
+      "settings": {
+        "show_image": {
+          "label": "Show image"
+        }
+      }
+    },
+    "main-blog": {
+      "name": "Blog",
+      "settings": {
+        "articles_per_page": {
+          "label": "Articles per page"
+        }
+      }
+    },
+    "main-list-collections": {
+      "name": "Collections list page",
+      "settings": {
+        "collections_per_page": {
+          "label": "Collections per page"
+        }
+      }
+    },
+    "custom-liquid": {
+      "name": "Custom Liquid"
+    },
+    "main-cart": {
+      "name": "Cart"
+    },
+    "product-recommendations": {
+      "name": "Product recommendations",
+      "settings": {
+        "intent": {
+          "label": "Intent",
+          "info": "[Recommendation intents](https://shopify.dev/docs/themes/product-merchandising/recommendations#recommendation-intents) are designed to recommend products using a targeted strategy.",
+          "options": {
+            "related": {
+              "label": "Related"
+            },
+            "complementary": {
+              "label": "Complementary"
+            }
+          }
+        }
+      }
+    },
+    "main-404": {
+      "name": "404"
+    }
+  },
+  "section_groups": {
+    "header": {
+      "name": "Header group"
+    },
+    "footer": {
+      "name": "Footer group"
+    }
+  },
+  "blocks": {
+    "heading": {
+      "name": "Heading"
+    },
+    "rich-text": {
+      "name": "Rich text"
+    },
+    "button": {
+      "name": "Button"
+    },
+    "custom-liquid": {
+      "name": "Custom Liquid"
+    },
+    "collection-card": {
+      "name": "Collection card"
+    },
+    "product-card": {
+      "name": "Product card"
+    },
+    "article-card": {
+      "name": "Article card"
+    },
+    "page-card": {
+      "name": "Page card"
+    },
+    "_product-price": {
+      "name": "Price",
+      "settings": {
+        "show_taxes_included": {
+          "label": "Show taxes included"
+        }
+      }
+    },
+    "_product-options": {
+      "name": "Variant options"
+    },
+    "_product-buttons": {
+      "name": "Buttons",
+      "settings": {
+        "show_accelerated_checkout_button": {
+          "label": "Show accelerated checkout button"
+        },
+        "show_gift_card_recipient_option": {
+          "label": "Show gift card recipient option"
+        }
+      }
+    },
+    "_product-pick-up": {
+      "name": "Pick up availability"
+    },
+    "_cart-title": {
+      "name": "Cart title",
+      "settings": {
+        "show_cart_count": {
+          "label": "Show cart count"
+        }
+      }
+    },
+    "_cart-summary": {
+      "name": "Cart summary",
+      "settings": {
+        "show_cart_note": {
+          "label": "Show cart note"
+        },
+        "show_payment_logos": {
+          "label": "Show payment logos"
+        }
+      }
+    },
+    "_article-title": {
+      "name": "Article title",
+      "settings": {
+        "show_author": {
+          "label": "Show author"
+        },
+        "show_published_at": {
+          "label": "Show published date"
+        }
+      }
+    },
+    "_article-comments": {
+      "name": "Article comments",
+      "settings": {
+        "comments_per_page": {
+          "label": "Comments per page"
+        }
+      }
+    },
+    "_footer-column": {
+      "name": "Menu column",
+      "settings": {
+        "heading": {
+          "info": "Defaults to the menu title"
+        }
+      }
+    },
+    "_newsletter-form": {
+      "name": "Newsletter form"
+    }
+  },
+  "presets": {
+    "blocks": {
+      "block": {
+        "name": "Block"
+      },
+      "button": {
+        "name": "Button"
+      }
+    },
+    "settings": {
+      "heading": {
+        "label": "Heading"
+      },
+      "heading_tag": {
+        "label": "Heading tag",
+        "options": {
+          "h1": { "label": "Heading 1" },
+          "h2": { "label": "Heading 2" },
+          "h3": { "label": "Heading 3" },
+          "h4": { "label": "Heading 4" },
+          "h5": { "label": "Heading 5" },
+          "h6": { "label": "Heading 6" },
+          "p": { "label": "Paragraph" }
+        }
+      },
+      "heading_style": {
+        "label": "Heading style"
+      },
+      "subheading": {
+        "label": "Subheading"
+      },
+      "text": {
+        "label": "Text"
+      },
+      "body": {
+        "label": "Body content"
+      },
+      "liquid": {
+        "label": "Liquid"
+      },
+      "image": {
+        "label": "Image"
+      },
+      "large_image": {
+        "label": "Image (desktop)"
+      },
+      "video": {
+        "label": "Video"
+      },
+      "large_video": {
+        "label": "Video (desktop)"
+      },
+      "menu": {
+        "label": "Navigation"
+      },
+      "button_label": {
+        "label": "Button label"
+      },
+      "label": {
+        "label": "Label"
+      },
+      "button_url": {
+        "label": "Button link"
+      },
+      "url": {
+        "label": "Link"
+      },
+      "text_color": {
+        "label": "Text color"
+      },
+      "background_color": {
+        "label": "Background color"
+      },
+      "text_alignment": {
+        "label": "Text alignment",
+        "options": {
+          "left": {
+            "label": "Left"
+          },
+          "center": {
+            "label": "Center"
+          },
+          "right": {
+            "label": "Right"
+          }
+        }
+      },
+      "product": {
+        "label": "Product"
+      },
+      "products": {
+        "label": "Products"
+      },
+      "collection": {
+        "label": "Collection"
+      },
+      "collections": {
+        "label": "Collections"
+      },
+      "blog": {
+        "label": "Blog"
+      },
+      "article": {
+        "label": "Article"
+      },
+      "page": {
+        "label": "Page"
+      }
+    }
+  }
+}

@@ -1,0 +1,145 @@
+{% doc %}
+  @description
+  Renders a consistent, responsive image element.
+
+  @param {string} image - The default image.
+  @param {number} width - The default image width.
+  @param {string} [height] - The default image height.
+  @param {string} [size] - The default image display size.
+  @param {string} [class] - Optional class applied to the image element.
+  @param {boolean} [preload] - Enables image preloading.
+  @param {string} [loading] - Defines the loading strategy.
+  @param {string} [fetchpriority] - Defines the fetch priority.
+  @param {string} [widths] - Image widths to generate in the srcset.
+  @param {string} [sizes] - Overrides the image tag sizes.
+  @param {string} [inline_styles] - Custom styling applied to the image tag.
+  @param {object} [small_image]
+  @param {object} [medium_image]
+  @param {object} [large_image]
+  @param {object} [xlarge_image]
+  @param {string} [small_size]
+  @param {string} [medium_size]
+  @param {string} [large_size]
+  @param {string} [xlarge_size]
+  @param {string} [small_widths]
+  @param {string} [medium_widths]
+  @param {string} [large_widths]
+  @param {string} [xlarge_widths]
+
+  @example
+  {% render 'image', image: image, width: 300, size: '50vw' %}
+{% enddoc %}
+
+{% liquid
+  assign aspect_ratio = image.aspect_ratio
+
+  if height
+    assign aspect_ratio = width | divided_by: height | round
+  endif
+
+  unless preload == false
+    assign section_preload = false
+
+    # theme-check-disable UndefinedObject
+    if section.location == 'header' or section.location == 'template' and section.index <= 2 or section.location == 'template' and section.index == null
+      assign section_preload = true
+    endif
+    # theme-check-enable UndefinedObject
+
+    if preload or section_preload
+      assign loading = 'eager'
+      assign fetchpriority = 'high'
+      assign preload = true
+    endif
+  endunless
+%}
+
+{% if size %}
+  {% unless sizes %}
+    {% capture sizes %}{% render 'image-sizes', default: size, small: small_size, medium: medium_size, large: large_size, xlarge: xlarge_size %}{% endcapture %}
+  {% endunless %}
+{% endif %}
+
+{% capture image_tag %}
+  {{
+    image
+    | image_url: width: width, height: height
+    | image_tag:
+      preload: preload,
+      loading: loading,
+      fetchpriority: fetchpriority,
+      sizes: sizes,
+      widths: widths,
+      class: class,
+      style: inline_styles
+  }}
+{% endcapture %}
+
+{% if small_image or medium_image or large_image or xlarge_image %}
+  <picture class="display-contents">
+    {% if small_image %}
+      {% assign widths = small_widths | default: small_image.width | split: ', ' %}
+
+      <source
+        srcset="
+          {% for width in widths %}
+            {% assign height = width | times: aspect_ratio %}
+
+            {{ small_image | image_url: width: width, height: height }} {{ width }}w{% unless forloop.last %},{% endunless %}
+          {% endfor %}
+        "
+        media="(min-width: 576px)"
+      >
+    {% endif %}
+
+    {% if medium_image %}
+      {% assign widths = medium_widths | default: medium_image.width | split: ', ' %}
+
+      <source
+        srcset="
+          {% for width in widths %}
+            {% assign height = width | times: aspect_ratio %}
+
+            {{ medium_image | image_url: width: width, height: height }} {{ width }}w{% unless forloop.last %},{% endunless %}
+          {% endfor %}
+        "
+        media="(min-width: 768px)"
+      >
+    {% endif %}
+
+    {% if large_image %}
+      {% assign widths = large_widths | default: large_image.width | split: ', ' %}
+
+      <source
+        srcset="
+          {% for width in widths %}
+            {% assign height = width | times: aspect_ratio %}
+
+            {{ large_image | image_url: width: width, height: height }} {{ width }}w{% unless forloop.last %},{% endunless %}
+          {% endfor %}
+        "
+        media="(min-width: 1024px)"
+      >
+    {% endif %}
+
+    {% if xlarge_image %}
+      {% assign widths = xlarge_widths | default: xlarge_image.width | split: ', ' %}
+
+      <source
+        srcset="
+          {% for width in widths %}
+            {% assign height = width | times: aspect_ratio %}
+
+            {{ xlarge_image | image_url: width: width, height: height }} {{ width }}w{% unless forloop.last %},{% endunless %}
+          {% endfor %}
+        "
+        media="(min-width: 1328px)"
+      >
+    {% endif %}
+
+    {{ image_tag }}
+  </picture>
+
+{% else %}
+  {{ image_tag }}
+{% endif %}

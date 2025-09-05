@@ -1,0 +1,33 @@
+{% doc %}
+  @param {string} [container_class]
+{% enddoc %}
+
+{%- liquid
+  if block.settings.body == empty
+    continue
+  endif
+-%}
+
+<div id="{{ block.id }}" class="rte {{ container_class }}" {{ block.shopify_attributes }}>
+  {{ block.settings.body }}
+</div>
+
+{% schema %}
+{
+  "name": "t:blocks.rich-text.name",
+  "tag": null,
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "t:presets.settings.body.label",
+      "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum porta, mi commodo varius sodales, lectus purus tempus urna, et fermentum ipsum tellus non felis. Nullam aliquet egestas lacinia. In auctor quis mauris non sollicitudin. Curabitur a quam ut massa auctor bibendum.</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks.rich-text.name"
+    }
+  ]
+}
+{% endschema %}

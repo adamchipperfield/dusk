@@ -1,0 +1,15 @@
+{% doc %}
+  @description
+  Renders a list of payment logos.
+
+  @param {string} [class] - Custom class applied to the container.
+
+  @example
+  {% render 'payment-logos' %}
+{% enddoc %}
+
+<ul class="flex flex-gap-small flex-wrap justify-center list-reset {{ class }}">
+  {% for payment_type in shop.enabled_payment_types %}
+    <li>{{ payment_type | payment_type_svg_tag }}</li>
+  {% endfor %}
+</ul>

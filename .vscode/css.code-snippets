@@ -1,0 +1,61 @@
+{
+  "Small breakpoint": {
+    "scope": "liquid-css,css",
+    "prefix": "media-small",
+    "body": ["@media (min-width: 576px) {", "\t$0", "}"],
+  },
+
+  "Until small breakpoint": {
+    "scope": "liquid-css,css",
+    "prefix": "media-small-until",
+    "body": ["@media (max-width: 575px) {", "\t$0", "}"],
+  },
+
+  "Medium breakpoint": {
+    "scope": "liquid-css,css",
+    "prefix": "media-medium",
+    "body": ["@media (min-width: 768px) {", "\t$0", "}"],
+  },
+
+  "Until medium breakpoint": {
+    "scope": "liquid-css,css",
+    "prefix": "media-medium-until",
+    "body": ["@media (max-width: 767px) {", "\t$0", "}"],
+  },
+
+  "Large breakpoint": {
+    "scope": "liquid-css,css",
+    "prefix": "media-large",
+    "body": ["@media (min-width: 1024px) {", "\t$0", "}"],
+  },
+
+  "Until large breakpoint": {
+    "scope": "liquid-css,css",
+    "prefix": "media-large-until",
+    "body": ["@media (max-width: 1023px) {", "\t$0", "}"],
+  },
+
+  "Extra large breakpoint": {
+    "scope": "liquid-css,css",
+    "prefix": "media-xlarge",
+    "body": ["@media (min-width: 1328px) {", "\t$0", "}"],
+  },
+
+  "Until extra large breakpoint": {
+    "scope": "liquid-css,css",
+    "prefix": "media-xlarge-until",
+    "body": ["@media (max-width: 1327px) {", "\t$0", "}"],
+  },
+
+  "Equal padding": {
+    "scope": "liquid-css,css",
+    "prefix": ["padding", "pd"],
+    "body": ["padding-block: ${1};\npadding-inline: ${1};"],
+  },
+
+  "Equal margin": {
+    "scope": "liquid-css,css",
+    "prefix": ["margin", "mg"],
+    "body": ["margin-block: ${1};\nmargin-inline: ${1};"],
+  },
+}

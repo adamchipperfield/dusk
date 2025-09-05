@@ -1,0 +1,40 @@
+{% doc %}
+  @description
+  Renders `sizes` for an image tag.
+
+  @param {string} default - The default breakpoint size.
+  @param {string} [small] - The small breakpoint size.
+  @param {string} [medium] - The medium breakpoint size.
+  @param {string} [large] - The large breakpoint size.
+  @param {string} [xlarge] - The extra-large breakpoint size.
+
+  @example
+  {% render 'image-sizes', default: '90vw', medium: '600px' %}
+{% enddoc %}
+
+{%- liquid
+  assign sizes = default
+
+  assign size_small_template = '(min-width: 576px) {{ size_small }}, '
+  assign size_medium_template = '(min-width: 768px) {{ size_medium }}, '
+  assign size_large_template = '(min-width: 1024px) {{ size_large }}, '
+  assign size_xlarge_template = '(min-width: 1328px) {{ size_xlarge }}, '
+
+  if small
+    assign sizes = sizes | prepend: size_small_template | replace: '{{ size_small }}', small
+  endif
+
+  if medium
+    assign sizes = sizes | prepend: size_medium_template | replace: '{{ size_medium }}', medium
+  endif
+
+  if large
+    assign sizes = sizes | prepend: size_large_template | replace: '{{ size_large }}', large
+  endif
+
+  if xlarge
+    assign sizes = sizes | prepend: size_xlarge_template | replace: '{{ size_xlarge }}', xlarge
+  endif
+-%}
+
+{{- sizes -}}

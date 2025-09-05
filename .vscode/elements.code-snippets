@@ -1,0 +1,13 @@
+{
+  "Dialog toggle element": {
+    "scope": "html,liquid",
+    "prefix": ["dialog-toggle-element", "dte"],
+    "body": [
+      "<toggle-element id=\"${1}\" class=\"dialog-window\" preset=\"dialog\">",
+      "\t<div class=\"${2}\" data-ref=\"toggle-element.dialog\">",
+      "\t\t${3}",
+      "\t</div>",
+      "</toggle-element>",
+    ],
+  },
+}

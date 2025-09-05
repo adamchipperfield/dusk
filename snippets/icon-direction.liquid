@@ -1,0 +1,48 @@
+{% doc %}
+  @description
+  Renders a directional based icon.
+
+  @param {string} icon - The icon name.
+  @param {string} [class] - Optional class applied to the SVG element.
+
+  @example
+  {% render 'icon-direction', icon: 'chevron-down' %}
+{% enddoc %}
+
+{% case icon %}
+  {% when 'chevron-down' %}
+    <svg
+      class="icon icon__chevron icon__chevron--down {{ class }}"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="m3 8.343 1.688-1.688 9 9L12 17.343l-9-9Z M19.313 6.652 21 8.34l-9 9-1.688-1.688 9-9Z" />
+    </svg>
+
+  {% when 'chevron-up' %}
+    <svg
+      class="icon icon__chevron icon__chevron--up {{ class }}"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="m3 15.656 7.315-7.313-.002-.002L12 6.653l9 9-1.688 1.688-7.31-7.31-7.315 7.313L3 15.656Z"/>
+    </svg>
+
+  {% when 'chevron-right' %}
+    <svg
+      class="icon icon__chevron icon__chevron--right {{ class }}"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+    >
+      <path d="m8.342 2.996 7.314 7.314.002-.001 1.687 1.687-9 9-1.687-1.687 7.31-7.311-7.313-7.314 1.687-1.688Z" />
+    </svg>
+
+  {% when 'chevron-left' %}
+    <svg
+      class="icon icon__chevron icon__chevron--left {{ class }}"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+    >
+      <path d="m15.658 20.996-7.314-7.314-.002.002-1.687-1.688 9-9 1.687 1.688-7.31 7.31 7.313 7.315-1.687 1.687Z" />
+    </svg>
+{% endcase %}

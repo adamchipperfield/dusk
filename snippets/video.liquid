@@ -1,0 +1,68 @@
+{% doc %}
+  @description
+  Renders a responsive video element.
+
+  @param {object} video - The default video.
+  @param {object} [large_video] - The large breakpoint video.
+  @param {string} [class] - Container class.
+  @param {boolean} [as_background] - Displays the video muted, autoplaying and looping.
+  @param {boolean} [lazy] - Lazy loads the video, defaults to `true`.
+
+  @example
+  {% render 'video' %}
+{% enddoc %}
+
+{% liquid
+  unless lazy == false
+    assign lazy = true
+  endunless
+%}
+
+<video-element class="display-contents">
+  <video
+    {% if video.preview_image %}
+      poster="{{ video.preview_image | image_url }}"
+    {% endif %}
+
+    {% if large_video.preview_image %}
+      data-large-poster="{{ large_video.preview_image | image_url }}"
+    {% endif %}
+
+    data-ref="video-element.video"
+
+    {% if class %}
+      class="{{ class }}"
+    {% endif %}
+
+    {% if as_background %}
+      autoplay loop muted playsinline
+    {% endif %}
+  >
+    {% for source in video.sources %}
+      <source
+        {% if lazy %}
+          data-src="{{ source.url }}"
+        {% else %}
+          src="{{ source.url }}"
+        {% endif %}
+        type="{{ source.mime_type }}"
+
+        {% if large_video %}
+          {% liquid
+            assign large_url = null
+
+            for large_source in large_video.sources
+              if large_source.mime_type == source.mime_type
+                assign large_url = large_source.url
+              endif
+            endfor
+          %}
+
+          {% if large_url %}
+            data-large="{{ large_url }}"
+          {% endif %}
+        {% endif %}
+      >
+    {% endfor %}
+  </video>
+</video-element>

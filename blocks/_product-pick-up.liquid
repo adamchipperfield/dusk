@@ -1,0 +1,130 @@
+{% liquid
+  assign variant = closest.product.selected_or_first_available_variant
+  assign availabilities = variant.store_availabilities | where: 'pick_up_enabled', true
+  assign availability = availabilities.first
+
+  unless availability
+    continue
+  endunless
+%}
+
+<div
+  id="shopify-block-{{ block.id }}"
+  class="product-pick-up flex flex-col flex-gap-small items-start"
+  data-section="{{ section.id }}"
+  data-section-element="pick-up"
+  {{ block.shopify_attributes }}
+>
+  <div class="flex flex-col flex-gap-xsmall">
+    <div class="flex flex-gap-small items-center">
+      {% if availability.available %}
+        {% render 'icon-misc', icon: 'check', class: 'product-pick-up__icon text-success' %}
+      {% else %}
+        {% render 'icon-misc', icon: 'cancel', class: 'product-pick-up__icon text-error' %}
+      {% endif %}
+
+      <p>
+        {% if availability.available %}
+          {{ 'product.pick_up_available_at' | t: location: availability.location.name }}
+
+        {% else %}
+          {{ 'product.pick_up_unavailable_at' | t: location: availability.location.name }}
+        {% endif %}
+      </p>
+    </div>
+
+    <p class="text-meta">{{ availability.pick_up_time }}</p>
+  </div>
+
+  {% if availabilities.size >= 2 %}
+    <toggle-element-button toggle-id="{{ block.id }}-drawer">
+      <button class="text-link button-reset text-body-small" type="button">
+        {{ 'product.pick_up_show_other_locations' | t }}
+      </button>
+    </toggle-element-button>
+  {% endif %}
+</div>
+
+<toggle-element
+  id="{{ block.id }}-drawer"
+  class="dialog-window"
+  preset="dialog"
+  hoist
+  data-section="{{ section.id }}"
+  data-section-element="pick-up-drawer"
+>
+  <div class="drawer" data-ref="toggle-element.dialog">
+    <div class="drawer__header">
+      <h2 class="text-h5 margin">{{ 'product.pick_up_title' | t }}</h2>
+
+      <button class="drawer__close button-reset" data-ref="toggle-element.close" type="button">
+        <span class="visually-hidden">{{ 'accessibility.close_drawer' | t }}</span>
+
+        {% render 'icon-misc', icon: 'cancel' %}
+      </button>
+    </div>
+
+    <div class="drawer__body flex flex-col flex-gap-medium">
+      {% unless variant.product.has_only_default_variant %}
+        <p>{{ variant.title }}</p>
+      {% endunless %}
+
+      <ul class="flex flex-col flex-gap-large list-reset">
+        {% for availability in availabilities %}
+          <li class="flex flex-col flex-gap-small">
+            <p>{{ availability.location.name }}</p>
+
+            <p class="text-meta">
+              {% if availability.available %}
+                {% render 'icon-misc', icon: 'check', class: 'product-pick-up__icon text-success' %}
+
+                {{ 'product.pick_up_available' | t }}, {{ availability.pick_up_time | downcase }}
+
+              {% else %}
+                {% render 'icon-misc', icon: 'cancel', class: 'product-pick-up__icon text-error' %}
+
+                {{ 'product.pick_up_unavailable' | t }}
+              {% endif %}
+            </p>
+
+            <address class="text-body-small">{{ availability.location.address | format_address }}</address>
+
+            {% if availability.location.address.phone.size >= 1 %}
+              <p>{{ availability.location.address.phone }}</p>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</toggle-element>
+
+{% stylesheet %}
+  .product-pick-up {
+    margin-block: var(--spacing-16);
+
+    &:first-child {
+      margin-block-start: 0;
+    }
+
+    &:last-child {
+      margin-block-end: 0;
+    }
+  }
+
+  .product-pick-up__icon {
+    --size: 16px;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:blocks._product-pick-up.name",
+  "tag": null,
+  "presets": [
+    {
+      "name": "t:blocks._product-pick-up.name"
+    }
+  ]
+}
+{% endschema %}

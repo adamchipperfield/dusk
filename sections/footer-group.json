@@ -1,0 +1,54 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "footer",
+  "name": "t:section_groups.footer.name",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "newsletter": {
+          "type": "_newsletter-form",
+          "static": true,
+          "settings": {},
+          "blocks": {
+            "title": {
+              "type": "heading",
+              "static": true,
+              "settings": {
+                "text": "Subscribe to our emails",
+                "heading_tag": "p",
+                "heading_style": "h5"
+              }
+            },
+            "body": {
+              "type": "rich-text",
+              "static": true,
+              "settings": {
+                "body": "<p>Subscribe to be the first to hear about new product launches, exclusive sales and company updates.</p>"
+              }
+            }
+          }
+        },
+        "column_1": {
+          "type": "_footer-column",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "column_1"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

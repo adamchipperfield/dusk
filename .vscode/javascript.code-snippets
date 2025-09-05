@@ -1,0 +1,25 @@
+{
+  "Connected callback": {
+    "scope": "javascript",
+    "prefix": ["connected-callback", "cc"],
+    "body": ["connectedCallback() {", "\tif (super.connectedCallback) super.connectedCallback();", "", "\t${1}", "}"]
+  },
+
+  "Disconnected callback": {
+    "scope": "javascript",
+    "prefix": ["disconnected-callback", "cc"],
+    "body": [
+      "disconnectedCallback() {",
+      "\tif (super.disconnectedCallback) super.disconnectedCallback();",
+      "",
+      "\t${1}",
+      "}"
+    ]
+  },
+
+  "Define a custom element": {
+    "scope": "javascript",
+    "prefix": ["define-custom-element"],
+    "body": ["if (!customElements.get('${1:element-name}')) customElements.define('${1}', ${2:ElementClass})"]
+  }
+}

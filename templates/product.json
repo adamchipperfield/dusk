@@ -1,0 +1,86 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "title": {
+          "type": "heading",
+          "name": "Title",
+          "settings": {
+            "text": "{{ closest.product.title }}"
+          }
+        },
+        "price": {
+          "type": "_product-price",
+          "settings": {}
+        },
+        "description": {
+          "type": "rich-text",
+          "name": "Description",
+          "settings": {
+            "body": "{{ closest.product.description }}"
+          }
+        },
+        "options": {
+          "type": "_product-options",
+          "settings": {}
+        },
+        "buttons": {
+          "type": "_product-buttons",
+          "name": "Add to cart",
+          "settings": {}
+        },
+        "pick_up": {
+          "type": "_product-pick-up",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "title",
+        "price",
+        "options",
+        "description",
+        "buttons",
+        "pick_up"
+      ],
+      "settings": {}
+    },
+    "recommendations": {
+      "type": "product-recommendations",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "static": true,
+          "settings": {
+            "text": "You may also like",
+            "heading_tag": "h2",
+            "heading_style": "h5"
+          }
+        },
+        "product": {
+          "type": "product-card",
+          "static": true,
+          "settings": {
+            "product": "{{ closest.product }}"
+          }
+        }
+      },
+      "settings": {
+        "intent": "related"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "recommendations"
+  ]
+}

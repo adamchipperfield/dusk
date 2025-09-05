@@ -1,0 +1,30 @@
+<script>
+  window.theme = {
+    /**
+     * Settings.
+     */
+    request: {
+      page_type: {{ request.page_type | json }}
+    },
+
+    /**
+     * Routes.
+     */
+    routes: {
+      root_url: {{ routes.root_url | json }},
+      cart_url: {{ routes.cart_url | json }},
+      cart_add_url: {{ routes.cart_add_url | json }},
+      cart_update_url: {{ routes.cart_update_url | json }}
+    },
+
+    /**
+     * Strings.
+     */
+    strings: {
+      product: {
+        add_to_cart: {{ 'product.add_to_cart' | t | json }},
+        adding_to_cart: {{ 'product.adding_to_cart' | t | json }}
+      }
+    }
+  }
+</script>

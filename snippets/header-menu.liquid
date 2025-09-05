@@ -1,0 +1,259 @@
+{% doc %}
+  @description
+  Renders the site header menu.
+
+  @param {object} menu - The link list object.
+
+  @example
+  {% render 'header-menu', menu: section.settings.menu %}
+{% enddoc %}
+
+{% liquid
+  if menu == blank
+    continue
+  endif
+%}
+
+<toggle-element-button toggle-id="header-menu">
+  <button
+    class="until-medium button-reset"
+    type="button"
+    title="{{ 'navigation.open' | t }}"
+  >
+    {% render 'icon-misc', icon: 'menu' %}
+  </button>
+</toggle-element-button>
+
+<header-menu class="header-menu is-ready">
+  <toggle-element
+    id="header-menu"
+    class="header-menu__dialog dialog-window"
+    preset="dialog"
+    until-breakpoint="medium"
+  >
+    <div class="header-menu__drawer drawer drawer--left" data-ref="toggle-element.dialog">
+      <div class="drawer__header until-medium">
+        <h2 class="text-h5">{{ 'navigation.title' | t }}</h2>
+
+        <button
+          class="button-reset drawer__close"
+          data-ref="toggle-element.close"
+          title="{{ 'accessibility.close_drawer' | t }}"
+        >
+          {% render 'icon-misc', icon: 'cancel' %}
+        </button>
+      </div>
+
+      <div class="drawer__body">
+        <ul class="header-menu__list list-reset">
+          {% for tier_1 in menu.links %}
+            {% liquid
+              assign has_submenu = false
+
+              unless tier_1.links.size == 0
+                assign has_submenu = true
+              endunless
+            %}
+
+            <li
+              class="header-menu__item"
+              {% if has_submenu %}
+                data-ref="header-menu.item"
+              {% endif %}
+            >
+              <a
+                class="header-menu__link flex justify-between items-center"
+                href="{{ tier_1.url }}"
+                data-ref="header-menu.link"
+                {% if has_submenu %}
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  aria-controls="submenu-{{ forloop.index }}"
+                {% endif %}
+              >
+                {{- tier_1.title -}}
+
+                {% if has_submenu %}
+                  {% render 'icon-direction', icon: 'chevron-up', class: 'until-medium' %}
+                {% endif %}
+              </a>
+
+              {% if has_submenu %}
+                <div
+                  id="submenu-{{ forloop.index }}"
+                  class="header-submenu hide-scrollbar"
+                  data-ref="header-menu.submenu"
+                  aria-hidden="true"
+                >
+                  <div class="header-submenu__panel">
+                    <div class="header-submenu__container flex flex-col flex-gap-medium">
+                      <ul class="header-submenu__list list-reset flex flex-col flex-gap-small">
+                        {% for tier_2 in tier_1.links %}
+                          <li class="header-submenu__item flex flex-col flex-gap-xsmall">
+                            <a href="{{ tier_2.url }}">{{ tier_2.title }}</a>
+
+                            {% unless tier_2.links.size == 0 %}
+                              <ul class="header-submenu__submenu list-reset flex flex-col flex-gap-xsmall">
+                                {% for tier_3 in tier_2.links %}
+                                  <li>
+                                    <a class="text-small" href="{{ tier_3.url }}">{{ tier_3.title }}</a>
+                                  </li>
+                                {% endfor %}
+                              </ul>
+                            {% endunless %}
+                          </li>
+                        {% endfor %}
+                      </ul>
+
+                      <a class="text-small until-medium" href="{{ tier_1.url }}">
+                        {{- 'navigation.view_all' | t: title: tier_1.title -}}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </toggle-element>
+</header-menu>
+
+{% stylesheet %}
+  /**
+   * Menu.
+   */
+  .header-menu__list {
+    margin-inline: calc(var(--container-gutter) * -1);
+  }
+
+  .header-menu__link .icon__chevron {
+    --size: 18px;
+  }
+
+  .header-menu__item:not(.is-open) .header-menu__link .icon__chevron {
+    rotate: 180deg;
+  }
+
+  .header-menu__link {
+    padding-block: var(--spacing-16);
+  }
+
+  .header-menu__item {
+    border-block-end: 1px solid var(--color-border-lighter);
+    padding-inline: var(--container-gutter);
+  }
+
+  /**
+   * Submenu.
+   */
+  .header-menu__item:not(.is-open) .header-submenu {
+    display: none;
+  }
+
+  .header-submenu__panel {
+    padding-block-end: var(--spacing-24);
+    padding-inline-start: var(--spacing-8);
+  }
+
+  .header-submenu__item:not(:last-child) .header-submenu__submenu {
+    margin-block-end: var(--spacing-12);
+  }
+
+  @media (min-width: 768px) {
+    /**
+     * Menu.
+     */
+    .header-menu,
+    .header-menu__link {
+      align-content: center;
+      display: block;
+      height: 100%;
+    }
+
+    .header-menu__dialog,
+    .header-menu__drawer,
+    .header-menu__drawer .drawer__body {
+      display: contents;
+      pointer-events: auto;
+    }
+
+    .header-menu__list {
+      --item-spacing: var(--spacing-8);
+      align-items: center;
+      display: flex;
+      flex-direction: row;
+      gap: 0;
+      height: 100%;
+    }
+
+    .header-menu__item {
+      align-content: center;
+      border-block-end: 0;
+      height: 100%;
+      padding-block: 0;
+      padding-inline: var(--item-spacing);
+    }
+
+    .site-header__left .header-menu__list {
+      margin-inline-start: calc(var(--item-spacing) * -1);
+    }
+
+    /**
+     * Submenu.
+     */
+    .header-submenu {
+      background-color: var(--color-backdrop);
+      height: calc(100vh - var(--header-height));
+      left: 0;
+      overflow-y: auto;
+      pointer-events: none;
+      position: absolute;
+      top: 100%;
+      width: 100%;
+    }
+
+    .header-submenu__panel {
+      background-color: var(--color-background);
+      padding-block: var(--spacing-24) var(--spacing-48);
+      padding-inline-start: 0;
+      pointer-events: auto;
+    }
+
+    .header-submenu__container {
+      margin-inline: auto;
+      max-width: var(--max-content-width);
+      padding-inline: var(--container-gutter);
+      width: 100%;
+    }
+
+    .header-submenu__list:has(.header-submenu__submenu) {
+      display: grid;
+      gap: var(--spacing-32) var(--spacing-16);
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .header-submenu__item:not(:last-child) .header-submenu__submenu {
+      margin-block-end: 0;
+    }
+
+    .header-menu.is-ready .header-menu__item .header-submenu {
+      transition: opacity 0.2s ease-out;
+    }
+
+    .header-menu.is-ready .header-menu__item .header-submenu__panel {
+      transition: transform 0.2s ease-out;
+    }
+
+    .header-menu__item:not(.is-open) .header-submenu {
+      display: block;
+      opacity: 0;
+    }
+
+    .header-menu__item:not(.is-open) .header-submenu__panel {
+      pointer-events: none;
+      transform: translateY(-5%);
+    }
+  }
+{% endstylesheet %}

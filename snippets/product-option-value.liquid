@@ -1,0 +1,36 @@
+{% doc %}
+  @description
+  Renders a product option value input and label.
+
+  @param {product_option_value} value - The option value.
+  @param {product_option} option - The option object.
+
+  @example
+  {% render 'product-option-value' %}
+{% enddoc %}
+
+{% # theme-check-disable UndefinedObject %}
+{% assign id = section.id | append: '-option_' | append: option.position | append: '-' | append: value | handleize %}
+{% # theme-check-enable UndefinedObject %}
+
+<input
+  id="{{ id }}"
+  class="visually-hidden"
+  name="{{ option.name }}"
+  type="radio"
+  value="{{ value | escape }}"
+  {% if value.selected %}
+    checked
+  {% endif %}
+  {% unless value.available %}
+    disabled
+  {% endunless %}
+  data-ref="product-form.option"
+  data-option-value-id="{{ value.id }}"
+>
+
+{% if value.swatch %}
+  {% render 'swatch', input_name: id, label: value, color: value.swatch.color, image: value.swatch.image %}
+{% else %}
+  <label class="pill" for="{{ id }}">{{ value }}</label>
+{% endif %}

@@ -1,0 +1,249 @@
+{% doc %}
+  @description
+  Renders the filter display options.
+
+  @param {filter[]} filters - The filters to display.
+  @param {string} sort_by - The selected sort option.
+  @param {string} default_sort_by - The default sort option.
+  @param {string} [terms] - The search terms.
+  @param {string} [ref] - The custom element ref.
+
+  @example
+  {% render 'filter-form', filters: collection.filters %}
+{% enddoc %}
+
+{% liquid
+  assign filter_reset_url = request.path
+  assign filter_reset_url_params = ''
+  assign has_active_filters = false
+
+  for filter in filters
+    case filter.type
+      when 'price_range'
+        if filter.min_value.value or filter.max_value.value
+          assign has_active_filters = true
+        endif
+
+      else
+        if filter.active_values.size >= 1
+          assign has_active_filters = true
+        endif
+    endcase
+  endfor
+
+  if terms
+    assign filter_reset_url_params = filter_reset_url_params | append: 'q=' | append: terms | append: ', '
+  endif
+
+  unless sort_by == default_sort_by
+    assign filter_reset_url_params = filter_reset_url_params | append: 'sort_by=' | append: sort_by | append: ', '
+  endunless
+
+  unless filter_reset_url_params == ''
+    assign filter_reset_url_params = filter_reset_url_params | split: ', ' | join: '&'
+    assign filter_reset_url = filter_reset_url | append: '?' | append: filter_reset_url_params
+  endunless
+%}
+
+<form
+  class="filter-form flex flex-col flex-gap-medium"
+  {% if ref %}
+    data-ref="{{ ref }}"
+  {% endif %}
+>
+  {% if terms %}
+    <input
+      name="q"
+      type="hidden"
+      value="{{ terms | escape }}"
+    >
+  {% endif %}
+
+  {% unless filters.size == 0 %}
+    <ul class="filter-form__list flex flex-col list-reset">
+      {% for filter in filters %}
+        {% liquid
+          assign is_active = false
+
+          if filter.active_values.size >= 1
+            assign is_active = true
+          endif
+
+          if filter.type == 'price_range'
+            if filter.min_value.value or filter.max_value.value
+              assign is_active = true
+            endif
+          endif
+        %}
+
+        <li>
+          <details
+            class="filter-form__filter disclosure-reset"
+            {% if is_active %}
+              open
+            {% endif %}
+          >
+            <summary class="flex items-center">
+              {{- filter.label -}}
+
+              {% if filter.active_values.size > 0 %}
+                <span class="text-meta">&nbsp;({{ filter.active_values.size }})</span>
+              {% endif %}
+
+              {% render 'icon-direction', icon: 'chevron-down', class: 'filter-form__chevron margin-left-auto' %}
+            </summary>
+
+            {% if is_active %}
+              <div class="filter-form__actions flex flex-gap-medium items-center text-small">
+                {% unless filter.type == 'price_range' %}
+                  {{ 'filter_sort.values_selected' | t: count: filter.active_values.size }}
+                {% endunless %}
+
+                {{
+                  'filter_sort.clear_filter'
+                  | t
+                  | link_to: filter.url_to_remove, class: 'text-weight-bold margin-left-auto'
+                }}
+              </div>
+            {% endif %}
+
+            {% case filter.type %}
+              {% when 'boolean', 'list' %}
+                <ul class="filter-form__values flex flex-wrap flex-gap-xsmall list-reset">
+                  {% for value in filter.values %}
+                    {% assign value_id = filter.param_name | append: '-' | append: value.value | handleize %}
+
+                    <li class="flex flex-row-reverse flex-gap-xsmall justify-flex-end">
+                      <input
+                        id="{{ value_id }}"
+                        class="filter-form__input visually-hidden"
+                        name="{{ filter.param_name }}"
+                        type="checkbox"
+                        value="{{ value.value }}"
+                        {% if value.active %}
+                          checked
+                        {% endif %}
+                        {% if value.count == 0 and value.active == false %}
+                          disabled
+                        {% endif %}
+                      >
+
+                      {% if filter.presentation == 'image' %}
+                        {% assign filter_image_id = value_id | append: '-image' %}
+
+                        <label for="{{ value_id }}" class="filter-image">
+                          {% if value.image %}
+                            {{
+                              value.image
+                              | image_url: width: 120
+                              | image_tag: class: 'image image-cover', id: filter_image_id
+                            }}
+                          {% endif %}
+
+                          <span class="visually-hidden">{{ value.label }}</span>
+                        </label>
+                      {% elsif filter.presentation == 'swatch' %}
+                        {% render 'swatch',
+                          input_name: value_id,
+                          label: value.value,
+                          color: value.swatch.color,
+                          image: value.swatch.image,
+                          small: true
+                        %}
+                      {% else %}
+                        <label for="{{ value_id }}" class="pill pill--small">
+                          {{- value.label }} ({{ value.count }})
+                        </label>
+                      {% endif %}
+                    </li>
+                  {% endfor %}
+                </ul>
+
+              {% when 'price_range' %}
+                <div class="filter-form__values form-group form-group--2-col">
+                  <div class="form-field">
+                    <label for="{{ filter.min_value.param_name }}">
+                      {{ 'filter_sort.price_range_from' | t }} ({{ localization.country.currency.symbol }})
+                    </label>
+
+                    <input
+                      id="{{ filter.min_value.param_name }}"
+                      max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                      min="0"
+                      name="{{ filter.min_value.param_name }}"
+                      type="number"
+                      {% if filter.min_value.value %}
+                        value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"
+                      {% endif %}
+                    >
+                  </div>
+
+                  <div class="form-field">
+                    <label for="{{ filter.max_value.param_name }}">
+                      {{ 'filter_sort.price_range_to' | t }} ({{ localization.country.currency.symbol }})
+                    </label>
+
+                    <input
+                      id="{{ filter.max_value.param_name }}"
+                      max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                      min="0"
+                      name="{{ filter.max_value.param_name }}"
+                      type="number"
+                      {% if filter.max_value.value %}
+                        value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"
+                      {% endif %}
+                    >
+                  </div>
+                </div>
+            {% endcase %}
+          </details>
+        </li>
+      {% endfor %}
+    </ul>
+
+    {% if has_active_filters %}
+      {{ 'filter_sort.clear_all' | t | link_to: filter_reset_url, class: 'text-small' }}
+    {% endif %}
+  {% endunless %}
+</form>
+
+{% stylesheet %}
+  .filter-form__list {
+    gap: var(--spacing-12);
+  }
+
+  .filter-form__values {
+    margin-block: var(--spacing-12) var(--spacing-4);
+  }
+
+  .filter-form__actions {
+    margin-block: var(--spacing-12);
+  }
+
+  .filter-form__chevron {
+    --size: 16px;
+  }
+
+  .filter-form__filter[open] .filter-form__chevron {
+    transform: scale(-1);
+  }
+
+  .filter-image {
+    border-radius: 3px;
+    cursor: pointer;
+    height: 60px;
+    margin: 0;
+    object-fit: cover;
+    overflow: hidden;
+    width: 60px;
+  }
+
+  .filter-form__input:checked + .filter-image {
+    outline: 1px solid var(--color-text);
+  }
+
+  .filter-form__input:disabled + .filter-image {
+    cursor: not-allowed;
+    opacity: 0.25;
+  }
+{% endstylesheet %}

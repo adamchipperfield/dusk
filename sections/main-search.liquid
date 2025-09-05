@@ -1,0 +1,60 @@
+{% liquid
+  assign article_badge = 'search.article' | t
+  assign page_badge = 'search.page' | t
+
+  unless search.performed
+    continue
+  endunless
+%}
+
+{% if search.results_count == 0 %}
+  <p class="text-h6 text-center">{{ 'search.no_results' | t: terms: search.terms }}</p>
+
+{% else %}
+  {% capture results %}
+    {% paginate search.results by section.settings.results_per_page %}
+      <ul class="grid list-reset">
+        {% for result in search.results %}
+          <li class="col xs6 l4">
+            {% # theme-check-disable CaptureOnContentForBlock %}
+              {% case result.object_type %}
+                {% when 'product' %}
+                  {% content_for 'block', type: 'product-card', id: 'product', closest.product: result %}
+                {% when 'article' %}
+                  {% content_for 'block', type: 'article-card', id: 'article', closest.article: result, badges: article_badge %}
+                {% when 'page' %}
+                  {% content_for 'block', type: 'page-card', id: 'page', closest.page: result, badges: page_badge %}
+              {% endcase %}
+            {% # theme-check-enable CaptureOnContentForBlock %}
+          </li>
+      {% endfor %}
+      </ul>
+
+      <div class="pagination">{{ paginate | default_pagination }}</div>
+    {% endpaginate %}
+  {% endcapture %}
+
+  {% render 'results-list',
+    sort_options: search.sort_options,
+    sort_by: search.sort_by,
+    default_sort_by: search.default_sort_by,
+    filters: search.filters,
+    results: results
+  %}
+{% endif %}
+
+{% schema %}
+{
+  "class": "container",
+  "settings": [
+    {
+      "type": "range",
+      "id": "results_per_page",
+      "label": "t:sections.main-search.settings.results_per_page.label",
+      "min": 1,
+      "max": 48,
+      "default": 12
+    }
+  ]
+}
+{% endschema %}

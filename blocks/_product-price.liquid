@@ -1,0 +1,35 @@
+{% form 'product',
+  closest.product,
+  data-section: section.id,
+  data-section-element: 'price',
+  class: 'flex flex-col flex-gap-xsmall'
+%}
+  {% render 'product-price',
+    variant: closest.product.selected_or_first_available_variant,
+    class: 'text-body-large text-weight-medium'
+  %}
+
+  {% if cart.taxes_included and block.settings.show_taxes_included %}
+    <small>{{ 'price.taxes_included' | t }}</small>
+  {% endif %}
+
+  {{ form | payment_terms }}
+{% endform %}
+
+{% schema %}
+{
+  "name": "t:blocks._product-price.name",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_taxes_included",
+      "label": "t:blocks._product-price.settings.show_taxes_included.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks._product-price.name"
+    }
+  ]
+}
+{% endschema %}

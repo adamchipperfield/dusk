@@ -1,0 +1,37 @@
+{% doc %}
+  @description
+  Loads a stylesheet.
+
+  @param {string} name - The asset filename.
+  @param {boolean} [inline] - Renders the styles in a style tag.
+  @param {boolean} [blocking] - Forces the asset to block page render.
+
+  @example
+  {% render 'stylesheet', name: 'site-header.css' %}
+{% enddoc %}
+
+{% liquid
+  unless inline
+    assign inline = false
+
+    # theme-check-disable UndefinedObject
+    if section.location == 'header' or section.location == 'template' and section.index <= 2
+      assign inline = true
+    endif
+    # theme-check-enable UndefinedObject
+  endunless
+%}
+
+{% if blocking %}
+  {{ name | asset_url | stylesheet_tag }}
+{% elsif inline %}
+  <style>
+    {{ name | inline_asset_content }}
+  </style>
+{% else %}
+  <link href="{{ name | asset_url }}" rel="stylesheet" type="text/css" media="print" onload="this.media='all'">
+
+  <noscript>
+    {{ name | asset_url | stylesheet_tag }}
+  </noscript>
+{% endif %}

@@ -1,0 +1,57 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "search-hero",
+      "blocks": {
+        "title": {
+          "type": "heading",
+          "static": true,
+          "settings": {
+            "text": "Search"
+          }
+        }
+      },
+      "settings": {}
+    },
+    "listing": {
+      "type": "main-search",
+      "blocks": {
+        "product": {
+          "type": "product-card",
+          "static": true,
+          "settings": {
+            "product": "{{ closest.product }}"
+          }
+        },
+        "article": {
+          "type": "article-card",
+          "static": true,
+          "settings": {
+            "article": "{{ closest.article }}"
+          }
+        },
+        "page": {
+          "type": "page-card",
+          "static": true,
+          "settings": {
+            "page": "{{ closest.page }}"
+          }
+        }
+      },
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero",
+    "listing"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./assets",
+    "paths": {
+      "@theme/*": ["./*"]
+    },
+    "target": "ES6",
+    "types": ["./global.d.ts"]
+  }
+}

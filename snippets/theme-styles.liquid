@@ -1,0 +1,40 @@
+<style>
+  {{ settings.font_body | font_face: font_display: 'swap' }}
+  {{ settings.font_heading | font_face: font_display: 'swap' }}
+
+  {{ settings.font_body | font_modify: 'weight', '400' | font_face: font_display: 'swap' }}
+  {{ settings.font_body | font_modify: 'weight', '500' | font_face: font_display: 'swap' }}
+  {{ settings.font_body | font_modify: 'weight', '700' | font_face: font_display: 'swap' }}
+
+  :root {
+    --heading-weight: {{ settings.font_heading.weight }};
+    --body-weight: {{ settings.font_body.weight }};
+  }
+
+  {{ 'typography.css' | inline_asset_content }}
+  {{ 'layout.css' | inline_asset_content }}
+  {{ 'theme.css' | inline_asset_content }}
+  {{ 'base.css' | inline_asset_content }}
+  {{ 'helpers.css' | inline_asset_content }}
+
+  {% if request.page_type == 'captcha' %}
+    .shopify-challenge__container {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-16);
+      padding-block: var(--spacing-96);
+    }
+
+    .shopify-challenge__container form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-8);
+    }
+  {% endif %}
+</style>
+
+{% liquid
+  if request.page_type contains 'customers'
+    render 'stylesheet', name: 'account.css'
+  endif
+%}

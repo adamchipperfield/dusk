@@ -1,0 +1,72 @@
+{% doc %}
+  @param {boolean} [show_cart_button]
+{% enddoc %}
+
+<div class="flex flex-gap-small justify-between">
+  <p class="text-weight-medium">{{ 'cart.subtotal' | t }}</p>
+  <p class="text-right">{{ cart.total_price | money }}</p>
+</div>
+
+{% if cart.cart_level_discount_applications.size > 0 %}
+  <ul class="list-reset text-right">
+    {% for discount in cart.cart_level_discount_applications %}
+      <li>
+        {% render 'icon-misc', icon: 'discount' %}
+        <small>{{ discount.title }} (-{{ discount.total_allocated_amount | money }})</small>
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+{% if cart.taxes_included %}
+  <small class="text-right">{{ 'price.taxes_included' | t }}</small>
+{% endif %}
+
+{% if block.settings.show_cart_note %}
+  <div class="form-group">
+    <div class="form-field">
+      <label for="{{ block.id }}-cart-note">{{ 'cart.note' | t }}</label>
+
+      <textarea id="{{ block.id }}-cart-note" name="note">
+        {{- cart.note -}}
+      </textarea>
+    </div>
+  </div>
+{% endif %}
+
+<div class="flex flex-col flex-gap-small">
+  {% if show_cart_button %}
+    {{ 'cart.cart_button' | t | link_to: routes.cart_url, class: 'button button--secondary' }}
+  {% endif %}
+
+  <button class="button button--block" name="checkout">{{ 'cart.checkout_button' | t }}</button>
+
+  {% if additional_checkout_buttons %}
+    <div class="additional-checkout-buttons--vertical">{{ content_for_additional_checkout_buttons }}</div>
+  {% endif %}
+
+  {% if block.settings.show_payment_logos %}
+    {% render 'payment-logos' %}
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "t:blocks._cart-summary.name",
+  "class": "flex flex-col flex-gap-medium",
+  "tag": "aside",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_cart_note",
+      "label": "t:blocks._cart-summary.settings.show_cart_note.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_logos",
+      "label": "t:blocks._cart-summary.settings.show_payment_logos.label",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

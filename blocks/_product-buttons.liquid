@@ -1,0 +1,95 @@
+{% assign variant = closest.product.selected_or_first_available_variant %}
+
+{% form 'product',
+  closest.product,
+  class: 'product-buttons flex flex-col flex-gap-small',
+  data-ref: 'product-form.form',
+  data-section: section.id,
+  data-section-element: 'buttons'
+%}
+  <input
+    type="hidden"
+    name="id"
+    value="{{ variant.id }}"
+  >
+
+  {% if product.gift_card? and block.settings.show_gift_card_recipient_option %}
+    {% render 'gift-card-recipient-form', form_object: form, id: form.id %}
+  {% endif %}
+
+  <div class="flex flex-gap-small items-end">
+    {% liquid
+      assign maximum_available = false
+      assign quantity_id = form.id | append: '-quantity'
+
+      unless variant.inventory_management == null
+        unless variant.inventory_policy == 'continue'
+          assign maximum_available = variant.inventory_quantity
+
+          if maximum_available == 0
+            assign maximum_available = 1
+          endif
+        endunless
+      endunless
+    %}
+
+    {% render 'quantity-selector',
+      max: maximum_available,
+      input_ref: 'product-form.quantity',
+      container_class: 'form-field product-buttons__quantity',
+      id: quantity_id
+    %}
+
+    <button
+      class="button button--block"
+      {% unless variant.available %}
+        disabled
+      {% endunless %}
+      data-ref="product-form.submit"
+    >
+      {% if variant.available %}
+        {{ 'product.add_to_cart' | t }}
+      {% else %}
+        {{ 'product.out_of_stock' | t }}
+      {% endif %}
+    </button>
+  </div>
+
+  <p class="text-error text-body-small hide-empty" data-ref="product-form.message"></p>
+
+  {% if block.settings.show_accelerated_checkout_button and variant.available %}
+    {{ form | payment_button }}
+  {% endif %}
+{% endform %}
+
+{% stylesheet %}
+  .product-buttons__quantity {
+    max-width: 140px;
+    width: 50%;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:blocks._product-buttons.name",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_accelerated_checkout_button",
+      "label": "t:blocks._product-buttons.settings.show_accelerated_checkout_button.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_gift_card_recipient_option",
+      "label": "t:blocks._product-buttons.settings.show_gift_card_recipient_option.label",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks._product-buttons.name"
+    }
+  ]
+}
+{% endschema %}

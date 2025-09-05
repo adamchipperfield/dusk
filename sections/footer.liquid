@@ -1,0 +1,85 @@
+{% liquid
+  assign show_follow_on_shop = false
+
+  if shop.features.follow_on_shop? and section.settings.show_follow_on_shop
+    assign show_follow_on_shop = true
+  endif
+
+  capture social_links
+    if section.settings.show_social_links
+      render 'social-links'
+    endif
+  endcapture
+%}
+
+<div class="container">
+  <div class="grid items-end">
+    <div class="col xs12 l5 xl4 flex flex-col flex-gap-large items-start">
+      {% unless show_follow_on_shop == false and social_links == blank %}
+        <div class="flex flex-wrap flex-gap-medium items-center">
+          {% if show_follow_on_shop %}
+            {{ shop | login_button: action: 'follow' }}
+          {% endif %}
+
+          {{ social_links }}
+        </div>
+      {% endunless %}
+
+      {% content_for 'block', type: '_newsletter-form', id: 'newsletter' %}
+    </div>
+
+    <div class="col xs12 l6 xl7 offset-l6 offset-xl7">
+      <div class="grid">{% content_for 'blocks' %}</div>
+    </div>
+
+    <div class="col xs12">
+      <div class="text-small flex flex-wrap flex-gap-y-small flex-gap-x-medium items-center">
+        {% if section.settings.show_localization %}
+          <toggle-element-button toggle-id="localization-drawer">
+            <button
+              class="button-reset"
+              title="{{ 'localization.open_drawer' | t }}"
+            >
+              {{ localization.country.name }} ({{ localization.language.endonym_name | capitalize }})
+            </button>
+          </toggle-element-button>
+        {% endif %}
+
+        <p>&copy; {{ 'now' | date: '%Y' }}, {{ shop.name | link_to: routes.root_url }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.footer.name",
+  "tag": "footer",
+  "class": "site-footer shopify-section-footer section-margin",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_follow_on_shop",
+      "label": "t:sections.footer.settings.show_follow_on_shop.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_links",
+      "label": "t:sections.footer.settings.show_social_links.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_localization",
+      "label": "t:sections.footer.settings.show_localization.label",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "_footer-column"
+    }
+  ]
+}
+{% endschema %}

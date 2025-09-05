@@ -1,0 +1,123 @@
+{% doc %}
+  @description
+  Renders a slider to display product media.
+
+  @param {object} [product] - The product object, defaults to the current product.
+  @param {string} [selected_variant] - The default variant.
+  @param {string} [section_id] - The current section.
+
+  @example
+  {% render 'product-gallery' %}
+{% enddoc %}
+
+{% liquid
+  if product.media.size == 0
+    continue
+  endif
+
+  if product.media.size > 1
+    unless selected_variant
+      assign selected_variant = product.selected_or_first_available_variant
+    endunless
+  endif
+
+  assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src'
+  assign primary_image = selected_variant.featured_image | default: product.featured_image
+  assign primary_image_width = 720
+  assign primary_image_width_2x = primary_image_width | times: 2
+  assign primary_image_width_px = primary_image_width | append: 'px'
+  assign secondary_image_width = 348
+  assign secondary_image_width_2x = secondary_image_width | times: 2
+  assign secondary_image_width_px = secondary_image_width | append: 'px'
+  assign image_classes = 'image image-wide'
+  assign widths = '352, 720, 1200, 1440'
+  # theme-check-disable UndefinedObject
+  assign section_id = section_id | default: section.id
+  # theme-check-enable UndefinedObject
+%}
+
+<ul
+  class="product-gallery list-reset hide-scrollbar"
+  data-section="{{ section_id }}"
+  data-section-element="gallery"
+>
+  {% if primary_image %}
+    <li class="product-gallery__item" style="--aspect-ratio: {{ primary_image.aspect_ratio }};">
+      {% render 'image',
+        image: primary_image,
+        width: primary_image_width_2x,
+        class: image_classes,
+        size: '90vw',
+        medium_size: primary_image_width_px,
+        widths: widths
+      %}
+    </li>
+  {% endif %}
+
+  {% for media in product.media %}
+    {% unless media.id == selected_variant.featured_media.id
+      or variant_images contains media.src
+      or media.id == product.featured_media.id
+    %}
+      <li class="product-gallery__item">
+        {% if media.media_type == 'image' %}
+          {% render 'image',
+            image: media,
+            width: secondary_image_width_2x,
+            class: image_classes,
+            size: '90vw',
+            medium_size: secondary_image_width_px,
+            preload: false,
+            loading: 'lazy',
+            widths: widths
+          %}
+
+        {% else %}
+          {{
+            media
+            | media_tag: image_size: secondary_image_width_2x, autoplay: true, loop: true, muted: true, controls: false
+          }}
+        {% endif %}
+      </li>
+    {% endunless %}
+  {% endfor %}
+</ul>
+
+{% stylesheet %}
+  .product-gallery {
+    display: flex;
+    gap: var(--spacing-24);
+    list-style: none;
+    overflow-x: scroll;
+    padding: 0;
+    scroll-snap-align: start;
+    scroll-snap-type: x mandatory;
+  }
+
+  .product-gallery__item {
+    aspect-ratio: var(--aspect-ratio);
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    width: 100%;
+  }
+
+  .product-gallery model-viewer {
+    height: 100%;
+    width: 100%;
+  }
+
+  .product-gallery iframe {
+    aspect-ratio: 16 / 9;
+  }
+
+  @media (min-width: 768px) {
+    .product-gallery {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .product-gallery__item:first-of-type {
+      grid-column: span 2;
+    }
+  }
+{% endstylesheet %}

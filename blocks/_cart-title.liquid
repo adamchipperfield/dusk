@@ -1,0 +1,20 @@
+{% content_for 'block', type: 'heading', id: 'title' %}
+
+{% if block.settings.show_cart_count %}
+  <span class="bubble">{{ cart.item_count }}</span>
+{% endif %}
+
+{% schema %}
+{
+  "name": "t:blocks._cart-title.name",
+  "class": "flex flex-gap-medium items-center",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_cart_count",
+      "label": "t:blocks._cart-title.settings.show_cart_count.label",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

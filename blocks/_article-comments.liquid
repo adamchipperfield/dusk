@@ -1,0 +1,131 @@
+{% capture comment_template %}
+  <article class="flex flex-col flex-gap-medium" id="#id#">
+    #content#
+
+    <div class="flex flex-gap-medium">
+      <span class="text-meta">#author#</span>
+      <span class="text-meta">#date#</span>
+    </div>
+  </article>
+{% endcapture %}
+
+{% if blog.comments_enabled? %}
+  <div id="comments" class="flex flex-col flex-gap-xlarge">
+    {% if article.comments_count %}
+      <div class="flex flex-col flex-gap-large">
+        <h2 class="text-h5">
+          {{ 'blog.comments_title' | t: count: article.comments_count }}
+        </h2>
+
+        {% paginate article.comments by block.settings.comments_per_page %}
+          <div class="flex flex-col flex-gap-medium">
+            <div class="flex flex-col flex-gap-large">
+              {% # theme-check-disable UndefinedObject %}
+              {% if comment %}
+                {% liquid
+                  assign form_success_string = 'blog.comments_form_success' | t
+
+                  if blog.moderated? and comment.status == 'unapproved'
+                    assign form_success_string = 'blog.comments_form_success_moderated' | t
+                  endif
+                %}
+
+                {% if comment.status == 'pending' and comment.content %}
+                  {% assign comment_date = comment.created_at | time_tag: format: 'date' %}
+
+                  {{
+                    comment_template
+                    | replace: '#content#', comment.content
+                    | replace: '#author#', comment.author
+                    | replace: '#date#', comment_date
+                  }}
+                {% endif %}
+              {% endif %}
+              {% # theme-check-enable UndefinedObject %}
+
+              {% for comment in article.comments %}
+                {% assign comment_date = comment.created_at | time_tag: format: 'date' %}
+
+                {{
+                  comment_template
+                  | replace: '#id#', comment.id
+                  | replace: '#content#', comment.content
+                  | replace: '#author#', comment.author
+                  | replace: '#date#', comment_date
+                }}
+              {% endfor %}
+            </div>
+
+            <div class="pagination">{{ paginate | default_pagination }}</div>
+          </div>
+        {% endpaginate %}
+      </div>
+    {% endif %}
+
+    {% form 'new_comment', article %}
+      <h3 class="text-h6 margin">{{ 'blog.comments_form_title' | t }}</h3>
+
+      {{ form.errors | default_errors }}
+
+      {% if form.posted_successfully? %}
+        <p class="text-meta success">{{ form_success_string }}</p>
+      {% endif %}
+
+      <div class="form-group">
+        <div class="form-field">
+          <label for="{{ block.id | append: '-comment-author' }}">
+            {{ 'blog.comments_form_author' | t }}
+          </label>
+
+          <input
+            id="{{ block.id | append: '-comment-author' }}"
+            name="comment[author]"
+            type="text"
+            value="{{ form.author }}"
+          >
+        </div>
+
+        <div class="form-field">
+          <label for="{{ block.id | append: '-comment-email' }}">
+            {{ 'blog.comments_form_email' | t }}
+          </label>
+
+          <input
+            id="{{ block.id | append: '-comment-email' }}"
+            name="comment[email]"
+            type="email"
+            value="{{ form.email }}"
+          >
+        </div>
+
+        <div class="form-field">
+          <label for="{{ block.id | append: '-comment-body' }}">
+            {{- 'blog.comments_form_body' | t -}}
+          </label>
+
+          <textarea id="{{ block.id | append: '-comment-body' }}" name="comment[body]">
+            {{- form.body -}}
+          </textarea>
+        </div>
+
+        <button class="button">{{ 'blog.comments_form_submit' | t }}</button>
+      </div>
+    {% endform %}
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "t:blocks._article-comments.name",
+  "settings": [
+    {
+      "type": "range",
+      "id": "comments_per_page",
+      "label": "t:blocks._article-comments.settings.comments_per_page.label",
+      "min": 1,
+      "max": 48,
+      "default": 12
+    }
+  ]
+}
+{% endschema %}

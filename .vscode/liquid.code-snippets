@@ -1,0 +1,77 @@
+{
+  "LiquidDoc": {
+    "scope": "liquid",
+    "prefix": ["liquid-doc", "doc"],
+    "body": [
+      "{% doc %}",
+      "\t@description",
+      "\t${1:Snippet description}",
+      "",
+      "\t@param {${3|string,number,boolean,object|}} ${2:variable_name}${4}",
+      "",
+      "\t@example\n\t{% render '${TM_FILENAME_BASE}' %}",
+      "{% enddoc %}",
+    ],
+  },
+
+  "LiquidDoc param": {
+    "scope": "liquid",
+    "prefix": ["liquid-doc-param", "doc-param", "@param"],
+    "body": ["@param {${2|string,number,boolean,object|}} ${1:variable_name}"],
+  },
+
+  "Icon (miscellaneous)": {
+    "scope": "liquid",
+    "prefix": ["icon-misc", "icm"],
+    "body": ["{% render 'icon-misc', icon: '${1}' %}"],
+  },
+
+  "Icon (direction)": {
+    "scope": "liquid",
+    "prefix": ["icon-direction", "icd"],
+    "body": ["{% render 'icon-direction', icon: '${1}' %}"],
+  },
+
+  "Icon (social)": {
+    "scope": "liquid",
+    "prefix": ["icon-social", "ics"],
+    "body": ["{% render 'icon-social', icon: '${1}' %}"],
+  },
+  "Liquid stylesheet": {
+    "scope": "liquid",
+    "prefix": ["liquid-stylesheet", "stylesheet"],
+    "body": ["{% stylesheet %}", "\t${1}", "{% endstylesheet %}"],
+  },
+  "Asset stylesheet": {
+    "scope": "liquid",
+    "prefix": ["asset-stylesheet", "css"],
+    "body": ["{% render 'stylesheet', name: '${1}' %}"],
+  },
+  "Schema tag with settings and presets": {
+    "scope": "liquid",
+    "prefix": ["schema"],
+    "body": [
+      "{% schema %}",
+      "{",
+      "\t\"name\": \"${1}\",",
+      "\t\"settings\": [${2}],",
+      "\t\"presets\": [",
+      "\t\t{",
+      "\t\t\t\"name\": \"${1}\"",
+      "\t\t}",
+      "\t]",
+      "}",
+      "{% endschema %}\n",
+    ],
+  },
+
+  "Renders a text setting element": {
+    "scope": "liquid",
+    "prefix": ["text-setting"],
+    "body": [
+      "{% unless ${1:section.settings.heading} == empty %}",
+      "\t<${2:p} class=\"${3:text-h1}\">{{ ${1:section.settings.heading} }}</${2:p}>",
+      "{% endunless %}",
+    ],
+  },
+}

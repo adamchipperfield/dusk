@@ -1,0 +1,53 @@
+{% liquid
+  assign has_menu = false
+
+  unless block.settings.menu == blank or block.settings.menu.links.size == 0
+    assign has_menu = true
+  endunless
+%}
+
+{% unless has_menu == false and block.settings.menu == blank and block.settings.heading == empty %}
+  <div
+    id="shopify-block-{{ block.id }}"
+    class="col xs12 s4 flex flex-col flex-gap-small"
+    {{ block.shopify_attributes }}
+  >
+    {% unless block.settings.menu == blank and block.settings.heading == empty %}
+      <p class="text-body text-weight-medium">{{ block.settings.heading | default: block.settings.menu.title }}</p>
+    {% endunless %}
+
+    {% if has_menu %}
+      <ul class="list-reset">
+        {% for menu_item in block.settings.menu.links %}
+          <li>{{ menu_item.title | link_to: menu_item.url }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+{% endunless %}
+
+{% schema %}
+{
+  "name": "t:blocks._footer-column.name",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:presets.settings.heading.label",
+      "info": "t:blocks._footer-column.settings.heading.info"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "t:presets.settings.menu.label",
+      "default": "footer"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks._footer-column.name"
+    }
+  ]
+}
+{% endschema %}

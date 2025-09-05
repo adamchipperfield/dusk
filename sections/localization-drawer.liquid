@@ -1,0 +1,24 @@
+<toggle-element id="localization-drawer" class="dialog-window" preset="dialog" open-on-section-select>
+  <div class="drawer" data-ref="toggle-element.dialog">
+    <div class="drawer__header">
+      {% content_for 'block', type: 'heading', id: 'title' %}
+
+      <button
+        class="drawer__close button-reset"
+        type="button"
+        title="{{ 'accessibility.close_drawer' | t }}"
+        data-ref="toggle-element.close"
+      >
+        {% render 'icon-misc', icon: 'cancel' %}
+      </button>
+    </div>
+
+    <div class="drawer__body">{% render 'localization-form' %}</div>
+  </div>
+</toggle-element>
+
+{% schema %}
+{
+  "name": "t:sections.localization-drawer.name"
+}
+{% endschema %}

@@ -1,0 +1,25 @@
+{%- liquid
+  if block.settings.liquid == empty
+    continue
+  endif
+-%}
+
+{{ block.settings.liquid }}
+
+{% schema %}
+{
+  "name": "t:blocks.custom-liquid.name",
+  "settings": [
+    {
+      "type": "liquid",
+      "id": "liquid",
+      "label": "t:presets.settings.liquid.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks.custom-liquid.name"
+    }
+  ]
+}
+{% endschema %}

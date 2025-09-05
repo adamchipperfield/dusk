@@ -1,0 +1,54 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "collection-hero",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "name": "Title",
+          "static": true,
+          "settings": {
+            "text": "{{ closest.collection.title }}",
+            "heading_tag": "h1",
+            "heading_style": "h2"
+          }
+        },
+        "description": {
+          "type": "rich-text",
+          "name": "Description",
+          "static": true,
+          "settings": {
+            "body": "{{ closest.collection.description }}"
+          }
+        }
+      },
+      "settings": {}
+    },
+    "listing": {
+      "type": "main-collection",
+      "blocks": {
+        "product": {
+          "type": "product-card",
+          "static": true,
+          "settings": {
+            "product": "{{ closest.product }}"
+          }
+        }
+      },
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero",
+    "listing"
+  ]
+}

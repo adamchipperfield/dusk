@@ -1,0 +1,54 @@
+{%- liquid
+  if closest.product.has_only_default_variant
+    continue
+  endif
+-%}
+
+<div id="shopify-block-{{ block.id }}" class="product-options form-group" {{ block.shopify_attributes }}>
+  {% for option in closest.product.options_with_values %}
+    {% liquid
+      assign selected_value_swatch = null
+
+      for value in option.values
+        if value == option.selected_value
+          assign selected_value_swatch = value.swatch
+        endif
+      endfor
+    %}
+
+    <div class="form-field">
+      <fieldset data-section="{{ section.id }}" data-section-element="option-{{ option.position }}">
+        <legend class="text-meta text-weight-medium no-padding">
+          {{ option.name -}}
+          {%- if selected_value_swatch -%}
+            : <span class="text-weight-regular">{{ option.selected_value }}</span>
+          {%- endif %}
+        </legend>
+
+        <div class="product-options__values flex flex-wrap flex-gap-small">
+          {% for value in option.values %}
+            {% render 'product-option-value', value: value, option: option %}
+          {% endfor %}
+        </div>
+      </fieldset>
+    </div>
+  {% endfor %}
+</div>
+
+{% stylesheet %}
+  .product-options__values {
+    row-gap: var(--spacing-12);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:blocks._product-options.name",
+  "tag": null,
+  "presets": [
+    {
+      "name": "t:blocks._product-options.name"
+    }
+  ]
+}
+{% endschema %}

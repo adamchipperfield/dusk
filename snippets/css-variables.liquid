@@ -1,0 +1,100 @@
+{% capture chevron_down_icon %}{% render 'icon-direction', icon: 'chevron-down' %}{% endcapture %}
+
+<style>
+  :root {
+
+    /**
+     * Declares scaled spacing variables.
+     * - https://carbondesignsystem.com/elements/spacing/overview/#spacing-scale
+     */
+    --spacing-2: 0.125rem;
+    --spacing-4: 0.25rem;
+    --spacing-8: 0.5rem;
+    --spacing-12: 0.75rem;
+    --spacing-16: 1rem;
+    --spacing-24: 1.5rem;
+    --spacing-32: 2rem;
+    --spacing-40: 2.5rem;
+    --spacing-48: 3rem;
+    --spacing-64: 4rem;
+    --spacing-80: 5rem;
+    --spacing-96: 6rem;
+    --spacing-160: 10rem;
+
+    /**
+     * Typography scale.
+     * - https://carbondesignsystem.com/elements/typography/overview/#scale
+     */
+    --font-size-12: 0.75rem;
+    --font-size-14: 0.875rem;
+    --font-size-16: 1rem;
+    --font-size-18: 1.125rem;
+    --font-size-20: 1.25rem;
+    --font-size-24: 1.5rem;
+    --font-size-28: 1.75rem;
+    --font-size-32: 2rem;
+    --font-size-36: 2.25rem;
+    --font-size-42: 2.625rem;
+    --font-size-48: 3rem;
+    --font-size-54: 3.375rem;
+    --font-size-60: 3.75rem;
+    --font-size-68: 4.25rem;
+    --font-size-76: 4.75rem;
+    --font-size-84: 5.25rem;
+    --font-size-92: 5.75rem;
+
+    /**
+     * Fonts.
+     */
+    --font-body: {{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
+    --font-heading: {{ settings.font_heading.family }}, {{ settings.font_heading.fallback_families }};
+
+    /**
+     * Font weight.
+     */
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold: 700;
+
+    /**
+     * Color.
+     */
+    --color-background: {{ settings.color_background | color_to_rgb }};
+    --color-text: {{ settings.color_text | color_to_rgb }};
+    --color-text-light: {{ settings.color_text_light | color_to_rgb }};
+    --color-text-inverse: {{ settings.color_text_inverse | color_to_rgb }};
+    --color-button-background: {{ settings.color_button_background | color_to_rgb }};
+    --color-button-hover-background: {{ settings.color_button_background | color_darken: 5 }};
+    --color-button-label: {{ settings.color_button_label | color_to_rgb }};
+    --color-border: {{ settings.color_border | color_to_rgb }};
+    --color-border-lighter: {{ settings.color_border | color_lighten: 8 | color_to_rgb }};
+    --color-success: {{ settings.color_success | color_to_rgb }};
+    --color-error: {{ settings.color_error | color_to_rgb }};
+    --color-backdrop: {{ settings.color_backdrop | color_to_rgb }};
+
+    /**
+     * Layout.
+     */
+    --container-gutter: var(--spacing-16);
+    --max-content-width: 1328px;
+    --header-height: 0;
+
+    /**
+     * Buttons.
+     */
+    --button-height: 50px;
+    --button-height-small: 40px;
+    --button-border-radius: 0;
+
+    /**
+     * Other.
+     */
+    --chevron-down-background-url: url({{ chevron_down_icon | base64_encode | prepend: 'data:image/svg+xml;base64,' | json }});
+  }
+
+  @media (min-width: 768px) {
+    :root {
+      --container-gutter: var(--spacing-24);
+    }
+  }
+</style>

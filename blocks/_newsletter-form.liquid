@@ -1,0 +1,67 @@
+<div class="flex flex-col flex-gap-small items-start hide-empty">
+  {{-  -}}
+  {%- content_for 'block', type: 'heading', id: 'title' -%}
+  {%- content_for 'block', type: 'rich-text', id: 'body', container_class: 'text-body-medium' -%}
+  {{-  -}}
+</div>
+
+{% form 'customer' %}
+  {{ form.errors | default_errors }}
+
+  {% if form.posted_successfully? %}
+    <p class="text-meta success">{{ 'newsletter.success' | t }}</p>
+  {% endif %}
+
+  <div class="form-group form-group--inline width-full">
+    <div class="form-field">
+      <label class="visually-hidden" for="newsletter-email">{{ 'form.email' | t }}</label>
+
+      <input
+        id="newsletter-email"
+        name="contact[email]"
+        placeholder="{{ 'form.email' | t }}"
+        type="email"
+      >
+    </div>
+
+    <button class="button">{{ 'form.submit' | t }}</button>
+  </div>
+{% endform %}
+
+{% stylesheet %}
+  .newsletter-form {
+    gap: var(--spacing-24);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:blocks._newsletter-form.name",
+  "class": "newsletter-form flex flex-col width-full",
+  "presets": [
+    {
+      "name": "t:blocks._newsletter-form.name",
+      "blocks": [
+        {
+          "type": "heading",
+          "id": "title",
+          "static": true,
+          "settings": {
+            "text": "Subscribe to our emails",
+            "heading_tag": "p",
+            "heading_style": "h5"
+          }
+        },
+        {
+          "type": "rich-text",
+          "id": "body",
+          "static": true,
+          "settings": {
+            "body": "<p>Subscribe to be the first to hear about new product launches, exclusive sales and company updates.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

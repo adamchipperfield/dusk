@@ -1,0 +1,126 @@
+/**
+ * Account page styles.
+ */
+.main-account {
+  margin-block: var(--spacing-64);
+}
+
+.main-account__header {
+  align-items: start;
+  display: flex;
+  flex-direction: column;
+  margin-block-end: var(--spacing-32);
+  gap: var(--spacing-12);
+}
+
+.main-account__subheading {
+  margin-block-end: var(--spacing-16);
+}
+
+.main-account__body {
+  margin-block-start: var(--spacing-24);
+}
+
+.main-account__return {
+  display: block;
+  margin-block-end: var(--spacing-24);
+}
+
+.main-account table {
+  border-collapse: collapse;
+}
+
+.main-account table thead {
+  background-color: transparent;
+}
+
+.main-account table :is(th, td) {
+  border: 0;
+  padding-block: var(--spacing-8);
+  padding-inline: 0;
+}
+
+.main-account table tfoot:before {
+  content: '\200C';
+  display: block;
+  line-height: var(--spacing-16);
+}
+
+.main-account__address-form:not(.is-active) {
+  display: none;
+}
+
+.main-account__addresses {
+  margin-block-start: var(--spacing-32);
+}
+
+.main-account__address {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+}
+
+.main-account__address + .main-account__address {
+  margin-block-start: var(--spacing-32);
+}
+
+@media (min-width: 768px) {
+  .main-account table :is(th, td) {
+    padding-inline: var(--spacing-8);
+  }
+
+  .main-account table :is(th, td):first-of-type {
+    padding-inline-start: 0;
+  }
+
+  .main-account table :is(th, td):last-of-type {
+    padding-inline-end: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .main-account table {
+    width: 100%;
+  }
+
+  .main-account table thead {
+    display: none;
+  }
+
+  .main-account table tr {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+  }
+
+  .main-account table td {
+    align-items: center;
+    display: flex;
+    gap: var(--spacing-8);
+    justify-content: space-between;
+  }
+
+  .main-account table td span[data-label]::before {
+    content: attr(data-label);
+  }
+
+  .main-account tfoot tr td:first-of-type {
+    display: none;
+  }
+
+  .main-account table tbody tr:not(:last-of-type) {
+    border-block-end: 1px solid var(--color-border-lighter);
+    margin-block-end: var(--spacing-16);
+    padding-block-end: var(--spacing-16);
+  }
+
+  .main-account table tfoot {
+    border-block-start: 1px solid var(--color-border);
+    display: block;
+    margin-block-start: var(--spacing-16);
+  }
+
+  .main-account table td .value {
+    text-align: right;
+  }
+}

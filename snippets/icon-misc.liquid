@@ -1,0 +1,53 @@
+{% doc %}
+  @description
+  Renders a general icon.
+
+  @param {string} icon - The icon name.
+  @param {string} [class] - Optional class applied to the SVG element.
+
+  @example
+  {% render 'icon-misc', icon: 'menu' %}
+{% enddoc %}
+
+{% case icon %}
+  {% when 'menu' %}
+    <svg class="icon icon__menu {{ class }}" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3 5.98h18v1.5H3v-1.5ZM3 11.25h18v1.5H3v-1.5ZM3 16.52h18v1.5H3v-1.5Z" />
+    </svg>
+
+  {% when 'discount' %}
+    <svg class="icon icon__discount {{ class }}" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12.986 6h3a2 2 0 0 1 2 2v3a1 1 0 0 1-.3.7l-6 6a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1 0-1.4l6-6a1 1 0 0 1 .7-.3Zm2 2a1 1 0 1 0 2 0 1 1 0 0 0-2 0Z" />
+    </svg>
+
+  {% when 'delete' %}
+    <svg class="icon icon__delete {{ class }}" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18.5 7.5h-3.53a3.07 3.07 0 0 0-.6-1.65C13.94 5.32 13.3 5 12.5 5s-1.44.32-1.87.85a3.06 3.06 0 0 0-.6 1.65H6.5a.5.5 0 1 0 0 1h1.25v10c0 .28.22.5.5.5h8.5a.5.5 0 0 0 .5-.5v-10h1.25a.5.5 0 0 0 0-1Zm-7.09-1.02c.23-.29.58-.48 1.09-.48.51 0 .85.19 1.09.48.2.24.3.6.36 1.02h-2.9c.05-.42.17-.78.36-1.02ZM16.25 18h-7.5V8.5h7.5V18Z" />
+      <path d="M11.05 9.75a.5.5 0 0 0-.5.5v6a.5.5 0 0 0 1 0v-6a.5.5 0 0 0-.5-.5Zm2.9 0a.5.5 0 0 0-.5.5v6a.5.5 0 0 0 1 0v-6a.5.5 0 0 0-.5-.5Z" />
+    </svg>
+
+  {% when 'check' %}
+    <svg class="icon icon__check {{ class }}" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M21 6.285L9.84 19.018L3 13L4.319 11.51L9.66 16.196L19.525 5L21 6.285Z" />
+    </svg>
+
+  {% when 'cancel' %}
+    <svg class="icon icon__cancel {{ class }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d="M5 6.355 6.355 5 19 17.645 17.645 19 5 6.355Z M17.645 5 19 6.355 6.355 19 5 17.645 17.645 5Z" />
+    </svg>
+
+  {% when 'profile' %}
+    <svg class="icon icon__profile {{ class }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d="M12.257 3.233a4.997 4.997 0 0 1 4.738 4.992l-.007.256a4.992 4.992 0 0 1-2.048 3.783 9.01 9.01 0 0 1 6.048 8.05l.012.46h-1.5A7.503 7.503 0 0 0 12 13.27a7.503 7.503 0 0 0-7.5 7.502H3l.012-.459a9.01 9.01 0 0 1 6.048-8.05A4.991 4.991 0 0 1 7.012 8.48l-.007-.256A4.997 4.997 0 0 1 12 3.227l.257.006ZM12 4.727a3.497 3.497 0 0 0-3.495 3.498A3.497 3.497 0 0 0 12 11.723a3.497 3.497 0 0 0 3.495-3.498A3.497 3.497 0 0 0 12 4.727Z" />
+    </svg>
+
+  {% when 'search' %}
+    <svg class="icon icon__search {{ class }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d="M5.898 5.373a7.243 7.243 0 0 1 9.973.256l.256.27a7.244 7.244 0 0 1 .246 9.416l4.121 4.121-1.06 1.06-4.122-4.12a7.243 7.243 0 0 1-9.414-.247l-.27-.257a7.243 7.243 0 0 1 0-10.243l.27-.256Zm.79 1.317a5.743 5.743 0 1 0 8.123 8.122A5.743 5.743 0 0 0 6.688 6.69Z" />
+    </svg>
+
+  {% when 'bag' %}
+    <svg class="icon icon__bag {{ class }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d="M18.113 7.414 20.218 21H3.782L5.887 7.414h12.226Zm-10.941 1.5L5.532 19.5h12.936l-1.64-10.585H7.172Z M14.915 7.414A2.915 2.915 0 0 0 12 4.5v-1.5l.228.006a4.416 4.416 0 0 1 4.181 4.182l.006.227h-1.5Zm-7.33 0 .006-.227a4.415 4.415 0 0 1 4.41-4.188v1.5a2.915 2.915 0 0 0-2.912 2.766l-.004.15h-1.5Z" />
+    </svg>
+{% endcase %}

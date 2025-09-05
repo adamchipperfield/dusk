@@ -1,0 +1,27 @@
+{% content_for 'block', type: 'heading', id: 'title', margin: true %}
+
+<form action="{{ routes.search_url }}">
+  <div class="form-group form-group--inline">
+    <div class="form-field">
+      <label class="visually-hidden" for="{{ section.id | append: '-search' }}">
+        {{ 'search.title' | t }}
+      </label>
+
+      <input
+        id="{{ section.id | append: '-search' }}"
+        name="q"
+        value="{{ search.terms | escape }}"
+        type="search"
+        placeholder="{{ 'search.query' | t }}"
+      >
+    </div>
+
+    <button class="button">{{ 'search.title' | t }}</button>
+  </div>
+</form>
+
+{% schema %}
+{
+  "class": "container section-margin"
+}
+{% endschema %}

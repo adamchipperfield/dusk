@@ -1,0 +1,25 @@
+<div class="grid">
+  <div class="col xs12 l6">
+    {% content_for 'block', type: 'heading', id: 'heading', margin: true %}
+    {% content_for 'block', type: 'rich-text', id: 'description' %}
+  </div>
+
+  {% if collection.image %}
+    <div class="col xs12 l6">
+      {% render 'image',
+        image: collection.image,
+        width: 1248,
+        class: 'image image-wide',
+        size: '90vw',
+        large_size: '624px',
+        widths: '352, 760, 1200, 1248'
+      %}
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "class": "container section-margin"
+}
+{% endschema %}

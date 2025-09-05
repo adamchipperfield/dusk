@@ -1,0 +1,44 @@
+{% doc %}
+  @description
+  Renders a quantity field with controls.
+
+  @param {string} id - Unique identifier for the input.
+  @param {number} [value] - The default quantity value, defaults to 1.
+  @param {number} [max] - The maximum quantity available.
+  @param {string} [container_class] - Class applied to the container element.
+  @param {string} [input_ref] - Ref applied to the input element.
+  @param {string} [name] - The input name, defaults to `quantity`.
+  @param {boolean} [hide_label] - Visually hides the label.
+
+  @example
+  {% render 'quantity-selector' %}
+{% enddoc %}
+
+<div
+  {% if container_class %}
+    class="{{ container_class }}"
+  {% endif %}
+>
+  <label
+    {% if hide_label %}
+      class="visually-hidden"
+    {% endif %}
+    for="{{ id }}"
+  >
+    {{- 'quantity.title' | t -}}
+  </label>
+
+  <input
+    id="{{ id }}"
+    type="number"
+    {% if max %}
+      max="{{ max }}"
+    {% endif %}
+    min="1"
+    name="{{ name | default: 'quantity' }}"
+    value="{{ value | default: 1 }}"
+    {% if input_ref %}
+      data-ref="{{ input_ref }}"
+    {% endif %}
+  >
+</div>

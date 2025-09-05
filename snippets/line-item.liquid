@@ -1,0 +1,87 @@
+{% doc %}
+  @description
+  Renders a cart line item.
+
+  @param {line_item} item - The line item object.
+  @param {string} [prefix]
+
+  @example
+  {% render 'line-item', item: item %}
+{% enddoc %}
+
+{% liquid
+  assign key = item.key | handleize | prepend: prefix
+  assign quantity = key | append: '-quantity'
+%}
+
+<line-item id="{{ key }}" class="line-item" key="{{ item.key }}">
+  <a class="line-item__image" href="{{ item.url }}">
+    {%- liquid
+      if item.image
+        echo item.image | image_url: width: 200 | image_tag
+      endif
+    -%}
+  </a>
+
+  <div class="flex flex-col flex-gap-small">
+    {{ item.product.title | link_to: item.url, class: 'text-body-medium' }}
+
+    {% unless item.product.has_only_default_variant %}
+      {% for option in item.options_with_values %}
+        <p class="text-body-small">{{ option.name }}: {{ option.value }}</p>
+      {% endfor %}
+    {% endunless %}
+
+    {% for property in item.properties %}
+      {% assign first_character = property.first | slice: 0 %}
+
+      {% unless property.last == blank or first_character == '_' %}
+        <p class="text-meta">{{ property.first }}: {{ property.last }}</p>
+      {% endunless %}
+    {% endfor %}
+
+    {% render 'product-price', price: item.final_price, class: 'text-body-small' %}
+
+    {% if item.selling_plan_allocation %}
+      <p class="text-body-small">{{ item.selling_plan_allocation.selling_plan.name }}</p>
+    {% endif %}
+
+    <div class="flex flex-gap-small items-center">
+      {% render 'quantity-selector',
+        id: quantity,
+        name: 'updates[]',
+        value: item.quantity,
+        input_ref: 'line-item.quantity',
+        hide_label: true
+      %}
+
+      <a href="{{ item.url_to_remove }}" data-ref="line-item.remove" title="{{ 'cart.line_item_remove' | t }}">
+        {%- render 'icon-misc', icon: 'delete' -%}
+      </a>
+    </div>
+  </div>
+
+  {% render 'product-price',
+    variant: item.variant,
+    price: item.final_line_price,
+    class: 'line-item__total text-right text-body-medium'
+  %}
+</line-item>
+
+{% stylesheet %}
+  .line-item {
+    align-items: start;
+    display: grid;
+    gap: var(--spacing-12) var(--spacing-24);
+    grid-template-columns: 100px 1fr auto;
+  }
+
+  .line-item__image:empty {
+    aspect-ratio: 1;
+    background-color: var(--color-border-lighter);
+  }
+
+  .line-item.is-loading {
+    opacity: 0.5;
+  }
+{% endstylesheet %}

@@ -1,0 +1,84 @@
+{% doc %}
+  @description
+  Renders a gift card recipient form fields.
+
+  @param {string} id - The form namespace.
+  @param {object} form_object - The form instance.
+
+  @example
+  {% render 'gift-card-recipient-form' %}
+{% enddoc %}
+
+<div class="form-group">
+  <div class="form-field">
+    <input
+      id="{{ id }}-send-gc-to-recipient"
+      type="checkbox"
+      name="properties[__shopify_send_gift_card_to_recipient]"
+      data-ref="product-form.gift-card-form-checkbox"
+    >
+
+    <label for="{{ id }}-send-gc-to-recipient">
+      {{- 'product.gift_card_recipient_form_send_to_recipient' | t -}}
+    </label>
+  </div>
+
+  <div class="form-field display-none" data-ref="product-form.gift-card-field">
+    <label for="{{ id }}-gc-email">{{ 'product.gift_card_recipient_form_email' | t }}</label>
+
+    <input
+      id="{{ id }}-gc-email"
+      name="properties[Recipient email]"
+      type="email"
+      required
+      value="{{ form_object.email }}"
+      data-ref="product-form.gift-card-input"
+      disabled
+    >
+  </div>
+
+  <div class="form-field display-none" data-ref="product-form.gift-card-field">
+    <label for="{{ id }}-gc-name">{{ 'product.gift_card_recipient_form_name' | t }}</label>
+
+    <input
+      id="{{ id }}-gc-name"
+      name="properties[Recipient name]"
+      type="text"
+      value="{{ form_object.name }}"
+      maxlength="255"
+      data-ref="product-form.gift-card-input"
+      disabled
+    >
+  </div>
+
+  <div class="form-field display-none" data-ref="product-form.gift-card-field">
+    <label for="{{ id }}-gc-name">{{ 'product.gift_card_recipient_form_message' | t }}</label>
+
+    <textarea
+      id="{{ id }}-gc-message"
+      name="properties[Message]"
+      maxlength="200"
+      rows="4"
+      data-ref="product-form.gift-card-input"
+      disabled
+    >
+      {{- form_object.message -}}
+    </textarea>
+  </div>
+
+  <div class="form-field display-none" data-ref="product-form.gift-card-field">
+    <label for="{{ id }}-gc-send-on">
+      {{- 'product.gift_card_recipient_form_send_on' | t -}}
+    </label>
+
+    <input
+      id="{{ id }}-gc-send-on"
+      name="properties[Send on]"
+      type="date"
+      pattern="\d{4}-\d{2}-\d{2}"
+      value="{{ form_object.send_on }}"
+      data-ref="product-form.gift-card-input"
+      disabled
+    >
+  </div>
+</div>

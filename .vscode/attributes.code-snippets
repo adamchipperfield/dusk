@@ -1,0 +1,25 @@
+{
+  "Custom element ref": {
+    "scope": "html,liquid",
+    "prefix": ["data-ref", "dt"],
+    "body": ["data-ref=\"${1:custom-element}.${2:ref}\""],
+  },
+
+  "Toggle element open": {
+    "scope": "html,liquid",
+    "prefix": ["toggle-element-open", "teo"],
+    "body": ["data-toggle-open=\"${1:toggle-element-id}\""],
+  },
+
+  "Toggle element close": {
+    "scope": "html,liquid",
+    "prefix": ["toggle-element-close", "tec"],
+    "body": ["data-toggle-close=\"${1:toggle-element-id}\""],
+  },
+
+  "Toggle element toggle": {
+    "scope": "html,liquid",
+    "prefix": ["toggle-element-toggle", "tet"],
+    "body": ["data-toggle=\"${1:toggle-element-id}\""],
+  },
+}
