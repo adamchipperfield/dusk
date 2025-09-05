@@ -292,6 +292,14 @@
     "page-card": {
       "name": "Page card"
     },
+    "_product-title": {
+      "name": "Title",
+      "settings": {
+        "show_vendor": {
+          "label": "Show vendor"
+        }
+      }
+    },
     "_product-price": {
       "name": "Price",
       "settings": {

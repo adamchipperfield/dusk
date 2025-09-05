@@ -116,6 +116,11 @@
   padding-inline: var(--spacing-8);
 }
 
+.pill--secondary {
+  background-color: var(--color-border-lighter);
+  border-color: var(--color-border-lighter);
+}
+
 :is(input[type='radio'], input[type='checkbox']):checked + .pill {
   border-color: var(--color-text);
 }

@@ -13,11 +13,18 @@
       "type": "main-product",
       "blocks": {
         "title": {
-          "type": "heading",
+          "type": "_product-title",
           "name": "Title",
-          "settings": {
-            "text": "{{ closest.product.title }}",
-            "heading_style": "h5"
+          "blocks": {
+            "title": {
+              "type": "heading",
+              "id": "title",
+              "static": true,
+              "settings": {
+                "text": "{{ closest.product.title }}",
+                "heading_style": "h5"
+              }
+            }
           }
         },
         "price": {

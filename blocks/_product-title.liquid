@@ -1,0 +1,20 @@
+{% if block.settings.show_vendor %}
+  <p class="pill pill--small pill--secondary">{{ product.vendor }}</p>
+{% endif %}
+
+{% content_for 'block', type: 'heading', id: 'title' %}
+
+{% schema %}
+{
+  "name": "t:blocks._product-title.name",
+  "class": "flex flex-col flex-gap-small items-start",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "t:blocks._product-title.settings.show_vendor.label",
+      "default": true
+    }
+  ]
+}
+{% endschema %}
