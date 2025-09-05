@@ -10,11 +10,7 @@
   fetchpriority="low"
 ></script>
 
-<main-product
-  class="main-product"
-  section-id="{{ section.id }}"
-  selected-variant="{{ product.selected_or_first_available_variant.id }}"
->
+<main-product section-id="{{ section.id }}" selected-variant="{{ product.selected_or_first_available_variant.id }}">
   <div class="container">
     <div class="main-product__grid grid">
       <div class="col xs12 m6 l7">
@@ -41,9 +37,9 @@
     }
 
     .main-product__form {
+      padding-block-start: var(--spacing-24);
       position: sticky;
       top: var(--header-height);
-      padding-block-start: var(--spacing-24);
     }
   }
 {% endstylesheet %}
@@ -55,7 +51,7 @@
 {% schema %}
 {
   "name": "t:sections.main-product.name",
-  "class": "section-margin",
+  "class": "main-product",
   "blocks": [
     {
       "type": "@theme"

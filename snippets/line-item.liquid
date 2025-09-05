@@ -24,7 +24,7 @@
   </a>
 
   <div class="flex flex-col flex-gap-small">
-    {{ item.product.title | link_to: item.url, class: 'text-body-medium' }}
+    {{ item.product.title | link_to: item.url }}
 
     {% unless item.product.has_only_default_variant %}
       {% for option in item.options_with_values %}
@@ -64,7 +64,7 @@
   {% render 'product-price',
     variant: item.variant,
     price: item.final_line_price,
-    class: 'line-item__total text-right text-body-medium'
+    class: 'line-item__total text-right'
   %}
 </line-item>
 

@@ -16,7 +16,8 @@
           "type": "heading",
           "name": "Title",
           "settings": {
-            "text": "{{ closest.product.title }}"
+            "text": "{{ closest.product.title }}",
+            "heading_style": "h5"
           }
         },
         "price": {

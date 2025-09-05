@@ -6,7 +6,7 @@
 %}
   {% render 'product-price',
     variant: closest.product.selected_or_first_available_variant,
-    class: 'text-body-large text-weight-medium'
+    class: 'product-price text-weight-bold'
   %}
 
   {% if cart.taxes_included and block.settings.show_taxes_included %}
@@ -15,6 +15,12 @@
 
   {{ form | payment_terms }}
 {% endform %}
+
+{% stylesheet %}
+  .product-price s {
+    color: var(--color-error);
+  }
+{% endstylesheet %}
 
 {% schema %}
 {

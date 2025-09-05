@@ -33,12 +33,11 @@
 
 body,
 .text-body,
-.text-body-small,
-.text-body-medium {
+.text-body-small {
   -webkit-font-smoothing: antialiased;
   color: var(--color-text);
   font-family: var(--font-body);
-  font-size: var(--font-size-16);
+  font-size: var(--font-size-14);
   font-weight: var(--body-weight);
   line-height: 1.5;
   text-rendering: optimizespeed;
@@ -46,10 +45,6 @@ body,
 
 .text-body-small {
   font-size: var(--font-size-12);
-}
-
-.text-body-medium {
-  font-size: var(--font-size-14);
 }
 
 .text-body-large {

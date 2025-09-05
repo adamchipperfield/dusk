@@ -9,6 +9,8 @@
  */
 {
   "current": {
+    "font_body": "dm_sans_n4",
+    "font_heading": "dm_serif_display_n4",
     "content_for_index": [],
     "color_schemes": {
       "scheme-1": {
@@ -22,12 +24,18 @@
           "borders": "#E5DFE1",
           "success": "#108043",
           "error": "#EB001B",
-          "primary_button_background": "#376FDA",
+          "primary_button_background": "#000000",
           "primary_button_label": "#FFFFFF",
-          "primary_button_border": "#376FDA",
-          "secondary_button_background": "#FFFFFF",
-          "secondary_button_label": "#376FDA",
-          "secondary_button_border": "#FFFFFF"
+          "primary_button_border": "#000000",
+          "primary_button_background_hover": "#000000",
+          "primary_button_label_hover": "#FFFFFF",
+          "primary_button_border_hover": "#000000",
+          "secondary_button_background": "transparent",
+          "secondary_button_label": "#000000",
+          "secondary_button_border": "#000000",
+          "secondary_button_background_hover": "transparent",
+          "secondary_button_label_hover": "#000000",
+          "secondary_button_border_hover": "#000000"
         }
       }
     }
