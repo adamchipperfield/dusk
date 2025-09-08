@@ -19,9 +19,17 @@
 <site-header>
   {% content_for 'block', type: '_announcement-bar', id: 'announcement' %}
 
-  <div class="site-header__container container">
-    <div class="site-header__left">
-      {% render 'header-menu', menu: section.settings.menu %}
+  <div class="site-header__top container">
+    <div class="site-header__left until-medium">
+      <toggle-element-button toggle-id="header-menu">
+        <button
+          class="site-header__menu-button until-medium button-reset"
+          type="button"
+          title="{{ 'navigation.open' | t }}"
+        >
+          {% render 'icon-misc', icon: 'menu' %}
+        </button>
+      </toggle-element-button>
     </div>
 
     <{{ logo_tag }} class="site-header__logo margin-left-auto margin-right-auto text-center text-h6">
@@ -75,7 +83,7 @@
             {% render 'icon-misc', icon: 'bag' %}
 
             <span
-              class="header-cart-badge__count bubble bubble--small bubble--button"
+              class="header-cart-badge__count bubble bubble--small bubble--button {% if cart.empty? %}visually-hidden{% endif %}"
               data-section="{{ section.id }}"
               data-section-element="cart-count"
             >
@@ -86,12 +94,19 @@
       </li>
     </ul>
   </div>
+
+  <div class="site-header__bottom">
+    <div class="container">
+      {% render 'header-menu', menu: section.settings.menu %}
+    </div>
+  </div>
 </site-header>
 
 {% stylesheet %}
   .site-header {
     --padding-block: var(--spacing-16);
     background-color: var(--color-background);
+    border-block-end: 1px solid var(--color-border-lighter);
     position: sticky;
     top: 0;
     width: 100%;
@@ -102,7 +117,7 @@
     display: block;
   }
 
-  .site-header__container {
+  .site-header__top {
     align-items: center;
     display: grid;
     grid-template-columns: var(--outside-column-size, 0.5fr) var(--middle-column-size, 1fr) var(
@@ -111,12 +126,26 @@
       );
   }
 
+  .site-header__bottom {
+    border-block-start: 1px solid var(--color-border-lighter);
+  }
+
+  .site-header__menu-button {
+    .icon {
+      --size: 18px;
+    }
+  }
+
   .site-header__logo {
     padding-block: var(--padding-block);
   }
 
   .site-header__misc {
-    gap: var(--spacing-8);
+    gap: var(--spacing-12);
+
+    .icon {
+      --size: 18px;
+    }
   }
 
   .header-cart-badge {
@@ -125,8 +154,8 @@
 
   .header-cart-badge__count {
     position: absolute;
-    right: calc(var(--spacing-4) * -1);
-    top: calc(var(--spacing-2) * -1);
+    right: calc(var(--spacing-8) * -1);
+    top: calc(var(--spacing-8) * -1);
     z-index: 1;
   }
 
@@ -135,17 +164,20 @@
       --padding-block: var(--spacing-24);
     }
 
-    .site-header__container {
+    .site-header__top {
       --outside-column-size: 2.5fr;
-    }
-
-    .site-header__left {
-      align-content: center;
-      height: 100%;
+      display: flex;
+      gap: var(--spacing-32);
     }
 
     .site-header__misc {
       gap: var(--spacing-16);
+      margin-inline-start: auto;
+    }
+
+    .site-header__logo {
+      --padding-block: var(--spacing-16);
+      margin-inline: 0;
     }
   }
 {% endstylesheet %}

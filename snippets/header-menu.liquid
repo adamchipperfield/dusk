@@ -14,16 +14,6 @@
   endif
 %}
 
-<toggle-element-button toggle-id="header-menu">
-  <button
-    class="until-medium button-reset"
-    type="button"
-    title="{{ 'navigation.open' | t }}"
-  >
-    {% render 'icon-misc', icon: 'menu' %}
-  </button>
-</toggle-element-button>
-
 <header-menu class="header-menu is-ready">
   <toggle-element
     id="header-menu"
@@ -62,7 +52,7 @@
               {% endif %}
             >
               <a
-                class="header-menu__link flex justify-between items-center"
+                class="header-menu__link flex justify-between items-center text-weight-medium"
                 href="{{ tier_1.url }}"
                 data-ref="header-menu.link"
                 {% if has_submenu %}
@@ -180,11 +170,12 @@
     }
 
     .header-menu__list {
-      --item-spacing: var(--spacing-8);
+      --item-spacing: var(--spacing-12);
       align-items: center;
       display: flex;
       flex-direction: row;
       gap: 0;
+      margin-inline: calc(var(--item-spacing) * -1) 0;
       height: 100%;
     }
 
@@ -194,10 +185,6 @@
       height: 100%;
       padding-block: 0;
       padding-inline: var(--item-spacing);
-    }
-
-    .site-header__left .header-menu__list {
-      margin-inline-start: calc(var(--item-spacing) * -1);
     }
 
     /**
