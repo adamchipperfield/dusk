@@ -20,7 +20,8 @@ class SiteHeader extends HTMLCustomElement {
       document.body.style.setProperty('--header-height', `${this.getBoundingClientRect().height.toFixed(2)}px`);
     }).observe(this);
 
-    this.on('keyup', this.refs.predictiveSearchInput, this.handlePredictiveSearch.bind(this));
+    if (this.refs.predictiveSearchInput)
+      this.on('keyup', this.refs.predictiveSearchInput.all, this.handlePredictiveSearch.bind(this));
   }
 
   /**
@@ -35,9 +36,24 @@ class SiteHeader extends HTMLCustomElement {
     url.searchParams.append('q', event.target.value);
     url.searchParams.append('section_id', this.getAttribute(this.customAttributes.sectionId));
 
+    /**
+     * Sync other predictive search input elements.
+     */
+    for (const element of this.refs.predictiveSearchInput.all) {
+      if (!(element === event.target)) {
+        element.value = event.target.value;
+      }
+    }
+
     publish(events.sectionUpdate, {
       sections: {
         [this.getAttribute(this.customAttributes.sectionId)]: await text(fetch(url.toString())),
+      },
+      /**
+       * When the elements have been updated, open the overlay.
+       */
+      onComplete() {
+        publish(events.toggleElementOpen, { id: 'search-overlay' });
       },
     });
   }

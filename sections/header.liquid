@@ -10,13 +10,28 @@
   endif
 %}
 
+{% capture predictive_search_form %}
+  <form action="{{ routes.search_url }}">
+    <label for="{{ section.id }}-predictive-search">{{ 'search.title' | t }}</label>
+
+    <input
+      id="{{ section.id }}-predictive-search"
+      name="q"
+      type="search"
+      placeholder="{{ 'search.query' | t }}"
+      data-ref="site-header.predictive-search-input"
+      data-static
+    >
+  </form>
+{% endcapture %}
+
 <script
   src="{{ 'site-header.js' | asset_url }}"
   type="module"
   fetchpriority="low"
 ></script>
 
-<site-header section-id="{{ section.id }}">
+<site-header section-id="{{ section.id }}" tabindex="1">
   {% content_for 'block', type: '_announcement-bar', id: 'announcement' %}
 
   <div class="site-header__top">
@@ -48,29 +63,33 @@
         </a>
       </{{ logo_tag }}>
 
-      <form action="{{ routes.search_url }}">
-        <label for="{{ section.id }}-predictive-search">{{ 'search.title' | t }}</label>
+      <div class="from-medium">
+        {{ predictive_search_form }}
+      </div>
 
-        <input
-          id="{{ section.id }}"
-          name="q"
-          type="search"
-          placeholder="{{ 'search.query' | t }}"
-          data-ref="site-header.predictive-search-input"
-        >
-      </form>
+      <toggle-element
+        id="search-overlay"
+        class="search-overlay"
+        close-on-body-click
+        close-on-escape
+        set-a11y-attributes
+        data-section="{{ section.id }}"
+        data-section-element="search-overlay"
+      >
+        <div class="until-medium">{{ predictive_search_form }}</div>
 
-      <div data-section="{{ section.id }}" data-section-element="search-overlay">
         {% if predictive_search.performed %}
           {{ 'search.products_found' | t: count: predictive_search.resources.products.size }}
         {% endif %}
-      </div>
+      </toggle-element>
 
       <ul class="site-header__misc flex justify-end margin-left-auto text-right list-reset">
         <li>
-          <a href="{{ routes.search_url }}" title="{{ 'search.title' | t }}">
-            {%- render 'icon-misc', icon: 'search' -%}
-          </a>
+          <toggle-element-button toggle-id="search-overlay">
+            <a href="{{ routes.search_url }}" title="{{ 'search.title' | t }}">
+              {%- render 'icon-misc', icon: 'search' -%}
+            </a>
+          </toggle-element-button>
         </li>
 
         {% if shop.customer_accounts_enabled %}
@@ -148,6 +167,21 @@
         --outside-column-size,
         0.5fr
       );
+    position: relative;
+
+    .search-overlay {
+      left: 0;
+      opacity: 0;
+      position: absolute;
+      top: 90%;
+      transition: opacity 0.2s ease-out, top 0.2s ease-out;
+      width: 100%;
+
+      &.is-open {
+        opacity: 1;
+        top: 100%;
+      }
+    }
   }
 
   .site-header__bottom {
@@ -181,6 +215,12 @@
     right: calc(var(--spacing-8) * -1);
     top: calc(var(--spacing-8) * -1);
     z-index: 1;
+  }
+
+  .search-overlay {
+    background-color: var(--color-background);
+    padding-block: var(--spacing-32);
+    padding-inline: var(--spacing-32);
   }
 
   @media (min-width: 768px) {

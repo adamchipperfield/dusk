@@ -181,7 +181,9 @@ export async function updateSectionElements(sectionId, sectionHtml) {
         /**
          * Exclude dynamic Shopify elements.
          */
-        (from) => !['dynamic-checkout-cart', 'payment-button'].includes(from.dataset.shopify),
+        (from) =>
+          !['dynamic-checkout-cart', 'payment-button'].includes(from.dataset.shopify) &&
+          !from.hasAttribute('data-static'),
       ),
     );
   }

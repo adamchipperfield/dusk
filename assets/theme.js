@@ -23,8 +23,12 @@ customElements.define('video-element', VideoElement);
 /**
  * Handles Section Rendering API events.
  */
-subscribe(events.sectionUpdate, ({ sections }) => {
-  Promise.all(
+subscribe(events.sectionUpdate, async ({ sections, onComplete }) => {
+  await Promise.all(
     Object.entries(sections).map(([sectionId, sectionHtml]) => updateSectionElements(sectionId, sectionHtml)),
   );
+
+  if (typeof onComplete === 'function') {
+    onComplete();
+  }
 });
