@@ -20,8 +20,10 @@ class SiteHeader extends HTMLCustomElement {
       document.body.style.setProperty('--header-height', `${this.getBoundingClientRect().height.toFixed(2)}px`);
     }).observe(this);
 
-    if (this.refs.predictiveSearchInput)
-      this.on('keyup', this.refs.predictiveSearchInput.all, this.handlePredictiveSearch.bind(this));
+    if (this.refs.predictiveSearchInput) {
+      this.on('input', this.refs.predictiveSearchInput.all, debounce(this.handlePredictiveSearch.bind(this)));
+      this.on('focus', this.refs.predictiveSearchInput.all, this.handlePredictiveSearch.bind(this));
+    }
   }
 
   /**
@@ -32,6 +34,14 @@ class SiteHeader extends HTMLCustomElement {
     const url = new URL(theme.routes.predictive_search_url, window.location.origin);
 
     event.preventDefault();
+
+    if (event.target.value === '') {
+      if (isFromBreakpoint('medium')) {
+        this.refs.searchOverlay.close();
+      }
+
+      return;
+    }
 
     url.searchParams.append('q', event.target.value);
     url.searchParams.append('section_id', this.getAttribute(this.customAttributes.sectionId));
@@ -53,7 +63,9 @@ class SiteHeader extends HTMLCustomElement {
        * When the elements have been updated, open the overlay.
        */
       onComplete() {
-        publish(events.toggleElementOpen, { id: 'search-overlay' });
+        if (isFromBreakpoint('medium') && !(event.target.value === '')) {
+          publish(events.toggleElementOpen, { id: 'search-overlay' });
+        }
       },
     });
   }

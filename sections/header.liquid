@@ -12,10 +12,11 @@
 
 {% capture predictive_search_form %}
   <form action="{{ routes.search_url }}">
-    <label for="{{ section.id }}-predictive-search">{{ 'search.title' | t }}</label>
+    <label class="visually-hidden" for="{{ section.id }}-predictive-search">{{ 'search.title' | t }}</label>
 
     <input
       id="{{ section.id }}-predictive-search"
+      class="site-header__search"
       name="q"
       type="search"
       placeholder="{{ 'search.query' | t }}"
@@ -73,14 +74,19 @@
         close-on-body-click
         close-on-escape
         set-a11y-attributes
-        data-section="{{ section.id }}"
-        data-section-element="search-overlay"
+        data-ref="site-header.search-overlay"
       >
         <div class="until-medium">{{ predictive_search_form }}</div>
 
-        {% if predictive_search.performed %}
-          {{ 'search.products_found' | t: count: predictive_search.resources.products.size }}
-        {% endif %}
+        <div
+          class="search-overlay__body"
+          data-section="{{ section.id }}"
+          data-section-element="search-overlay"
+        >
+          {% if predictive_search.performed %}
+            {{ 'search.products_found' | t: count: predictive_search.resources.products.size }}
+          {% endif %}
+        </div>
       </toggle-element>
 
       <ul class="site-header__misc flex justify-end margin-left-auto text-right list-reset">
@@ -172,6 +178,7 @@
     .search-overlay {
       left: 0;
       opacity: 0;
+      pointer-events: none;
       position: absolute;
       top: 90%;
       transition: opacity 0.2s ease-out, top 0.2s ease-out;
@@ -179,6 +186,7 @@
 
       &.is-open {
         opacity: 1;
+        pointer-events: auto;
         top: 100%;
       }
     }
@@ -219,8 +227,13 @@
 
   .search-overlay {
     background-color: var(--color-background);
+    border-block-start: 1px solid var(--color-border-lighter);
     padding-block: var(--spacing-32);
     padding-inline: var(--spacing-32);
+
+    &:has(.site-header__search:placeholder-shown) .search-overlay__body {
+      display: none;
+    }
   }
 
   @media (min-width: 768px) {
