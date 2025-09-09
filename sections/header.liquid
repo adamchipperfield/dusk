@@ -48,13 +48,13 @@
         </a>
       </{{ logo_tag }}>
 
-      <div class="from-medium">
+      <div class="site-header__search from-medium">
         <form action="{{ routes.search_url }}">
           <label class="visually-hidden" for="{{ section.id }}-search">{{ 'search.title' | t }}</label>
 
           <input
             id="{{ section.id }}-search"
-            class="site-header__search"
+            class="site-header__search-input"
             name="q"
             type="search"
             placeholder="{{ 'search.query' | t }}"
@@ -76,7 +76,7 @@
 
           <input
             id="{{ section.id }}-search-overlay-input"
-            class="site-header__search"
+            class="site-header__search-input"
             name="q"
             type="search"
             placeholder="{{ 'search.query' | t }}"
@@ -96,7 +96,7 @@
       </toggle-element>
 
       <ul class="site-header__misc flex justify-end margin-left-auto text-right list-reset">
-        <li>
+        <li class="until-medium">
           <toggle-element-button toggle-id="search-overlay">
             <a href="{{ routes.search_url }}" title="{{ 'search.title' | t }}">
               {%- render 'icon-misc', icon: 'search' -%}
@@ -155,7 +155,6 @@
 
 {% stylesheet %}
   .site-header {
-    --padding-block: var(--spacing-16);
     background-color: var(--color-background);
     border-block-end: 1px solid var(--color-border-lighter);
     position: sticky;
@@ -179,6 +178,7 @@
         --outside-column-size,
         0.5fr
       );
+    padding-block: var(--spacing-12);
     position: relative;
 
     .search-overlay {
@@ -198,18 +198,10 @@
     }
   }
 
-  .site-header__bottom {
-    border-block-start: 1px solid var(--color-border-lighter);
-  }
-
   .site-header__menu-button {
     .icon {
       --size: 18px;
     }
-  }
-
-  .site-header__logo {
-    padding-block: var(--padding-block);
   }
 
   .site-header__misc {
@@ -234,21 +226,30 @@
   .search-overlay {
     background-color: var(--color-background);
     border-block-start: 1px solid var(--color-border-lighter);
-    padding-block: var(--spacing-32);
-    padding-inline: var(--spacing-32);
+    padding-block: var(--spacing-16);
+    padding-inline: var(--spacing-16);
 
     @media (max-width: 767px) {
-      &:has(.site-header__search:placeholder-shown) .search-overlay__body {
+      &:has(.site-header__search-input:placeholder-shown) .search-overlay__body {
         display: none;
       }
     }
   }
 
-  @media (min-width: 768px) {
-    .site-header {
-      --padding-block: var(--spacing-24);
-    }
+  .site-header__search {
+    flex-grow: 1;
+    max-width: 400px;
+  }
 
+  .site-header__search-input.site-header__search-input {
+    background-color: var(--color-border-lighter);
+    border-color: var(--color-border-lighter);
+    border-radius: 50px;
+    min-height: 45px;
+    padding-block: var(--spacing-8);
+  }
+
+  @media (min-width: 768px) {
     .site-header__container {
       --outside-column-size: 2.5fr;
       display: flex;
@@ -261,8 +262,16 @@
     }
 
     .site-header__logo {
-      --padding-block: var(--spacing-16);
       margin-inline: 0;
+    }
+
+    .site-header__bottom {
+      border-block-start: 1px solid var(--color-border-lighter);
+    }
+
+    .search-overlay {
+      padding-block: var(--spacing-32);
+      padding-inline: var(--spacing-32);
     }
   }
 {% endstylesheet %}
