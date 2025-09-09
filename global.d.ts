@@ -1,4 +1,4 @@
-export {};
+export { };
 
 declare global {
   interface Theme {
@@ -11,6 +11,7 @@ declare global {
       cart_url: string;
       cart_add_url: string;
       cart_update_url: string;
+      predictive_search_url: string;
     };
 
     strings: {

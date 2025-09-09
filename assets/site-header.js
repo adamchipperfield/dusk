@@ -1,15 +1,45 @@
 import { getFocusableElements } from '@theme/a11y';
 import { isFromBreakpoint } from '@theme/breakpoints';
-import { classes } from '@theme/constants';
+import { classes, events } from '@theme/constants';
 import { getRefs } from '@theme/dom';
+import { publish } from '@theme/event-bus';
+import { text } from '@theme/fetch';
 import { HTMLCustomElement } from '@theme/html-custom-element';
 import { debounce } from '@theme/utilities';
 
 class SiteHeader extends HTMLCustomElement {
+  customAttributes = {
+    /** @type {string} */
+    sectionId: 'section-id',
+  };
+
+  requiredAttributes = [this.customAttributes.sectionId];
+
   connectedCallback() {
     new ResizeObserver(() => {
       document.body.style.setProperty('--header-height', `${this.getBoundingClientRect().height.toFixed(2)}px`);
     }).observe(this);
+
+    this.on('keyup', this.refs.predictiveSearchInput, this.handlePredictiveSearch.bind(this));
+  }
+
+  /**
+   * Performs a predictive search query and publishes the updated section.
+   * @param {KeyboardEvent} event
+   */
+  async handlePredictiveSearch(event) {
+    const url = new URL(theme.routes.predictive_search_url, window.location.origin);
+
+    event.preventDefault();
+
+    url.searchParams.append('q', event.target.value);
+    url.searchParams.append('section_id', this.getAttribute(this.customAttributes.sectionId));
+
+    publish(events.sectionUpdate, {
+      sections: {
+        [this.getAttribute(this.customAttributes.sectionId)]: await text(fetch(url.toString())),
+      },
+    });
   }
 }
 

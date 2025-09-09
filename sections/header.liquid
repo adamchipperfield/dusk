@@ -16,83 +16,103 @@
   fetchpriority="low"
 ></script>
 
-<site-header>
+<site-header section-id="{{ section.id }}">
   {% content_for 'block', type: '_announcement-bar', id: 'announcement' %}
 
-  <div class="site-header__top container">
-    <div class="site-header__left until-medium">
-      <toggle-element-button toggle-id="header-menu">
-        <button
-          class="site-header__menu-button until-medium button-reset"
-          type="button"
-          title="{{ 'navigation.open' | t }}"
-        >
-          {% render 'icon-misc', icon: 'menu' %}
-        </button>
-      </toggle-element-button>
-    </div>
+  <div class="site-header__top">
+    <div class="site-header__container container">
+      <div class="site-header__left until-medium">
+        <toggle-element-button toggle-id="header-menu">
+          <button
+            class="site-header__menu-button until-medium button-reset"
+            type="button"
+            title="{{ 'navigation.open' | t }}"
+          >
+            {% render 'icon-misc', icon: 'menu' %}
+          </button>
+        </toggle-element-button>
+      </div>
 
-    <{{ logo_tag }} class="site-header__logo margin-left-auto margin-right-auto text-center text-h6">
-      <a href="{{ routes.root_url }}">
-        {% if section.settings.logo %}
-          {{
-            section.settings.logo
-            | image_url: width: logo_width_2x
-            | image_tag: alt: logo_alt, width: logo_width, srcset: null
-          }}
+      <{{ logo_tag }} class="site-header__logo margin-left-auto margin-right-auto text-center text-h6">
+        <a href="{{ routes.root_url }}">
+          {% if section.settings.logo %}
+            {{
+              section.settings.logo
+              | image_url: width: logo_width_2x
+              | image_tag: alt: logo_alt, width: logo_width, srcset: null
+            }}
 
-        {% else %}
-          {{ shop.name }}
-        {% endif %}
-      </a>
-    </{{ logo_tag }}>
-
-    <ul class="site-header__misc flex justify-end margin-left-auto text-right list-reset">
-      <li>
-        <a href="{{ routes.search_url }}" title="{{ 'search.title' | t }}">
-          {%- render 'icon-misc', icon: 'search' -%}
+          {% else %}
+            {{ shop.name }}
+          {% endif %}
         </a>
-      </li>
+      </{{ logo_tag }}>
 
-      {% if shop.customer_accounts_enabled %}
-        {% liquid
-          assign customer_url = routes.account_login_url
-          assign customer_label = 'customer.login.title' | t
+      <form action="{{ routes.search_url }}">
+        <label for="{{ section.id }}-predictive-search">{{ 'search.title' | t }}</label>
 
-          if customer
-            assign customer_url = routes.account_url
-            assign customer_label = 'customer.title' | t
-          endif
-        %}
+        <input
+          id="{{ section.id }}"
+          name="q"
+          type="search"
+          placeholder="{{ 'search.query' | t }}"
+          data-ref="site-header.predictive-search-input"
+        >
+      </form>
 
+      <div data-section="{{ section.id }}" data-section-element="search-overlay">
+        {% if predictive_search.performed %}
+          {{ 'search.products_found' | t: count: predictive_search.resources.products.size }}
+        {% endif %}
+      </div>
+
+      <ul class="site-header__misc flex justify-end margin-left-auto text-right list-reset">
         <li>
-          <a href="{{ customer_url }}" title="{{ customer_label }}">
-            {% render 'icon-misc', icon: 'profile' %}
+          <a href="{{ routes.search_url }}" title="{{ 'search.title' | t }}">
+            {%- render 'icon-misc', icon: 'search' -%}
           </a>
         </li>
-      {% endif %}
 
-      <li>
-        <toggle-element-button
-          toggle-id="cart-drawer"
-          {% if request.page_type == 'cart' %}
-            disabled
-          {% endif %}
-        >
-          <a class="header-cart-badge" href="{{ routes.cart_url }}" title="{{ 'cart.title' | t }}">
-            {% render 'icon-misc', icon: 'bag' %}
+        {% if shop.customer_accounts_enabled %}
+          {% liquid
+            assign customer_url = routes.account_login_url
+            assign customer_label = 'customer.login.title' | t
 
-            <span
-              class="header-cart-badge__count bubble bubble--small bubble--button {% if cart.empty? %}visually-hidden{% endif %}"
-              data-section="{{ section.id }}"
-              data-section-element="cart-count"
-            >
-              {{ cart.item_count }}
-            </span>
-          </a>
-        </toggle-element-button>
-      </li>
-    </ul>
+            if customer
+              assign customer_url = routes.account_url
+              assign customer_label = 'customer.title' | t
+            endif
+          %}
+
+          <li>
+            <a href="{{ customer_url }}" title="{{ customer_label }}">
+              {% render 'icon-misc', icon: 'profile' %}
+            </a>
+          </li>
+        {% endif %}
+
+        <li>
+          <toggle-element-button
+            toggle-id="cart-drawer"
+            {% if request.page_type == 'cart' %}
+              disabled
+            {% endif %}
+          >
+            <a class="header-cart-badge" href="{{ routes.cart_url }}" title="{{ 'cart.title' | t }}">
+              {% render 'icon-misc', icon: 'bag' %}
+
+              <span
+                class="header-cart-badge__count bubble bubble--small bubble--button {% if cart.empty? %}visually-hidden{% endif %}"
+                data-section="{{ section.id }}"
+                data-section-element="cart-count"
+              >
+                {{ cart.item_count }}
+              </span>
+            </a>
+          </toggle-element-button>
+        </li>
+      </ul>
+    </div>
   </div>
 
   <div class="site-header__bottom">
@@ -118,6 +138,10 @@
   }
 
   .site-header__top {
+    position: relative;
+  }
+
+  .site-header__container {
     align-items: center;
     display: grid;
     grid-template-columns: var(--outside-column-size, 0.5fr) var(--middle-column-size, 1fr) var(
@@ -164,7 +188,7 @@
       --padding-block: var(--spacing-24);
     }
 
-    .site-header__top {
+    .site-header__container {
       --outside-column-size: 2.5fr;
       display: flex;
       gap: var(--spacing-32);
