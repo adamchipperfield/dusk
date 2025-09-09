@@ -43,6 +43,12 @@ class SiteHeader extends HTMLCustomElement {
         }
       }),
     );
+
+    this.on('focus', this.refs.searchInput, (event) => {
+      if (!(event.target.value === '')) {
+        this.refs.searchOverlay.open();
+      }
+    });
   }
 
   /**
