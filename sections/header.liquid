@@ -71,6 +71,19 @@
         set-a11y-attributes
         data-ref="site-header.search-overlay"
       >
+        <form class="until-medium" action="{{ routes.search_url }}">
+          <label class="visually-hidden" for="{{ section.id }}-search-overlay-input">{{ 'search.title' | t }}</label>
+
+          <input
+            id="{{ section.id }}-search-overlay-input"
+            class="site-header__search"
+            name="q"
+            type="search"
+            placeholder="{{ 'search.query' | t }}"
+            data-ref="site-header.search-overlay-input"
+          >
+        </form>
+
         <div
           class="search-overlay__body"
           data-section="{{ section.id }}"
@@ -224,8 +237,10 @@
     padding-block: var(--spacing-32);
     padding-inline: var(--spacing-32);
 
-    &:has(.site-header__search:placeholder-shown) .search-overlay__body {
-      display: none;
+    @media (max-width: 767px) {
+      &:has(.site-header__search:placeholder-shown) .search-overlay__body {
+        display: none;
+      }
     }
   }
 

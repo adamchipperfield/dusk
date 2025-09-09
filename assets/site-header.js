@@ -18,12 +18,24 @@ class SiteHeader extends HTMLCustomElement {
   connectedCallback() {
     new ResizeObserver(() => {
       document.body.style.setProperty('--header-height', `${this.getBoundingClientRect().height.toFixed(2)}px`);
+
+      /**
+       * If the search input is empty on desktop, close the search overlay.
+       */
+      if (isFromBreakpoint('medium') && this.refs.searchInput.value === '') {
+        this.refs.searchOverlay.close();
+      }
     }).observe(this);
 
     this.on(
       'input',
       this.refs.searchInput,
       debounce(async (event) => {
+        /**
+         * Update the search overlay input.
+         */
+        this.refs.searchOverlayInput.value = event.target.value;
+
         if (event.target.value === '') {
           this.refs.searchOverlay.close();
 
@@ -49,6 +61,19 @@ class SiteHeader extends HTMLCustomElement {
         this.refs.searchOverlay.open();
       }
     });
+
+    this.on(
+      'input',
+      this.refs.searchOverlayInput,
+      debounce((event) => {
+        this.handlePredictiveSearch(event);
+
+        /**
+         * Update the header search input.
+         */
+        this.refs.searchInput.value = event.target.value;
+      }),
+    );
   }
 
   /**
