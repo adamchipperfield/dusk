@@ -10,22 +10,6 @@
   endif
 %}
 
-{% capture predictive_search_form %}
-  <form action="{{ routes.search_url }}">
-    <label class="visually-hidden" for="{{ section.id }}-predictive-search">{{ 'search.title' | t }}</label>
-
-    <input
-      id="{{ section.id }}-predictive-search"
-      class="site-header__search"
-      name="q"
-      type="search"
-      placeholder="{{ 'search.query' | t }}"
-      data-ref="site-header.predictive-search-input"
-      data-static
-    >
-  </form>
-{% endcapture %}
-
 <script
   src="{{ 'site-header.js' | asset_url }}"
   type="module"
@@ -65,7 +49,18 @@
       </{{ logo_tag }}>
 
       <div class="from-medium">
-        {{ predictive_search_form }}
+        <form action="{{ routes.search_url }}">
+          <label class="visually-hidden" for="{{ section.id }}-search">{{ 'search.title' | t }}</label>
+
+          <input
+            id="{{ section.id }}-search"
+            class="site-header__search"
+            name="q"
+            type="search"
+            placeholder="{{ 'search.query' | t }}"
+            data-ref="site-header.search-input"
+          >
+        </form>
       </div>
 
       <toggle-element
@@ -76,8 +71,6 @@
         set-a11y-attributes
         data-ref="site-header.search-overlay"
       >
-        <div class="until-medium">{{ predictive_search_form }}</div>
-
         <div
           class="search-overlay__body"
           data-section="{{ section.id }}"

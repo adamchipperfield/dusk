@@ -20,10 +20,29 @@ class SiteHeader extends HTMLCustomElement {
       document.body.style.setProperty('--header-height', `${this.getBoundingClientRect().height.toFixed(2)}px`);
     }).observe(this);
 
-    if (this.refs.predictiveSearchInput) {
-      this.on('input', this.refs.predictiveSearchInput.all, debounce(this.handlePredictiveSearch.bind(this)));
-      this.on('focus', this.refs.predictiveSearchInput.all, this.handlePredictiveSearch.bind(this));
-    }
+    this.on(
+      'input',
+      this.refs.searchInput,
+      debounce(async (event) => {
+        if (event.target.value === '') {
+          this.refs.searchOverlay.close();
+
+          if (this.predictiveSearchController) {
+            this.predictiveSearchController.abort('Aborted predictive search due to an empty query');
+          }
+          return;
+        }
+
+        await this.handlePredictiveSearch(event);
+
+        /**
+         * Open the overlay.
+         */
+        if (!(event.target.value === '')) {
+          this.refs.searchOverlay.open();
+        }
+      }),
+    );
   }
 
   /**
@@ -33,39 +52,18 @@ class SiteHeader extends HTMLCustomElement {
   async handlePredictiveSearch(event) {
     const url = new URL(theme.routes.predictive_search_url, window.location.origin);
 
+    this.predictiveSearchController = new AbortController();
+
     event.preventDefault();
-
-    if (event.target.value === '') {
-      if (isFromBreakpoint('medium')) {
-        this.refs.searchOverlay.close();
-      }
-
-      return;
-    }
 
     url.searchParams.append('q', event.target.value);
     url.searchParams.append('section_id', this.getAttribute(this.customAttributes.sectionId));
 
-    /**
-     * Sync other predictive search input elements.
-     */
-    for (const element of this.refs.predictiveSearchInput.all) {
-      if (!(element === event.target)) {
-        element.value = event.target.value;
-      }
-    }
-
-    publish(events.sectionUpdate, {
+    return publish(events.sectionUpdate, {
       sections: {
-        [this.getAttribute(this.customAttributes.sectionId)]: await text(fetch(url.toString())),
-      },
-      /**
-       * When the elements have been updated, open the overlay.
-       */
-      onComplete() {
-        if (isFromBreakpoint('medium') && !(event.target.value === '')) {
-          publish(events.toggleElementOpen, { id: 'search-overlay' });
-        }
+        [this.getAttribute(this.customAttributes.sectionId)]: await text(
+          fetch(url.toString(), { signal: this.predictiveSearchController.signal }),
+        ),
       },
     });
   }
