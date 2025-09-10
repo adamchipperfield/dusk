@@ -17,7 +17,11 @@ class SiteHeader extends HTMLCustomElement {
 
   connectedCallback() {
     new ResizeObserver(() => {
-      document.body.style.setProperty('--header-height', `${this.getBoundingClientRect().height.toFixed(2)}px`);
+      document.body.style.setProperty('--full-header-height', `${this.getBoundingClientRect().height.toFixed(2)}px`);
+      document.body.style.setProperty(
+        '--inner-header-height',
+        `${this.refs.inner.getBoundingClientRect().height.toFixed(2)}px`,
+      );
 
       /**
        * If the search input is empty on desktop, close the search overlay.

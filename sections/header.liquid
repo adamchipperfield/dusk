@@ -17,161 +17,163 @@
 ></script>
 
 <site-header section-id="{{ section.id }}" tabindex="1">
-  {% content_for 'block', type: '_announcement-bar', id: 'announcement' %}
+  <div data-ref="site-header.inner">
+    {% content_for 'block', type: '_announcement-bar', id: 'announcement' %}
 
-  <div class="site-header__top">
-    <div class="site-header__container container">
-      <div class="site-header__left until-medium">
-        <toggle-element-button toggle-id="header-menu">
-          <button
-            class="site-header__menu-button until-medium button-reset"
-            type="button"
-            title="{{ 'navigation.open' | t }}"
-          >
-            {% render 'icon-misc', icon: 'menu' %}
-          </button>
-        </toggle-element-button>
-      </div>
+    <div class="site-header__top">
+      <div class="site-header__container container">
+        <div class="site-header__left until-medium">
+          <toggle-element-button toggle-id="header-menu">
+            <button
+              class="site-header__menu-button until-medium button-reset"
+              type="button"
+              title="{{ 'navigation.open' | t }}"
+            >
+              {% render 'icon-misc', icon: 'menu' %}
+            </button>
+          </toggle-element-button>
+        </div>
 
-      <{{ logo_tag }} class="site-header__logo margin-left-auto margin-right-auto text-center text-h6">
-        <a href="{{ routes.root_url }}">
-          {% if section.settings.logo %}
-            {{
-              section.settings.logo
-              | image_url: width: logo_width_2x
-              | image_tag: alt: logo_alt, width: logo_width, srcset: null
-            }}
+        <{{ logo_tag }} class="site-header__logo margin-left-auto margin-right-auto text-center text-h6">
+          <a href="{{ routes.root_url }}">
+            {% if section.settings.logo %}
+              {{
+                section.settings.logo
+                | image_url: width: logo_width_2x
+                | image_tag: alt: logo_alt, width: logo_width, srcset: null
+              }}
 
-          {% else %}
-            {{ shop.name }}
-          {% endif %}
-        </a>
-      </{{ logo_tag }}>
-
-      <div class="site-header__search from-medium">
-        <form action="{{ routes.search_url }}">
-          <label class="visually-hidden" for="{{ section.id }}-search">{{ 'search.title' | t }}</label>
-
-          <input
-            id="{{ section.id }}-search"
-            class="site-header__search-input"
-            name="q"
-            type="search"
-            placeholder="{{ 'search.query' | t }}"
-            data-ref="site-header.search-input"
-          >
-        </form>
-      </div>
-
-      <toggle-element
-        id="search-overlay"
-        class="search-overlay flex flex-col flex-gap-medium"
-        close-on-body-click
-        close-on-escape
-        set-a11y-attributes
-        data-ref="site-header.search-overlay"
-      >
-        <form class="until-medium" action="{{ routes.search_url }}">
-          <label class="visually-hidden" for="{{ section.id }}-search-overlay-input">{{ 'search.title' | t }}</label>
-
-          <input
-            id="{{ section.id }}-search-overlay-input"
-            class="site-header__search-input"
-            name="q"
-            type="search"
-            placeholder="{{ 'search.query' | t }}"
-            data-ref="site-header.search-overlay-input"
-          >
-        </form>
-
-        <div
-          class="search-overlay__body flex flex-col flex-gap-large"
-          data-section="{{ section.id }}"
-          data-section-element="search-overlay"
-        >
-          {% if predictive_search.performed %}
-            {% if predictive_search.resources.products.size == 0 and predictive_search.resources.queries.size == 0 %}
-              <p class="text-h6">{{ 'search.no_results' | t: terms: predictive_search.terms }}</p>
             {% else %}
-              <div class="flex flex-gap-medium items-baseline">
-                <p class="text-h6">{{ 'search.results_for_query' | t: query: predictive_search.terms }}</p>
+              {{ shop.name }}
+            {% endif %}
+          </a>
+        </{{ logo_tag }}>
 
-                <a
-                  class="text-link text-body-small"
-                  href="{{ routes.search_url }}?q={{ predictive_search.terms | url_encode }}"
-                >
-                  {{- 'search.view_all_results' | t -}}
-                </a>
-              </div>
+        <div class="site-header__search from-medium">
+          <form action="{{ routes.search_url }}">
+            <label class="visually-hidden" for="{{ section.id }}-search">{{ 'search.title' | t }}</label>
 
-              <div class="flex flex-col flex-gap-medium">
-                <div class="flex flex-wrap flex-gap-small">
-                  {% for query in predictive_search.resources.queries %}
-                    {{ query.styled_text | link_to: query.url, class: 'search-overlay__resources-query pill' }}
-                  {% endfor %}
+            <input
+              id="{{ section.id }}-search"
+              class="site-header__search-input"
+              name="q"
+              type="search"
+              placeholder="{{ 'search.query' | t }}"
+              data-ref="site-header.search-input"
+            >
+          </form>
+        </div>
+
+        <toggle-element
+          id="search-overlay"
+          class="search-overlay flex flex-col flex-gap-medium"
+          close-on-body-click
+          close-on-escape
+          set-a11y-attributes
+          data-ref="site-header.search-overlay"
+        >
+          <form class="until-medium" action="{{ routes.search_url }}">
+            <label class="visually-hidden" for="{{ section.id }}-search-overlay-input">{{ 'search.title' | t }}</label>
+
+            <input
+              id="{{ section.id }}-search-overlay-input"
+              class="site-header__search-input"
+              name="q"
+              type="search"
+              placeholder="{{ 'search.query' | t }}"
+              data-ref="site-header.search-overlay-input"
+            >
+          </form>
+
+          <div
+            class="search-overlay__body flex flex-col flex-gap-large"
+            data-section="{{ section.id }}"
+            data-section-element="search-overlay"
+          >
+            {% if predictive_search.performed %}
+              {% if predictive_search.resources.products.size == 0 and predictive_search.resources.queries.size == 0 %}
+                <p class="text-h6">{{ 'search.no_results' | t: terms: predictive_search.terms }}</p>
+              {% else %}
+                <div class="flex flex-gap-medium items-baseline">
+                  <p class="text-h6">{{ 'search.results_for_query' | t: query: predictive_search.terms }}</p>
+
+                  <a
+                    class="text-link text-body-small"
+                    href="{{ routes.search_url }}?q={{ predictive_search.terms | url_encode }}"
+                  >
+                    {{- 'search.view_all_results' | t -}}
+                  </a>
                 </div>
 
-                <ul class="list-reset search-overlay__grid grid">
-                  {% for product in predictive_search.resources.products %}
-                    <li class="col xs6 s4 m3 l2">
-                      {% render 'product-card', product: product %}
-                    </li>
-                  {% endfor %}
-                </ul>
-              </div>
+                <div class="flex flex-col flex-gap-medium">
+                  <div class="flex flex-wrap flex-gap-small">
+                    {% for query in predictive_search.resources.queries %}
+                      {{ query.styled_text | link_to: query.url, class: 'search-overlay__resources-query pill' }}
+                    {% endfor %}
+                  </div>
+
+                  <ul class="list-reset search-overlay__grid grid">
+                    {% for product in predictive_search.resources.products %}
+                      <li class="col xs6 s4 m3 l2">
+                        {% render 'product-card', product: product %}
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% endif %}
             {% endif %}
+          </div>
+        </toggle-element>
+
+        <ul class="site-header__misc flex justify-end margin-left-auto text-right list-reset">
+          <li class="until-medium">
+            <toggle-element-button toggle-id="search-overlay">
+              <a href="{{ routes.search_url }}" title="{{ 'search.title' | t }}">
+                {%- render 'icon-misc', icon: 'search' -%}
+              </a>
+            </toggle-element-button>
+          </li>
+
+          {% if shop.customer_accounts_enabled %}
+            {% liquid
+              assign customer_url = routes.account_login_url
+              assign customer_label = 'customer.login.title' | t
+
+              if customer
+                assign customer_url = routes.account_url
+                assign customer_label = 'customer.title' | t
+              endif
+            %}
+
+            <li>
+              <a href="{{ customer_url }}" title="{{ customer_label }}">
+                {% render 'icon-misc', icon: 'profile' %}
+              </a>
+            </li>
           {% endif %}
-        </div>
-      </toggle-element>
-
-      <ul class="site-header__misc flex justify-end margin-left-auto text-right list-reset">
-        <li class="until-medium">
-          <toggle-element-button toggle-id="search-overlay">
-            <a href="{{ routes.search_url }}" title="{{ 'search.title' | t }}">
-              {%- render 'icon-misc', icon: 'search' -%}
-            </a>
-          </toggle-element-button>
-        </li>
-
-        {% if shop.customer_accounts_enabled %}
-          {% liquid
-            assign customer_url = routes.account_login_url
-            assign customer_label = 'customer.login.title' | t
-
-            if customer
-              assign customer_url = routes.account_url
-              assign customer_label = 'customer.title' | t
-            endif
-          %}
 
           <li>
-            <a href="{{ customer_url }}" title="{{ customer_label }}">
-              {% render 'icon-misc', icon: 'profile' %}
-            </a>
+            <toggle-element-button
+              toggle-id="cart-drawer"
+              {% if request.page_type == 'cart' %}
+                disabled
+              {% endif %}
+            >
+              <a class="header-cart-badge" href="{{ routes.cart_url }}" title="{{ 'cart.title' | t }}">
+                {% render 'icon-misc', icon: 'bag' %}
+
+                <span
+                  class="header-cart-badge__count bubble bubble--small bubble--button {% if cart.empty? %}visually-hidden{% endif %}"
+                  data-section="{{ section.id }}"
+                  data-section-element="cart-count"
+                >
+                  {{ cart.item_count }}
+                </span>
+              </a>
+            </toggle-element-button>
           </li>
-        {% endif %}
-
-        <li>
-          <toggle-element-button
-            toggle-id="cart-drawer"
-            {% if request.page_type == 'cart' %}
-              disabled
-            {% endif %}
-          >
-            <a class="header-cart-badge" href="{{ routes.cart_url }}" title="{{ 'cart.title' | t }}">
-              {% render 'icon-misc', icon: 'bag' %}
-
-              <span
-                class="header-cart-badge__count bubble bubble--small bubble--button {% if cart.empty? %}visually-hidden{% endif %}"
-                data-section="{{ section.id }}"
-                data-section-element="cart-count"
-              >
-                {{ cart.item_count }}
-              </span>
-            </a>
-          </toggle-element-button>
-        </li>
-      </ul>
+        </ul>
+      </div>
     </div>
   </div>
 
@@ -212,7 +214,9 @@
 
     .search-overlay {
       left: 0;
+      max-height: calc(100vh - var(--inner-header-height));
       opacity: 0;
+      overflow-y: auto;
       pointer-events: none;
       position: absolute;
       top: 90%;
