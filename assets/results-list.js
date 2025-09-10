@@ -1,4 +1,6 @@
+import { events } from '@theme/constants';
 import { morph, parseHtml } from '@theme/dom';
+import { publish } from '@theme/event-bus';
 import { sectionStatusHandler, text } from '@theme/fetch';
 import { HTMLCustomElement } from '@theme/html-custom-element';
 
@@ -47,7 +49,17 @@ class ResultsList extends HTMLCustomElement {
 
     try {
       await text(fetch(`${origin}${pathname}?${query}`), sectionStatusHandler).then(async (response) => {
-        await morph(this, parseHtml(response, this.tagName.toLowerCase()));
+        if (this.sectionId) {
+          publish(events.sectionUpdate, {
+            sections: {
+              [this.sectionId]: response,
+            },
+          });
+
+          return;
+        }
+
+        morph(this, parseHtml(response, this.tagName.toLowerCase()));
       });
     } catch {
       /**

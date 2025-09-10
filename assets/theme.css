@@ -184,6 +184,11 @@
   color: var(--color-primary-button-label);
 }
 
+.bubble--button-inverse {
+  background-color: var(--color-primary-button-label);
+  color: var(--color-primary-button-background);
+}
+
 /**
  * Badges.
  */

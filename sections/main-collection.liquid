@@ -13,7 +13,7 @@
       {% paginate collection.products by section.settings.products_per_page %}
         <ul class="grid list-reset">
           {% for product in collection.products %}
-            <li class="col xs6 l4">
+            <li class="col xs6 m4 l3 xl2">
               {% # theme-check-disable CaptureOnContentForBlock %}
               {% content_for 'block', type: 'product-card', id: 'product', closest.product: product %}
               {% # theme-check-enable CaptureOnContentForBlock %}
@@ -31,7 +31,8 @@
     sort_by: collection.sort_by,
     default_sort_by: collection.default_sort_by,
     filters: collection.filters,
-    results: results
+    results: results,
+    results_count: collection.products_count
   %}
 {% endif %}
 

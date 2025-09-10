@@ -7,6 +7,7 @@
   @param {string} [default_sort_by] - The default sort option.
   @param {filter[]} [filters] - The filters to display.
   @param {string} [results] - The query results to display.
+  @param {number} [results_count]
 
   @example
   {% render 'results-list' %}
@@ -16,6 +17,28 @@
   unless results
     continue
   endunless
+
+  assign active_filter_count = 0
+
+  if filters
+    for filter in filters
+      case filter.type
+        when 'price_range'
+          if filter.min_value.value or filter.max_value.value
+            assign active_filter_count = active_filter_count | plus: 1
+          endif
+
+        else
+          assign active_filter_count = active_filter_count | plus: filter.active_values.size
+      endcase
+    endfor
+  endif
+
+  # theme-check-disable UndefinedObject
+  if section
+    assign section_id = section.id
+  endif
+  # theme-check-enable UndefinedObject
 %}
 
 <script
@@ -25,88 +48,150 @@
 ></script>
 
 <results-list
-  {% # theme-check-disable UndefinedObject %}
-  {% if section %}
-    section-id="{{ section.id }}"
+  {% if section_id %}
+    section-id="{{ section_id }}"
   {% endif %}
-  {% # theme-check-enable UndefinedObject %}
   {% if default_sort_by %}
     default-sort-by="{{ default_sort_by }}"
   {% endif %}
 >
-  <div class="grid">
-    <div class="col xs12 m3">
-      <div class="results-list__aside flex flex-col flex-gap-medium">
-        {% unless sort_options == null or sort_options.size == 0 %}
-          <form data-ref="results-list.sort">
-            <label for="sort-by">{{ 'filter_sort.sort_by' | t }}</label>
+  <div class="results-list__toolbar">
+    {% unless filters.size == 0 %}
+      <toggle-element-button action="toggle" toggle-id="filter-form">
+        <button
+          class="button button--small flex flex-gap-small results-list__filter-button"
+          type="button"
+          {% if section_id %}
+            data-section="{{ section_id }}"
+            data-section-element="filter-button"
+          {% endif %}
+        >
+          {{ 'filter_sort.filter' | t }}
 
-            <select id="sort-by" name="sort_by">
-              {% for option in sort_options %}
-                {% liquid
-                  assign selected = false
+          {% unless active_filter_count == 0 %}
+            <span class="bubble bubble--small bubble--button-inverse">{{ active_filter_count }}</span>
+          {% endunless %}
+        </button>
+      </toggle-element-button>
 
-                  if sort_by == '' or sort_by == null
-                    if option.value == default_sort_by
-                      assign selected = true
-                    endif
+      <toggle-element
+        id="filter-form"
+        class="dialog-window"
+        preset="dialog"
+      >
+        <div class="drawer" data-ref="toggle-element.dialog">
+          <div class="drawer__header">
+            <p class="text-h6">{{ 'filter_sort.filter' | t }}</p>
 
-                  else
-                    if option.value == sort_by
-                      assign selected = true
-                    endif
-                  endif
-                %}
+            <button
+              class="drawer__close button-reset"
+              data-ref="toggle-element.close"
+              title="{{ 'accessibility.close_drawer' | t }}"
+            >
+              {% render 'icon-misc', icon: 'cancel' %}
+            </button>
+          </div>
 
-                <option
-                  value="{{ option.value }}"
-                  {% if selected %}
-                    selected
-                  {% endif %}
-                >
-                  {{ option.name }}
-                </option>
-              {% endfor %}
-            </select>
-          </form>
-        {% endunless %}
-
-        <toggle-element-button action="toggle" toggle-id="filter-form">
-          <button
-            class="button button--block button--small until-medium"
-            type="button"
+          <div
+            class="drawer__body flex flex-col flex-gap-large"
+            {% if section_id %}
+              data-section="{{ section_id }}"
+              data-section-element="filters"
+            {% endif %}
           >
-            {{ 'filter_sort.filter' | t }}
-          </button>
-        </toggle-element-button>
+            {% unless sort_options == null or sort_options.size == 0 %}
+              <form data-ref="results-list.sort">
+                <label for="sort-by">{{ 'filter_sort.sort_by' | t }}</label>
 
-        <toggle-element id="filter-form" class="results-list__filters">
-          {% render 'filter-form',
-            filters: filters,
-            ref: 'results-list.filters',
-            terms: search.terms,
-            sort_by: sort_by,
-            default_sort_by: default_sort_by
-          %}
-        </toggle-element>
-      </div>
-    </div>
+                <select id="sort-by" name="sort_by">
+                  {% for option in sort_options %}
+                    {% liquid
+                      assign selected = false
 
-    <div class="col xs12 m9">{{ results }}</div>
+                      if sort_by == '' or sort_by == null
+                        if option.value == default_sort_by
+                          assign selected = true
+                        endif
+
+                      else
+                        if option.value == sort_by
+                          assign selected = true
+                        endif
+                      endif
+                    %}
+
+                    <option
+                      value="{{ option.value }}"
+                      {% if selected %}
+                        selected
+                      {% endif %}
+                    >
+                      {{ option.name }}
+                    </option>
+                  {% endfor %}
+                </select>
+              </form>
+            {% endunless %}
+
+            {% render 'filter-form',
+              filters: filters,
+              ref: 'results-list.filters',
+              terms: search.terms,
+              sort_by: sort_by,
+              default_sort_by: default_sort_by
+            %}
+          </div>
+        </div>
+      </toggle-element>
+    {% endunless %}
+
+    <p
+      class="text-right"
+      {% if section_id %}
+        data-section="{{ section_id }}"
+        data-section-element="results-count"
+      {% endif %}
+    >
+      {{ 'results_list.results_count' | t: count: results_count }}
+    </p>
+  </div>
+
+  <div
+    class="results-list__results width-full"
+    {% if section_id %}
+      data-section="{{ section_id }}" data-section-element="results"
+    {% endif %}
+  >
+    {{ results }}
   </div>
 </results-list>
 
 {% stylesheet %}
-  @media (max-width: 767px) {
-    .results-list__filters:not(.is-open) {
-      display: none;
+  .results-list__toolbar {
+    align-items: center;
+    display: grid;
+    gap: var(--spacing-16);
+    grid-template-columns: 1fr 1fr;
+    margin-block: var(--spacing-24);
+
+    .results-list__filter-button {
+      justify-self: start;
     }
   }
 
-  @media (min-width: 768px) {
-    .results-list__aside {
-      position: sticky;
-      top: calc(var(--spacing-24) + var(--full-header-height));
+  .results-list__results {
+    margin-block: var(--spacing-24);
+  }
+
+  @media (min-width: 1024px) {
+    .results-list__toolbar {
+      display: flex;
+      gap: var(--spacing-24);
+      margin-block: var(--spacing-32);
+    }
+
+    .results-list__results {
+      margin-block: var(--spacing-32);
     }
   }
 {% endstylesheet %}

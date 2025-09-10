@@ -479,10 +479,6 @@
  * Large breakpoints.
  */
 @media (min-width: 1024px) {
-  .grid {
-    gap: var(--spacing-48) var(--spacing-32);
-  }
-
   .grid > .col.l1 {
     grid-column-end: span 1;
   }

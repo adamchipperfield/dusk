@@ -15,7 +15,7 @@
     {% paginate search.results by section.settings.results_per_page %}
       <ul class="grid list-reset">
         {% for result in search.results %}
-          <li class="col xs6 l4">
+          <li class="col xs6 m4 l3 xl2">
             {% # theme-check-disable CaptureOnContentForBlock %}
               {% case result.object_type %}
                 {% when 'product' %}
@@ -39,7 +39,8 @@
     sort_by: search.sort_by,
     default_sort_by: search.default_sort_by,
     filters: search.filters,
-    results: results
+    results: results,
+    results_count: search.results_count
   %}
 {% endif %}
 

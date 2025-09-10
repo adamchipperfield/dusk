@@ -113,8 +113,14 @@
     "expired": "Expired",
     "print_gift_card": "Print"
   },
+  "results_list": {
+    "results_count": {
+      "one": "{{ count }} result",
+      "other": "{{ count }} results"
+    }
+  },
   "filter_sort": {
-    "filter": "Filter",
+    "filter": "Filter and sort",
     "values_selected": "{{ count }} selected",
     "clear_filter": "Reset",
     "clear_all": "Clear all",
