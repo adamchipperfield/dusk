@@ -62,10 +62,8 @@
     "no_results": "No results found for \"{{ terms }}\"",
     "article": "Article",
     "page": "Page",
-    "products_found": {
-      "one": "{{ count }} product found",
-      "other": "{{ count }} products found"
-    }
+    "results_for_query": "Results for \"{{ query }}\"",
+    "view_all_results": "View all"
   },
   "collection": {
     "no_products": "No products found"

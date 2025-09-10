@@ -99,7 +99,7 @@
   cursor: pointer;
   display: block;
   font-size: var(--font-size-14);
-  font-weight: var(--font-weight-regular);
+  font-weight: var(--font-weight-medium);
   margin: 0;
   padding-block: var(--spacing-4);
   padding-inline: var(--spacing-12);

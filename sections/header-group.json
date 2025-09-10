@@ -32,6 +32,13 @@
               }
             }
           }
+        },
+        "predictive_search_product": {
+          "type": "product-card",
+          "static": true,
+          "settings": {
+            "product": "{{ closest.product }}"
+          }
         }
       },
       "settings": {}
@@ -52,9 +59,5 @@
       "settings": {}
     }
   },
-  "order": [
-    "header",
-    "cart-drawer",
-    "localization-drawer"
-  ]
+  "order": ["header", "cart-drawer", "localization-drawer"]
 }

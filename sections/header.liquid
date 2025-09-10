@@ -65,7 +65,7 @@
 
       <toggle-element
         id="search-overlay"
-        class="search-overlay"
+        class="search-overlay flex flex-col flex-gap-medium"
         close-on-body-click
         close-on-escape
         set-a11y-attributes
@@ -85,12 +85,41 @@
         </form>
 
         <div
-          class="search-overlay__body"
+          class="search-overlay__body flex flex-col flex-gap-large"
           data-section="{{ section.id }}"
           data-section-element="search-overlay"
         >
           {% if predictive_search.performed %}
-            {{ 'search.products_found' | t: count: predictive_search.resources.products.size }}
+            {% if predictive_search.resources.products.size == 0 and predictive_search.resources.queries.size == 0 %}
+              <p class="text-h6">{{ 'search.no_results' | t: terms: predictive_search.terms }}</p>
+            {% else %}
+              <div class="flex flex-gap-medium items-baseline">
+                <p class="text-h6">{{ 'search.results_for_query' | t: query: predictive_search.terms }}</p>
+
+                <a
+                  class="text-link text-body-small"
+                  href="{{ routes.search_url }}?q={{ predictive_search.terms | url_encode }}"
+                >
+                  {{- 'search.view_all_results' | t -}}
+                </a>
+              </div>
+
+              <div class="flex flex-col flex-gap-medium">
+                <div class="flex flex-wrap flex-gap-small">
+                  {% for query in predictive_search.resources.queries %}
+                    {{ query.styled_text | link_to: query.url, class: 'search-overlay__resources-query pill' }}
+                  {% endfor %}
+                </div>
+
+                <ul class="list-reset search-overlay__grid grid">
+                  {% for product in predictive_search.resources.products %}
+                    <li class="col xs6 s4 m3 l2">
+                      {% render 'product-card', product: product %}
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
           {% endif %}
         </div>
       </toggle-element>
@@ -233,6 +262,19 @@
       &:has(.site-header__search-input:placeholder-shown) .search-overlay__body {
         display: none;
       }
+    }
+  }
+
+  .search-overlay__grid.search-overlay__grid {
+    gap: var(--spacing-16) var(--spacing-12);
+  }
+
+  .search-overlay__resources-query {
+    color: var(--color-text-light);
+
+    mark {
+      background-color: transparent;
+      color: var(--color-text);
     }
   }
 

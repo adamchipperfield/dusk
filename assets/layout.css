@@ -85,6 +85,10 @@
   flex-wrap: wrap;
 }
 
+.items-baseline {
+  align-items: baseline;
+}
+
 .items-start {
   align-items: start;
 }
