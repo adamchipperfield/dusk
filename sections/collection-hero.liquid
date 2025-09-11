@@ -1,31 +1,54 @@
-<div class="grid">
-  <div class="col xs12 l6">
+{% if collection.image %}
+  {% render 'image',
+    image: collection.image,
+    width: 1248,
+    class: 'collection-hero__image image-cover',
+    size: '90vw',
+    large_size: '624px',
+    widths: '352, 760, 1200, 1248'
+  %}
+{% endif %}
+
+<div class="collection-hero__body">
+  <div class="container">
+    <div class="flex flex-wrap flex-gap-small text-meta">{{ 'breadcrumb.home' | t }} — {{ collection.title }}</div>
+
     {% content_for 'block', type: 'heading', id: 'heading', margin: true %}
     {% content_for 'block', type: 'rich-text', id: 'description' %}
   </div>
-
-  {% if collection.image %}
-    <div class="col xs12 l6">
-      {% render 'image',
-        image: collection.image,
-        width: 1248,
-        class: 'image image-wide',
-        size: '90vw',
-        large_size: '624px',
-        widths: '352, 760, 1200, 1248'
-      %}
-    </div>
-  {% endif %}
 </div>
 
 {% stylesheet %}
-  .collection-hero {
-    border-block-end: 1px solid var(--color-border-lighter);
+  .collection-hero__body {
+    padding-block: var(--spacing-24);
+  }
+
+  .collection-hero__image {
+    aspect-ratio: 2 / 1;
+  }
+
+  @media (min-width: 1024px) {
+    .collection-hero {
+      align-items: end;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+
+    .collection-hero__body {
+      grid-column: 1;
+      grid-row: 1;
+      padding-block-start: var(--spacing-48);
+    }
+
+    .collection-hero__image {
+      grid-column: 2;
+      grid-row: 1;
+    }
   }
 {% endstylesheet %}
 
 {% schema %}
 {
-  "class": "container section-padding collection-hero"
+  "class": "collection-hero"
 }
 {% endschema %}

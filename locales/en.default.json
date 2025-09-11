@@ -17,6 +17,9 @@
     "read_more": "Read more",
     "read_less": "Read less"
   },
+  "breadcrumb": {
+    "home": "Home"
+  },
   "form": {
     "first_name": "First name",
     "last_name": "Last name",
