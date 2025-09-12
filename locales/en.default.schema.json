@@ -270,6 +270,43 @@
     },
     "main-404": {
       "name": "404"
+    },
+    "hero-banner": {
+      "name": "Hero banner",
+      "settings": {
+        "content_position": {
+          "label": "Content position",
+          "options": {
+            "top_left": {
+              "label": "Top left"
+            },
+            "top_center": {
+              "label": "Top center"
+            },
+            "top_right": {
+              "label": "Top right"
+            },
+            "middle_left": {
+              "label": "Middle left"
+            },
+            "middle_center": {
+              "label": "Middle center"
+            },
+            "middle_right": {
+              "label": "Middle right"
+            },
+            "bottom_left": {
+              "label": "Bottom left"
+            },
+            "bottom_center": {
+              "label": "Bottom center"
+            },
+            "bottom_right": {
+              "label": "Bottom right"
+            }
+          }
+        }
+      }
     }
   },
   "section_groups": {
@@ -456,14 +493,21 @@
       "image": {
         "label": "Image"
       },
-      "large_image": {
+      "image_desktop": {
         "label": "Image (desktop)"
       },
-      "video": {
-        "label": "Video"
+      "image_mobile": {
+        "label": "Image (default)"
       },
-      "large_video": {
+      "video": {
+        "label": "Video",
+        "info": "Overrides image"
+      },
+      "video_desktop": {
         "label": "Video (desktop)"
+      },
+      "video_mobile": {
+        "label": "Video (default)"
       },
       "menu": {
         "label": "Navigation"

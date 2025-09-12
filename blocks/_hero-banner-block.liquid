@@ -1,0 +1,263 @@
+{% liquid
+  assign image_width = 2880
+  assign image_size_large = '100vw'
+
+  if section.blocks.size >= 2
+    assign image_width = 1440
+    assign image_size_large = '50vw'
+  endif
+%}
+
+{% unless block.blocks.size == 0 %}
+  <div class="hero-banner-block__content flex flex-col flex-gap-medium items-start">
+    {% content_for 'blocks' %}
+  </div>
+{% endunless %}
+
+{% if block.settings.video %}
+  {% render 'video',
+    video: block.settings.video,
+    large_video: block.settings.large_video,
+    as_background: true,
+    class: 'hero-banner-block__background image-cover'
+  %}
+{% elsif block.settings.image %}
+  {% render 'image',
+    image: block.settings.image,
+    large_image: block.settings.large_image,
+    width: image_width,
+    size: '100vw',
+    large_size: image_size_large,
+    class: 'hero-banner-block__background image-cover'
+  %}
+{% endif %}
+
+{% stylesheet %}
+  .hero-banner-block {
+    --height: 600px;
+    display: flex;
+    flex-direction: column;
+    min-height: calc(var(--height) - var(--full-header-height));
+    overflow: hidden;
+    padding-block: var(--spacing-80);
+    position: relative;
+    z-index: 0;
+  }
+
+  .hero-banner-block__background {
+    height: 100%;
+    inset: 0;
+    position: absolute;
+    width: 100%;
+    z-index: -2;
+  }
+
+  .hero-banner-block__content {
+    max-width: 90%;
+
+    .rte {
+      --p-spacing: var(--spacing-12);
+    }
+
+    .rich-text {
+      max-width: 60%;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .hero-banner-block__content {
+      max-width: 700px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-banner-block {
+      --height: 90vh;
+    }
+  }
+{% endstylesheet %}
+
+{% unless block.settings.color == blank or block.settings.color.alpha == 0 %}
+  {% style %}
+    #shopify-block-{{ block.id }} {
+      color: {{ block.settings.color }};
+    }
+  {% endstyle %}
+{% endunless %}
+
+{% style %}
+  {% case block.settings.content_position %}
+    {% when 'top_left' %}
+      #shopify-block-{{ block.id }} {
+        align-items: start;
+        justify-content: start;
+      }
+
+    {% when 'top_center' %}
+      #shopify-block-{{ block.id }} {
+        align-items: center;
+        justify-content: start;
+
+        .hero-banner-block__content {
+          align-items: center;
+          text-align: center;
+        }
+      }
+
+    {% when 'top_right' %}
+      #shopify-block-{{ block.id }} {
+        align-items: end;
+        justify-content: start;
+
+        .hero-banner-block__content {
+          align-items: end;
+          text-align: right;
+        }
+      }
+
+    {% when 'middle_left' %}
+      #shopify-block-{{ block.id }} {
+        align-items: start;
+        justify-content: center;
+      }
+
+    {% when 'middle_center' %}
+      #shopify-block-{{ block.id }} {
+        align-items: center;
+        justify-content: center;
+
+        .hero-banner-block__content {
+          align-items: center;
+          text-align: center;
+        }
+      }
+
+    {% when 'middle_right' %}
+      #shopify-block-{{ block.id }} {
+        align-items: end;
+        justify-content: center;
+
+        .hero-banner-block__content {
+          align-items: end;
+          text-align: right;
+        }
+      }
+
+    {% when 'bottom_left' %}
+      #shopify-block-{{ block.id }} {
+        align-items: start;
+        justify-content: end;
+      }
+
+    {% when 'bottom_center' %}
+      #shopify-block-{{ block.id }} {
+        align-items: center;
+        justify-content: end;
+
+        .hero-banner-block__content {
+          align-items: center;
+          text-align: center;
+        }
+      }
+
+    {% when 'bottom_right' %}
+      #shopify-block-{{ block.id }} {
+        align-items: end;
+        justify-content: end;
+
+        .hero-banner-block__content {
+          align-items: end;
+          text-align: right;
+        }
+      }
+  {% endcase %}
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "t:presets.blocks.block.name",
+  "class": "hero-banner-block container",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:presets.settings.image_mobile.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "large_image",
+      "label": "t:presets.settings.image_desktop.label"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "t:presets.settings.video_mobile.label",
+      "info": "t:presets.settings.video.info"
+    },
+    {
+      "type": "video",
+      "id": "large_video",
+      "label": "t:presets.settings.video_desktop.label"
+    },
+    {
+      "type": "color",
+      "id": "color",
+      "label": "t:presets.settings.text_color.label"
+    },
+    {
+      "type": "select",
+      "id": "content_position",
+      "label": "t:sections.hero-banner.settings.content_position.label",
+      "options": [
+        {
+          "value": "top_left",
+          "label": "t:sections.hero-banner.settings.content_position.options.top_left.label"
+        },
+        {
+          "value": "top_center",
+          "label": "t:sections.hero-banner.settings.content_position.options.top_center.label"
+        },
+        {
+          "value": "top_right",
+          "label": "t:sections.hero-banner.settings.content_position.options.top_right.label"
+        },
+        {
+          "value": "middle_left",
+          "label": "t:sections.hero-banner.settings.content_position.options.middle_left.label"
+        },
+        {
+          "value": "middle_center",
+          "label": "t:sections.hero-banner.settings.content_position.options.middle_center.label"
+        },
+        {
+          "value": "middle_right",
+          "label": "t:sections.hero-banner.settings.content_position.options.middle_right.label"
+        },
+        {
+          "value": "bottom_left",
+          "label": "t:sections.hero-banner.settings.content_position.options.bottom_left.label"
+        },
+        {
+          "value": "bottom_center",
+          "label": "t:sections.hero-banner.settings.content_position.options.bottom_center.label"
+        },
+        {
+          "value": "bottom_right",
+          "label": "t:sections.hero-banner.settings.content_position.options.bottom_right.label"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading"
+    },
+    {
+      "type": "rich-text"
+    },
+    {
+      "type": "button"
+    }
+  ]
+}
+{% endschema %}

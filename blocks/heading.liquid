@@ -10,10 +10,14 @@
 
 <{{ block.settings.heading_tag }}
   id="shopify-block-{{ block.id }}"
-  class="text-{{ block.settings.heading_style -}} {% if margin %} margin{% endif %}"
+  class="text-{{ block.settings.heading_style -}} {% if margin %} margin{% endif %} flex flex-col flex-gap-small"
   {{ block.shopify_attributes }}
 >
-  {{ block.settings.text }}
+  {% unless block.settings.eyebrow == empty -%}
+    <span class="text-eyebrow">{{ block.settings.eyebrow }}</span>
+  {%- endunless %}
+
+  <span>{{ block.settings.text }}</span>
 </{{ block.settings.heading_tag }}>
 
 {% schema %}
@@ -23,6 +27,11 @@
   "settings": [
     {
       "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text"
+    },
+    {
+      "type": "inline_richtext",
       "id": "text",
       "label": "t:presets.settings.text.label",
       "default": "Heading text"

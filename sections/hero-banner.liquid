@@ -1,0 +1,44 @@
+{% content_for 'blocks' %}
+
+{% stylesheet %}
+  @media (min-width: 1024px) {
+    .hero-banner {
+      display: flex;
+      flex-wrap: wrap;
+
+      .hero-banner-block {
+        flex: 1 1 50%;
+      }
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.hero-banner.name",
+  "class": "hero-banner",
+  "blocks": [
+    {
+      "type": "_hero-banner-block"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.hero-banner.name",
+      "blocks": [
+        {
+          "type": "_hero-banner-block",
+          "blocks": [
+            {
+              "type": "heading"
+            },
+            {
+              "type": "button"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

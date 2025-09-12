@@ -8,7 +8,7 @@
 :root {
   --heading-font: var(--font-heading);
   --heading-letter-spacing: initial;
-  --heading-line-height: initial;
+  --heading-line-height: 1;
 
   /**
    * Mobile styles.
@@ -188,18 +188,18 @@ table th,
  */
 .rte p:not(:last-child, .no-margin),
 p.margin {
-  margin-block-end: var(--spacing-24);
+  margin-block-end: var(--p-spacing, var(--spacing-24));
 }
 
 .rte :is(h1, .text-h1, h2, .text-h2, h3, .text-h3, h4, .text-h4, h5, .text-h5, h6, .text-h6):not(:last-child),
 :is(h1, .text-h1, h2, .text-h2, h3, .text-h3, h4, .text-h4, h5, .text-h5, h6, .text-h6).margin:not(:last-child) {
-  margin-block-end: var(--spacing-12);
+  margin-block-end: var(--h-spacing, var(--spacing-12));
 }
 
 .rte ul,
 .rte ol {
-  margin-block: var(--spacing-24);
-  padding-inline-start: var(--spacing-24);
+  margin-block: var(--list-spacing, var(--spacing-24));
+  padding-inline-start: var(--list-spacing, var(--spacing-24));
 }
 
 .rte p:empty {
@@ -212,6 +212,13 @@ p.margin {
 .text-meta {
   color: var(--color-text-light);
   font-size: var(--font-size-12);
+}
+
+.text-eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--font-size-12);
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .text-small {
