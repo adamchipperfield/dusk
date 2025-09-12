@@ -137,6 +137,24 @@
         }
       }
     },
+    "collection-hero": {
+      "settings": {
+        "layout": {
+          "label": "Layout",
+          "options": {
+            "default": {
+              "label": "Image separate"
+            },
+            "background": {
+              "label": "Image as background"
+            },
+            "no_image": {
+              "label": "No image"
+            }
+          }
+        }
+      }
+    },
     "main-collection": {
       "settings": {
         "products_per_page": {

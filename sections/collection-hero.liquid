@@ -1,24 +1,30 @@
-{% if collection.image %}
-  {% render 'image',
-    image: collection.image,
-    width: 1248,
-    class: 'collection-hero__image image-cover',
-    size: '90vw',
-    large_size: '624px',
-    widths: '352, 760, 1200, 1248'
-  %}
-{% endif %}
+<div class="collection-hero__container">
+  {% unless section.settings.layout == 'no_image' %}
+    {% if collection.image %}
+      {% render 'image',
+        image: collection.image,
+        width: 1248,
+        class: 'collection-hero__image image-cover',
+        size: '90vw',
+        large_size: '624px',
+        widths: '352, 760, 1200, 1248'
+      %}
+    {% endif %}
+  {% endunless %}
 
-<div class="collection-hero__body">
-  <div class="container">
-    <div class="flex flex-wrap flex-gap-small text-meta">{{ 'breadcrumb.home' | t }} — {{ collection.title }}</div>
+  <div class="collection-hero__body">
+    <div class="container">
+      <div class="flex flex-wrap flex-gap-small text-meta">{{ 'breadcrumb.home' | t }} — {{ collection.title }}</div>
 
-    {% content_for 'block', type: 'heading', id: 'heading', margin: true %}
-    {% content_for 'block', type: 'rich-text', id: 'description' %}
-
-    <div class="collection-hero__blocks list-reset flex flex-gap-medium">
-      {% content_for 'blocks' %}
+      {% content_for 'block', type: 'heading', id: 'heading', margin: true %}
+      {% content_for 'block', type: 'rich-text', id: 'description' %}
     </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="collection-hero__blocks list-reset flex flex-gap-medium">
+    {% content_for 'blocks' %}
   </div>
 </div>
 
@@ -32,11 +38,15 @@
   }
 
   .collection-hero__blocks {
-    margin-block-start: var(--spacing-40);
+    margin-block: var(--spacing-24);
+  }
+
+  .collection-hero:not(:has(.collection-hero__image)) .collection-hero__blocks {
+    margin-block-start: 0;
   }
 
   @media (min-width: 1024px) {
-    .collection-hero {
+    .collection-hero__container {
       align-items: end;
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -52,12 +62,85 @@
       grid-column: 2;
       grid-row: 1;
     }
+
+    .collection-hero__blocks {
+      margin-block: var(--spacing-40) var(--spacing-48);
+    }
   }
 {% endstylesheet %}
+
+{% style %}
+  {% if section.settings.layout == 'background' and collection.image %}
+    .collection-hero__container {
+      overflow: hidden;
+      position: relative;
+      z-index: 0;
+    }
+
+    .collection-hero__container::before {
+      background-color: var(--color-backdrop);
+      content: '';
+      display: block;
+      height: 100%;
+      inset: 0;
+      position: absolute;
+      width: 100%;
+      z-index: -1;
+    }
+
+    .collection-hero__body {
+      color: var(--color-background);
+      padding-block: var(--spacing-48);
+
+      .text-meta {
+        color: var(--color-background);
+        opacity: 0.75;
+      }
+    }
+
+    .collection-hero__image {
+      aspect-ratio: auto;
+      height: 100%;
+      inset: 0;
+      grid-column: unset;
+      grid-row: unset;
+      position: absolute;
+      width: 100%;
+      z-index: -2;
+    }
+
+    @media (min-width: 1024px) {
+      .collection-hero__body {
+        padding-block: var(--spacing-64);
+      }
+    }
+  {% endif %}
+{% endstyle %}
 
 {% schema %}
 {
   "class": "collection-hero",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "t:sections.collection-hero.settings.layout.label",
+      "options": [
+        {
+          "value": "default",
+          "label": "t:sections.collection-hero.settings.layout.options.default.label"
+        },
+        {
+          "value": "background",
+          "label": "t:sections.collection-hero.settings.layout.options.background.label"
+        },
+        {
+          "value": "no_image",
+          "label": "t:sections.collection-hero.settings.layout.options.no_image.label"
+        }
+      ]
+    }
+  ],
   "blocks": [
     {
       "type": "_collection-block"
