@@ -160,13 +160,45 @@ ol {
 .pagination {
   align-items: center;
   display: flex;
-  gap: var(--spacing-12);
+  font-size: var(--font-size-16);
+  gap: var(--spacing-4);
   justify-content: center;
-  margin-block: var(--spacing-32);
-}
+  margin-block: var(--spacing-48);
 
-.pagination .page.current {
-  font-weight: var(--font-weight-bold);
+  .page {
+    align-items: center;
+    border-radius: 50px;
+    color: var(--color-text-light);
+    display: flex;
+    font-weight: var(--font-weight-medium);
+    height: 40px;
+    justify-content: center;
+    padding: var(--spacing-4);
+    position: relative;
+    width: 40px;
+    text-align: center;
+
+    &.current {
+      background-color: var(--color-border-lighter);
+    }
+  }
+
+  .next,
+  .prev {
+    a {
+      background-image: var(--chevron-right-background-url);
+      display: block;
+      font-size: 0;
+      height: 14px;
+      width: 14px;
+    }
+  }
+
+  .prev {
+    a {
+      background-image: var(--chevron-left-background-url);
+    }
+  }
 }
 
 .pagination:empty {

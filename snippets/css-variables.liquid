@@ -1,4 +1,6 @@
 {% capture chevron_down_icon %}{% render 'icon-direction', icon: 'chevron-down' %}{% endcapture %}
+{% capture chevron_left_icon %}{% render 'icon-direction', icon: 'chevron-left' %}{% endcapture %}
+{% capture chevron_right_icon %}{% render 'icon-direction', icon: 'chevron-right' %}{% endcapture %}
 
 <style>
   :root {
@@ -75,6 +77,8 @@
      * Other.
      */
     --chevron-down-background-url: url({{ chevron_down_icon | base64_encode | prepend: 'data:image/svg+xml;base64,' | json }});
+    --chevron-left-background-url: url({{ chevron_left_icon | base64_encode | prepend: 'data:image/svg+xml;base64,' | json }});
+    --chevron-right-background-url: url({{ chevron_right_icon | base64_encode | prepend: 'data:image/svg+xml;base64,' | json }});
   }
 
   @media (min-width: 768px) {
