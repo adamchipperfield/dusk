@@ -166,9 +166,9 @@
 }
 
 .image-container .badges {
-  left: var(--spacing-12);
+  left: var(--spacing-8);
   position: absolute;
-  top: var(--spacing-12);
+  top: var(--spacing-8);
   z-index: 2;
 }
 

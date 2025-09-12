@@ -32,14 +32,14 @@
   endif
 %}
 
-<a class="flex flex-col flex-gap-medium" href="{{ product.url }}">
+<a class="product-card flex flex-col flex-gap-small" href="{{ product.url }}">
   <div
-    class="image-container"
+    class="product-card__thumbnail image-container"
     style="aspect-ratio: {{ product.featured_image.aspect_ratio | default: 1 }};"
   >
     {% if on_sale %}
       <ul class="badges list-reset">
-        <li>{{ 'product.sale' | t }}</li>
+        <li class="product-card__sale-badge badge">{{ 'product.sale' | t }}</li>
       </ul>
     {% endif %}
 
@@ -75,14 +75,33 @@
   </div>
 
   <div class="flex flex-col flex-gap-xsmall">
-    <p>{{ product.title }}</p>
+    <div class="flex flex-col">
+      <p class="text-meta">{{ product.vendor }}</p>
+      <p class="text-weight-medium">{{ product.title }}</p>
+    </div>
 
     {% render 'product-price',
       product: product,
       price: product.price,
       compare_at: product.compare_at_price,
       context: 'card',
-      class: 'text-small'
+      class: 'text-body-small text-weight-medium'
     %}
   </div>
 </a>
+
+{% stylesheet %}
+  .product-card__thumbnail {
+    border-radius: 3px;
+  }
+
+  .product-card__sale-badge {
+    color: var(--color-error);
+  }
+
+  @media (min-width: 768px) {
+    .product-card {
+      gap: var(--spacing-16);
+    }
+  }
+{% endstylesheet %}
