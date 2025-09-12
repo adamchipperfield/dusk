@@ -1,0 +1,12 @@
+{% doc %}
+  @param {string} title - The page title.
+{% enddoc %}
+
+{{ 'breadcrumb.home' | t }} — {{ title }}
+
+{% schema %}
+{
+  "name": "t:blocks._breadcrumb.name",
+  "class": "flex flex-wrap flex-gap-small text-meta"
+}
+{% endschema %}

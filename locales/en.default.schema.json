@@ -408,6 +408,9 @@
     },
     "_collection-block": {
       "name": "Collection block"
+    },
+    "_breadcrumb": {
+      "name": "Breadcrumb"
     }
   },
   "presets": {
