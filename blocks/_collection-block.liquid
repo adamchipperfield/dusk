@@ -1,0 +1,60 @@
+<a
+  id="shopify-block-{{ block.id }}"
+  class="collection-block flex flex-col flex-gap-small"
+  href="{{ block.settings.collection.url }}"
+  {{ block.shopify_attributes }}
+>
+  <p class="text-body-large">{{ block.settings.collection.title }}</p>
+
+  {% if block.settings.collection.image %}
+    {% render 'image',
+      image: block.settings.collection.image,
+      width: 600,
+      class: 'collection-block__image image-cover'
+    %}
+  {% endif %}
+</a>
+
+{% stylesheet %}
+  .collection-block {
+    aspect-ratio: 280 / 350;
+    border-radius: 8px;
+    color: var(--color-background);
+    display: flex;
+    justify-content: end;
+    max-width: 250px;
+    overflow: hidden;
+    padding-block: var(--spacing-24);
+    padding-inline: var(--spacing-24);
+    position: relative;
+    width: 100%;
+    z-index: 0;
+  }
+
+  .collection-block__image {
+    height: 100%;
+    inset: 0;
+    position: absolute;
+    width: 100%;
+    z-index: -1;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:blocks._collection-block.name",
+  "tag": null,
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "t:presets.settings.collection.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks._collection-block.name"
+    }
+  ]
+}
+{% endschema %}

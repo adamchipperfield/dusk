@@ -47,7 +47,7 @@
         },
         "button_border_hover": {
           "label": "Border hover"
-        },
+        }
       }
     },
     "typography": {
@@ -387,6 +387,9 @@
     },
     "_announcement-bar": {
       "name": "Announcement bar"
+    },
+    "_collection-block": {
+      "name": "Collection block"
     }
   },
   "presets": {

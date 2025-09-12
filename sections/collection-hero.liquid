@@ -15,6 +15,10 @@
 
     {% content_for 'block', type: 'heading', id: 'heading', margin: true %}
     {% content_for 'block', type: 'rich-text', id: 'description' %}
+
+    <div class="collection-hero__blocks list-reset flex flex-gap-medium">
+      {% content_for 'blocks' %}
+    </div>
   </div>
 </div>
 
@@ -25,6 +29,10 @@
 
   .collection-hero__image {
     aspect-ratio: 2 / 1;
+  }
+
+  .collection-hero__blocks {
+    margin-block-start: var(--spacing-40);
   }
 
   @media (min-width: 1024px) {
@@ -49,6 +57,11 @@
 
 {% schema %}
 {
-  "class": "collection-hero"
+  "class": "collection-hero",
+  "blocks": [
+    {
+      "type": "_collection-block"
+    }
+  ]
 }
 {% endschema %}
