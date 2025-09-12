@@ -22,11 +22,13 @@
   </div>
 </div>
 
-<div class="container">
-  <div class="collection-hero__blocks list-reset flex flex-gap-medium">
-    {% content_for 'blocks' %}
+{% unless section.blocks.size == 0 %}
+  <div class="container">
+    <div class="collection-hero__blocks list-reset flex flex-gap-medium hide-scrollbar">
+      {% content_for 'blocks' %}
+    </div>
   </div>
-</div>
+{% endunless %}
 
 {% stylesheet %}
   .collection-hero__body {
@@ -38,11 +40,14 @@
   }
 
   .collection-hero__blocks {
-    margin-block: var(--spacing-24);
-  }
+    margin-block: var(--spacing-24) var(--spacing-48);
+    margin-inline: calc(var(--container-gutter) * -1);
+    padding-inline: var(--container-gutter);
+    overflow: auto;
 
-  .collection-hero:not(:has(.collection-hero__image)) .collection-hero__blocks {
-    margin-block-start: 0;
+    .collection-block {
+      flex-shrink: 0;
+    }
   }
 
   @media (min-width: 1024px) {
@@ -64,7 +69,11 @@
     }
 
     .collection-hero__blocks {
-      margin-block: var(--spacing-40) var(--spacing-48);
+      margin-block: var(--spacing-32) var(--spacing-48);
+
+      .collection-block {
+        flex-shrink: 1;
+      }
     }
   }
 {% endstylesheet %}
