@@ -15,6 +15,8 @@
   {% content_for 'block', type: 'product-card', id: 'product', closest.product: product %}
 {% enddoc %}
 
+{% assign id = 'shopify-block-' | append: block.id %}
+
 {% render 'product-card',
   product: block.settings.product,
   preload: preload,
@@ -24,12 +26,15 @@
   medium_size: medium_size,
   large_size: large_size,
   xlarge_size: xlarge_size,
-  widths: widths
+  widths: widths,
+  attributes: block.shopify_attributes,
+  id: id
 %}
 
 {% schema %}
 {
   "name": "t:blocks.product-card.name",
+  "tag": null,
   "settings": [
     {
       "type": "product",

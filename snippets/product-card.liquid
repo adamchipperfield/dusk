@@ -11,6 +11,8 @@
   @param {string} [large_size] - The large breakpoint size.
   @param {string} [xlarge_size] - The extra-large breakpoint size.
   @param {string} [widths] - Responsive image widths.
+  @param {string} [attributes]
+  @param {string} [id]
 
   @example
   {% render 'product-card', product: product %}
@@ -32,7 +34,16 @@
   endif
 %}
 
-<a class="product-card flex flex-col flex-gap-small" href="{{ product.url }}">
+<a
+  {% if id %}
+    id="{{ id }}"
+  {% endif %}
+  class="product-card flex flex-col flex-gap-small"
+  href="{{ product.url }}"
+  {% if attributes %}
+    {{- attributes -}}
+  {% endif %}
+>
   <div
     class="product-card__thumbnail image-container"
     style="aspect-ratio: {{ product.featured_image.aspect_ratio | default: 1 }};"

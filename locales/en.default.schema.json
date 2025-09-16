@@ -307,6 +307,9 @@
           }
         }
       }
+    },
+    "featured-products": {
+      "name": "Featured products"
     }
   },
   "section_groups": {

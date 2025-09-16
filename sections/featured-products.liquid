@@ -1,0 +1,83 @@
+{% content_for 'block', type: 'heading', id: 'heading' %}
+
+<div class="featured-products__products hide-scrollbar">
+  {% for product in section.settings.products %}
+    {% content_for 'block', type: 'product-card', id: 'product', closest.product: product %}
+  {% endfor %}
+</div>
+
+{% stylesheet %}
+  .featured-products__products {
+    display: flex;
+    gap: var(--spacing-12);
+    margin-inline: calc(var(--container-gutter) * -1);
+    overflow-x: auto;
+    padding-inline: var(--container-gutter);
+
+    .product-card {
+      flex-basis: 60%;
+      flex-shrink: 0;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .featured-products__products {
+      .product-card {
+        flex-basis: 40%;
+      }
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .featured-products__products {
+      .product-card {
+        flex-basis: 30%;
+      }
+    }
+  }
+
+  @media (min-width: 1328px) {
+    .featured-products__products {
+      .product-card {
+        flex-basis: 400px;
+      }
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.featured-products.name",
+  "class": "container section-margin flex flex-col flex-gap-large",
+  "settings": [
+    {
+      "type": "product_list",
+      "id": "products",
+      "label": "t:presets.settings.products.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.featured-products.name",
+      "blocks": [
+        {
+          "type": "heading",
+          "id": "heading",
+          "static": true,
+          "settings": {
+            "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+          }
+        },
+        {
+          "type": "product-card",
+          "id": "product",
+          "static": true,
+          "settings": {
+            "product": "{{ closest.product }}"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
