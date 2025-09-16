@@ -324,6 +324,9 @@
     "rich-text": {
       "name": "Rich text",
       "settings": {
+        "max_width": {
+          "label": "Max width"
+        },
         "truncate": {
           "label": "Truncate"
         }

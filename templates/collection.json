@@ -19,7 +19,7 @@
           "settings": {
             "text": "{{ closest.collection.title }}",
             "heading_tag": "h1",
-            "heading_style": "h2"
+            "heading_style": "h1"
           }
         },
         "description": {
@@ -27,7 +27,8 @@
           "name": "Description",
           "static": true,
           "settings": {
-            "body": "{{ closest.collection.description }}"
+            "body": "{{ closest.collection.description }}",
+            "max_width": 80
           }
         }
       },
@@ -47,8 +48,5 @@
       "settings": {}
     }
   },
-  "order": [
-    "hero",
-    "listing"
-  ]
+  "order": ["hero", "listing"]
 }

@@ -47,6 +47,12 @@
   }
 {% endstylesheet %}
 
+{% style %}
+  #shopify-block-{{ block.id }} {
+    max-width: {{ block.settings.max_width }}%;
+  }
+{% endstyle %}
+
 {% schema %}
 {
   "name": "t:blocks.rich-text.name",
@@ -57,6 +63,16 @@
       "id": "body",
       "label": "t:presets.settings.body.label",
       "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum porta, mi commodo varius sodales, lectus purus tempus urna, et fermentum ipsum tellus non felis. Nullam aliquet egestas lacinia. In auctor quis mauris non sollicitudin. Curabitur a quam ut massa auctor bibendum.</p>"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "t:blocks.rich-text.settings.max_width.label",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100
     },
     {
       "type": "checkbox",
